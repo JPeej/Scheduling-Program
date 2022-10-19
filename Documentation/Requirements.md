@@ -1,15 +1,15 @@
-#Requirements
+# Requirements
 
-1. Create a GUI based program for the company. Non-Java APIs are not allowed with the exception of JavaFX SDK and MySQL JDBC Driver.
-    A.  Create a login form with the following features.
-    
+1. Create a GUI based program for the company. Non-Java APIs are not allowed with the exception of JavaFX SDK and MySQL
+   JDBC Driver. A. Create a login form with the following features.
+
         *   Accept User ID and password. Provides error messaging.
         *   Determine user location and display it.
         *   Adjust user login form language based upon user location (English or French).
         *   Adjust error messaging language based upon user location (English or French).
 
-    B.  Provide following customer features.
-    
+   B. Provide following customer features.
+
         *   Customer records and appointments can be added, modified, and removed. All customer appointments must be deleted before customer may be removed.
         *   The following customer data must be collected for adding or modifying customer: customer name, address, zipcode, and phone number.
         *   Customer IDs must be auto-generated.
@@ -24,8 +24,8 @@
         *   Customer data, including first-level divison data, is displayed via a TableView. A list of all customers and their data is displayed via a TableView. Updates of the data can be performed on the textfields.
         *   Prompt the user with a message when a customer is deleted.
 
-    C.  Provide following scheduling features.
-    
+   C. Provide following scheduling features.
+
         *   Allow users to add, modify, and delete appointments.
         *   Contact customer name assigned to appointment via drop down or combo box.
         *   Prompt user with message if appointment is canceled, should provide appointment ID and type of appointment.
@@ -33,7 +33,7 @@
         *   The following appointment data must be collected for adding or modifying appointment: title, description, location, contact, type, start date and time, end date and time, customer ID, and user ID.
         *   Original appointment info displayed in modifiy screen is in local time.
         *   All fields except ID may be modified.
-        *   Allow users to filter and view appointments by month and week within TableView. Allow choice between month and week via tabs or radio buttons.
+        *   Allow users to filter and View appointments by month and week within TableView. Allow choice between month and week via tabs or radio buttons.
         *   Provide the following info in the appointment TableView as columns: appointment ID, title, description, location, contact, type, start date and time, end date and time, customer ID, user ID.
         *   Allow user to adjust appointment time.
         *   Store appointment times in UTC.
@@ -51,17 +51,23 @@
 
 2. Use two unique lambda expressions.
 
-3. Write code that provides the ability to track user activity by recording all user log-in attempts, dates, and time stamps and whether each attempt was successful in a file named login_activity.txt. Append each new record to the existing file, and save to the root folder of the application.
+3. Write code that provides the ability to track user activity by recording all user log-in attempts, dates, and time
+   stamps and whether each attempt was successful in a file named login_activity.txt. Append each new record to the
+   existing file, and save to the root folder of the application.
 
-4. Provide descriptive Javadoc comments for at least 70 percent of the classes and their members throughout the code, and create an index.html file of your comments to include with your submission based on Oracle’s guidelines for the Javadoc tool best practices. Your comments should include a justification for each lambda expression in the method where it is used.
+4. Provide descriptive Javadoc comments for at least 70 percent of the classes and their members throughout the code,
+   and create an index.html file of your comments to include with your submission based on Oracle’s guidelines for the
+   Javadoc tool best practices. Your comments should include a justification for each lambda expression in the method
+   where it is used.
 
 5. Create a README.txt file that includes the following information:
 
-    *   title and purpose of the application
-    *   author, contact information, student application version, and date
-    *   IDE including version number (e.g., IntelliJ Community 2020.01), full JDK of version used (e.g., Java SE 17.0.1), and JavaFX version compatible with JDK version (e.g. JavaFX-SDK-17.0.1)
-    *   directions for how to run the program
-    *   a description of the additional report of your choice you ran in part A3f
-    *   the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
+    * title and purpose of the application
+    * author, contact information, student application version, and date
+    * IDE including version number (e.g., IntelliJ Community 2020.01), full JDK of version used (e.g., Java SE 17.0.1),
+      and JavaFX version compatible with JDK version (e.g. JavaFX-SDK-17.0.1)
+    * directions for how to run the program
+    * a description of the additional report of your choice you ran in part A3f
+    * the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
 
 6. Demonstrate professional communication.
