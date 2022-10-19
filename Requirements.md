@@ -2,12 +2,14 @@
 
 1. Create a GUI based program for the company. Non-Java APIs are not allowed with the exception of JavaFX SDK and MySQL JDBC Driver.
     A.  Create a login form with the following features.
+    
         *   Accept User ID and password. Provides error messaging.
         *   Determine user location and display it.
         *   Adjust user login form language based upon user location (English or French).
         *   Adjust error messaging language based upon user location (English or French).
 
     B.  Provide following customer features.
+    
         *   Customer records and appointments can be added, modified, and removed. All customer appointments must be deleted before customer may be removed.
         *   The following customer data must be collected for adding or modifying customer: customer name, address, zipcode, and phone number.
         *   Customer IDs must be auto-generated.
@@ -23,6 +25,7 @@
         *   Prompt the user with a message when a customer is deleted.
 
     C.  Provide following scheduling features.
+    
         *   Allow users to add, modify, and delete appointments.
         *   Contact customer name assigned to appointment via drop down or combo box.
         *   Prompt user with message if appointment is canceled, should provide appointment ID and type of appointment.
@@ -53,6 +56,7 @@
 4. Provide descriptive Javadoc comments for at least 70 percent of the classes and their members throughout the code, and create an index.html file of your comments to include with your submission based on Oracle’s guidelines for the Javadoc tool best practices. Your comments should include a justification for each lambda expression in the method where it is used.
 
 5. Create a README.txt file that includes the following information:
+
 *  title and purpose of the application
 *  author, contact information, student application version, and date
 *  IDE including version number (e.g., IntelliJ Community 2020.01), full JDK of version used (e.g., Java SE 17.0.1), and JavaFX version compatible with JDK version (e.g. JavaFX-SDK-17.0.1)
