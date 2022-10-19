@@ -1,10 +1,10 @@
 # Scheduling-Program
 
-#Introduction
+# Introduction
 
 This is a school project for an advanced software class based in Java. I have been tasked to create a desktop scheduling application as a solution for a fictional company. This project will challenge my education up to this point and verify that the foundations of programming have been learned. I am looking forward to work on this project.
 
-#Scenario
+# Scenario
 
 The following situation is the one I must place myself in. It lays out a semi-realistic professional project that I must complete.
 
