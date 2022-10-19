@@ -24,4 +24,4 @@
   * File
   * ResourceBundle
 * Test your work.
-* https://www.youtube.com/watch?v=wKhvzCz07vw DAO video
+* [https://www.youtube.com/watch?v=wKhvzCz07vw](https://www.youtube.com/watch?v=3J5L40MJfU4&list=PL3bGLnkkGnuX_Pa95v_FUdazcFhEF7iBi) DAO videos
