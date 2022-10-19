@@ -18,6 +18,7 @@
 # Controller
   - Nav.java
   - LoginController.java
+  - MainMenuController.java
   - CustomerMenuController.java
   - AddCustomerController.java
   - ModifyCustomerController.java
