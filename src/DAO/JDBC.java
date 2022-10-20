@@ -1,10 +1,10 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.DriverManager;
 
-/**Manages connection to MySQL database for CRUD.*/
+/**Manages connection to MySQL database for CRUD.
+ * mysql-connector-j-8.0.31. */
 public abstract class JDBC {
 
     private static final String protocol = "jdbc";
@@ -17,6 +17,10 @@ public abstract class JDBC {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+    /**Opens connection between program and MySQL database.
+     * Call once at program start to open connection to MySQL database.
+     * @throws if failed to connect.
+     * */
     public static void openConnection()
     {
         try {
@@ -30,10 +34,16 @@ public abstract class JDBC {
         }
     }
 
+    /**Getter for connection in CRUD methods.
+     * Gets connection. Efficient compared to redundant open and close cycles.
+     * @return Currently open Connection object that is open. */
     public static Connection getConnection() {
         return connection;
     }
 
+    /**Closes connection between program and MySQL database.
+     * Call once at program end to close connection to MySQL database.
+     * @throws Exception race condition*/
     public static void closeConnection() {
         try {
             connection.close();
