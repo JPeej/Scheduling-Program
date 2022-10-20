@@ -1,8 +1,10 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.DriverManager;
 
+/**Manages connection to MySQL database for CRUD.*/
 public abstract class JDBC {
 
     private static final String protocol = "jdbc";
@@ -28,6 +30,10 @@ public abstract class JDBC {
         }
     }
 
+    public static Connection getConnection() {
+        return connection;
+    }
+
     public static void closeConnection() {
         try {
             connection.close();
@@ -35,7 +41,6 @@ public abstract class JDBC {
         }
         catch(Exception e)
         {
-            System.out.println("Error:" + e.getMessage());
         }
     }
 
