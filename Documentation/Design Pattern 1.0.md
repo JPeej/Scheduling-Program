@@ -28,7 +28,7 @@
   - ReportMenuController.java
   
 # DAO
-  - DBConnection.java
+  - JDBC.java
   - DAO.java ( Interface )
   - UserDAO.java ( Extends DAO.java )
   - CustomerDAO.java ( Extends DAO.java )
