@@ -33,33 +33,41 @@ public class Nav {
     Stage stage;
     Parent scene;
 
-    /**Navigate to requested menu.
+    /**
+     * Navigate to requested menu.
      * Upon activating event handler via button, handles navigation to menu.
-     * @param event ActionEvent instantiated via event handler tied to button.
+     *
+     * @param event        ActionEvent instantiated via event handler tied to button.
      * @param fxmlLocation String of fxml file location of desired menu.
-     * @param title String of title.
-     * @throws IOException if stage or scene can't be set.*/
+     * @param title        String of title.
+     * @throws IOException if stage or scene can't be set.
+     */
     public void navigate(ActionEvent event, String fxmlLocation, String title) throws IOException {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource(fxmlLocation));
         stage.setTitle(title);
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
-    public void toCustomersMenu(ActionEvent event) throws IOException {
-        navigate(event, Nav.customerMenuLoc, Nav.customerMenuTitle);
+    /**Navigate to Customer Menu.
+     * Multiple menus need this method, DRY.
+     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
+    public void toCustomersMenu(ActionEvent actionEvent) throws IOException {
+        navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
     }
 
-    public void toAppointmentsMenu(ActionEvent event) throws IOException {
-        navigate(event, Nav.appointmentMenuLoc, Nav.appointmentMenuTitle);
+    /**Navigate to Appointment Menu.
+     * Multiple menus need this method, DRY.
+     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
+    public void toAppointmentsMenu(ActionEvent actionEvent) throws IOException {
+        navigate(actionEvent, Nav.appointmentMenuLoc, Nav.appointmentMenuTitle);
     }
 
-    public void toReportsMenu(ActionEvent event) throws IOException {
-        navigate(event, Nav.reportMenuLoc, Nav.reportMenuTitle);
-    }
-
-    public void exitProgram(ActionEvent event) {
-        System.exit(0);
+    /**Navigate to Report Menu.
+     * Multiple menus need this method, DRY.
+     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
+    public void toReportsMenu(ActionEvent actionEvent) throws IOException {
+        navigate(actionEvent, Nav.reportMenuLoc, Nav.reportMenuTitle);
     }
 }
