@@ -6,7 +6,6 @@
   
 # View
   - Login.fxml
-  - MainMenu.fxml
   - CustomerMenu.fxml
   - AddCustomer.fxml
   - ModifyCustomer.fxml
@@ -18,7 +17,6 @@
 # Controller
   - Nav.java
   - LoginController.java
-  - MainMenuController.java
   - CustomerMenuController.java
   - AddCustomerController.java
   - ModifyCustomerController.java
