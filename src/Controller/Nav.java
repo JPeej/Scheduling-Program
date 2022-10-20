@@ -6,9 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+/**Manage navigation between menus.
+ * Static strings available for Controller package. */
 public class Nav {
 
     public static String addAppointmentLoc = "/View/AddAppointment.fxml";
@@ -30,6 +31,12 @@ public class Nav {
     Stage stage;
     Parent scene;
 
+    /**Navigate to requested menu.
+     * Upon activating event handler via button, handles navigation to menu.
+     * @param event ActionEvent instantiated via event handler tied to button.
+     * @param fxmlLocation String of fxml file location of desired menu.
+     * @param title String of title.
+     * @throws IOException if stage or scene can't be set.*/
     public void navigate(ActionEvent event, String fxmlLocation, String title) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource(fxmlLocation));
