@@ -44,4 +44,20 @@ public class Nav {
         stage.setScene(new Scene(scene));
         stage.show();
     }
+
+    public void toCustomersMenu(ActionEvent event) throws IOException {
+        navigate(event, Nav.customerMenuLoc, Nav.customerMenuTitle);
+    }
+
+    public void toAppointmentsMenu(ActionEvent event) throws IOException {
+        navigate(event, Nav.appointmentMenuLoc, Nav.appointmentMenuTitle);
+    }
+
+    public void toReportsMenu(ActionEvent event) throws IOException {
+        navigate(event, Nav.reportMenuLoc, Nav.reportMenuTitle);
+    }
+
+    public void exitProgram(ActionEvent event) {
+        System.exit(0);
+    }
 }

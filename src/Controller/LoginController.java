@@ -9,15 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginController{
 
     Nav nav = new Nav();
-    Stage stage;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    //Stage stage;
 
     @FXML
     public void onActionSubmitLogin(ActionEvent actionEvent) throws IOException {
