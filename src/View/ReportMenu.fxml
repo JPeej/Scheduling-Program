@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.ReportMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerMenu">
+    <children>
+        <TableView layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
+            <columns>
+                <TableColumn maxWidth="50.0" prefWidth="50.0" text="ID" />
+                <TableColumn prefWidth="112.0" text="Title" />
+                <TableColumn prefWidth="125.0" text="Description" />
+                <TableColumn prefWidth="100.0" text="Location" />
+                <TableColumn prefWidth="100.0" text="Contact" />
+                <TableColumn prefWidth="100.0" text="Type" />
+                <TableColumn prefWidth="115.0" text="Start Date &amp; Time" />
+                <TableColumn minWidth="4.20001220703125" prefWidth="115.0" text="End Date &amp; Time" />
+                <TableColumn text="Customer ID" />
+                <TableColumn prefWidth="50.0" text="User ID" />
+            </columns>
+        </TableView>
+        <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" text="Customers Menu" />
+        <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" text="Appointments Menu" />
+        <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" text="Reports Menu" />
+        <Label layoutX="624.0" layoutY="28.0" prefHeight="35.0" prefWidth="201.0" text="Reports" textAlignment="CENTER" underline="true">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Exit" />
+      <ComboBox layoutX="25.0" layoutY="60.0" prefHeight="26.0" prefWidth="360.0" promptText="Select Report" />
+    </children>
 </AnchorPane>
