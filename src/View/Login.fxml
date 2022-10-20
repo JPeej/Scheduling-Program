@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Login">
+   <children>
+      <TextField layoutX="32.0" layoutY="54.0" promptText="Enter user name">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField layoutX="33.0" layoutY="104.0" promptText="Enter password">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="72.0" layoutY="23.0" text="Enter login info">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="11.0" layoutY="236.0" prefHeight="20.0" prefWidth="220.0" text="Location: Unknown" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="72.0" layoutY="172.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="SUBMIT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
