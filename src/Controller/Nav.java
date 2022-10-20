@@ -18,6 +18,7 @@ public class Nav {
     public static String customerMenuLoc = "/View/CustomerMenu.fxml";
     public static String loginLoc = "/View/Login.fxml";
     public static String modifyAppointmentLoc = "/View/ModifyAppointment.fxml";
+    public static String modifyCustomerLoc = "/View/ModifyCustomer.fxml";
     public static String reportMenuLoc = "/View/ReportMenu.fxml";
 
     public static String addAppointmentTitle = "Add Appointment";
@@ -26,6 +27,7 @@ public class Nav {
     public static String customerMenuTitle = "Customer Menu";
     public static String loginTitle = "Login";
     public static String modifyAppointmentTitle = "Modify Appointment";
+    public static String modifyCustomerTitle = "Modify Customer";
     public static String reportMenuTitle = "Report Menu";
 
     Stage stage;

@@ -27,15 +27,18 @@ public class CustomerMenuController implements Initializable {
     }
 
     @FXML
-    public void onActionAddCustomer(ActionEvent actionEvent) {
+    public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
+        nav.navigate(actionEvent, Nav.addCustomerLoc, Nav.addCustomerTitle);
     }
 
     @FXML
-    public void onActionModifyCustomer(ActionEvent actionEvent) {
+    public void onActionModifyCustomer(ActionEvent actionEvent) throws IOException {
+        nav.navigate(actionEvent, Nav.modifyCustomerLoc, Nav.modifyCustomerTitle);
     }
 
     @FXML
     public void onActionExit(ActionEvent actionEvent) {
+        System.exit(0);
     }
 
     @Override

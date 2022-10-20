@@ -26,14 +26,17 @@ public class ApptMenuController {
 
 
     @FXML
-    public void onActionAddAppt(ActionEvent actionEvent) {
+    public void onActionAddAppt(ActionEvent actionEvent) throws IOException {
+        nav.navigate(actionEvent, Nav.addAppointmentLoc, Nav.addAppointmentTitle);
     }
 
     @FXML
-    public void onActionModifyAppt(ActionEvent actionEvent) {
+    public void onActionModifyAppt(ActionEvent actionEvent) throws IOException {
+        nav.navigate(actionEvent, Nav.modifyAppointmentLoc, Nav.modifyAppointmentTitle);
     }
 
     @FXML
     public void onActionExit(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }

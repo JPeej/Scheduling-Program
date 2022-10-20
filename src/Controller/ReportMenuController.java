@@ -25,5 +25,6 @@ public class ReportMenuController {
     }
 
     public void onActionExit(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }
