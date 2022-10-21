@@ -3,9 +3,11 @@ package Controller;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
+import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 /**Controller for Login view. */
 public class LoginController {
 
+    @FXML private Label incorrectLoginText;
     @FXML private TextField userNameLogin;
     @FXML private PasswordField passwordLogin;
     Nav nav = new Nav();
@@ -56,7 +59,7 @@ public class LoginController {
         if (loginUser != null) {
             nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
         } else {
-            //TODO alert user to failed login
+            incorrectLoginText.setText("Username or password incorrect.");
         }
         //TODO export login meta data
     }
