@@ -21,7 +21,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="72.0" layoutY="172.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="SUBMIT">
+      <Button layoutX="72.0" layoutY="172.0" mnemonicParsing="false" onAction="#onActionSubmitLogin" prefHeight="30.0" prefWidth="95.0" text="SUBMIT">
          <font>
             <Font size="14.0" />
          </font>

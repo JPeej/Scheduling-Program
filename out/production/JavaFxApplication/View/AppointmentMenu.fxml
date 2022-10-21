@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ApptMenuController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ApptMenuController">
     <children>
         <TableView layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
             <columns>
@@ -20,18 +20,18 @@
                 <TableColumn prefWidth="50.0" text="User ID" />
             </columns>
         </TableView>
-        <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" text="Customers Menu" />
-        <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" text="Appointments Menu" />
-        <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" text="Reports Menu" />
+        <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomerMenu" text="Customers Menu" />
+        <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
+        <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
         <Label layoutX="578.0" layoutY="15.0" prefHeight="35.0" prefWidth="201.0" text="Appointment Data" textAlignment="CENTER" underline="true">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Add" />
-        <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Modify" />
+        <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAddAppt" prefWidth="75.0" text="Add" />
+        <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModifyAppt" prefWidth="75.0" text="Modify" />
         <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Delete" />
-        <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Exit" />
+        <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
       <RadioButton layoutX="25.0" layoutY="64.0" mnemonicParsing="false" selected="true" text="All">
          <toggleGroup>
             <ToggleGroup fx:id="Filter" />

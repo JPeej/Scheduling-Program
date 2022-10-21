@@ -3,7 +3,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**Manages connection to MySQL database for CRUD.
+/**Manage connection to MySQL database for CRUD.
  * mysql-connector-j-8.0.31. */
 public abstract class JDBC {
 
@@ -19,7 +19,6 @@ public abstract class JDBC {
 
     /**Opens connection between program and MySQL database.
      * Call once at program start to open connection to MySQL database.
-     * @throws if failed to connect.
      * */
     public static void openConnection()
     {
@@ -42,8 +41,7 @@ public abstract class JDBC {
     }
 
     /**Closes connection between program and MySQL database.
-     * Call once at program end to close connection to MySQL database.
-     * @throws Exception race condition*/
+     * Call once at program end to close connection to MySQL database. */
     public static void closeConnection() {
         try {
             connection.close();
