@@ -1,11 +1,15 @@
 package Main;
 
 import DAO.JDBC;
+import DAO.UserDAO;
+import DAO.UserDAOImp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -17,10 +21,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        launch(args);
         JDBC.openConnection();
+        launch(args);
         JDBC.closeConnection();
 
     }
