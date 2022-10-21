@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.io.IOException;
 
-/**Controller for ReportMenu.fxml. */
+/**Controller for ReportMenu. */
 public class ReportMenuController {
 
     Nav nav = new Nav();

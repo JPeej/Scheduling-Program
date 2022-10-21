@@ -1,8 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-
 /**Manage User objects within program. */
 public class User {
     private int userID;
@@ -55,12 +52,4 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
