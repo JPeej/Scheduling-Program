@@ -3,6 +3,7 @@ package Controller;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
+import Utility.Nav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
