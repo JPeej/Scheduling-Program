@@ -11,12 +11,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.TimeZone;
+import java.time.Instant;
+import java.util.*;
 
 /**Controller for Login view. */
 public class LoginController implements Initializable {
@@ -28,6 +28,25 @@ public class LoginController implements Initializable {
     @FXML private TextField userNameLogin;
     @FXML private PasswordField passwordLogin;
     Nav nav = new Nav();
+
+    /**Event handler for login submit button.
+     * Challenges credentials provided to those on database.
+     * Navigates to Customer Menu upon authentication.
+     * See userAuthentication.
+     * See Nav.toAppointmentsMenu.
+     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
+    @FXML
+    public void onActionSubmitLogin(ActionEvent actionEvent) throws IOException, SQLException {
+        User loginUser = userAuthentication();
+        if (loginUser != null) {
+            logActivity("Success");
+            nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
+        } else {
+            logActivity("Fail");
+            ResourceBundle rb = ResourceBundle.getBundle("Utility/MessageBundle", Locale.getDefault());
+            incorrectLoginText.setText(rb.getString("incorrectLoginText"));
+        }
+    }
 
     /**Get user name entered in login menu.
      * Parse String from @FXML Textfield.
@@ -54,22 +73,17 @@ public class LoginController implements Initializable {
         return userDAO.get(userNameLogin, passwordLogin);
     }
 
-    /**Event handler for login submit button.
-     * Challenges credentials provided to those on database.
-     * Navigates to Customer Menu upon authentication.
-     * See userAuthentication.
-     * See Nav.toAppointmentsMenu.
-     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML
-    public void onActionSubmitLogin(ActionEvent actionEvent) throws IOException, SQLException {
-        User loginUser = userAuthentication();
-        if (loginUser != null) {
-            nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
-        } else {
-            ResourceBundle rb = ResourceBundle.getBundle("Utility/MessageBundle", Locale.getDefault());
-            incorrectLoginText.setText(rb.getString("incorrectLoginText"));
-        }
-        //TODO export login meta data
+    /**Logs any login attempt to login_activity.txt.
+     * DateTime is in UTC.
+     * @param logResult whether or not the login attempt was successful. */
+    public void logActivity(String logResult) throws IOException {
+        String user = getUserNameLogin();
+        Instant dateTimeUTC = Instant.now();
+        String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
+
+        FileWriter fw = new FileWriter("login_activity.txt", true);
+        fw.write(log);
+        fw.close();
     }
 
     /**Sets appropriate language to the Login menu.
@@ -88,17 +102,17 @@ public class LoginController implements Initializable {
         }
     }
 
-    /**Changes label location to fit French translations. */
-    public void frenchRelocate() {
-        header.setLayoutX(87);
-        incorrectLoginText.setLayoutX(5);
-    }
-
     /**Determines user's location.
      * @param resourceBundle created in initialize method.
      * @return String of user's time zone. */
     public String setLocation(ResourceBundle resourceBundle) {
         return TimeZone.getDefault().getID();
+    }
+
+    /**Changes label location to fit French translations. */
+    public void frenchRelocate() {
+        header.setLayoutX(87);
+        incorrectLoginText.setLayoutX(5);
     }
 
     /**Initial method called upon screen load.
