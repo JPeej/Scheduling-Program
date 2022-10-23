@@ -1,0 +1,3 @@
+User | Date Time UTC | Login Result
+Username | 2022-10-23T12:30:51.689786900Z | Fail
+test | 2022-10-23T12:30:55.314788400Z | Success

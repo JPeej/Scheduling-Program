@@ -6,26 +6,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
-      <TextField layoutX="32.0" layoutY="54.0" promptText="Enter user name">
+      <Label fx:id="header" layoutX="102.0" layoutY="23.0" text="Login">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="userNameLogin" layoutX="32.0" layoutY="54.0" promptText="Enter user name" text="Username">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="72.0" layoutY="23.0" text="Enter login info">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="11.0" layoutY="236.0" prefHeight="20.0" prefWidth="220.0" text="Location: Unknown" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="72.0" layoutY="172.0" mnemonicParsing="false" onAction="#onActionSubmitLogin" prefHeight="30.0" prefWidth="95.0" text="SUBMIT">
+      <PasswordField fx:id="passwordLogin" layoutX="33.0" layoutY="104.0" prefHeight="30.4" prefWidth="175.2" promptText="Enter password" text="Password" />
+      <Button fx:id="submit" layoutX="72.0" layoutY="172.0" mnemonicParsing="false" onAction="#onActionSubmitLogin" prefHeight="30.0" prefWidth="95.0" text="Submit">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <PasswordField layoutX="33.0" layoutY="104.0" prefHeight="30.4" prefWidth="175.2" promptText="Enter password" />
+      <Label fx:id="incorrectLoginText" layoutX="34.0" layoutY="145.0" textAlignment="CENTER" textFill="RED" wrapText="true" />
+      <Label fx:id="location" layoutX="14.0" layoutY="239.0" />
    </children>
 </AnchorPane>
