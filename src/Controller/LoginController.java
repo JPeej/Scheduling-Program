@@ -91,7 +91,7 @@ public class LoginController implements Initializable {
      * If user's language is French, then call frenchRelocate.
      * @param resourceBundle created in initialize method. */
     public void setLanguage(ResourceBundle resourceBundle){
-        String userLocation = setLocation(resourceBundle);
+        String userLocation = setLocation();
         location.setText(resourceBundle.getString("location") + userLocation);
         header.setText(resourceBundle.getString("header"));
         userNameLogin.setText(resourceBundle.getString("userNameLogin"));
@@ -103,9 +103,8 @@ public class LoginController implements Initializable {
     }
 
     /**Determines user's location.
-     * @param resourceBundle created in initialize method.
      * @return String of user's time zone. */
-    public String setLocation(ResourceBundle resourceBundle) {
+    public String setLocation() {
         return TimeZone.getDefault().getID();
     }
 

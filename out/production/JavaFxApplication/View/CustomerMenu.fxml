@@ -8,16 +8,16 @@
    <children>
       <TableView layoutX="25.0" layoutY="65.0" prefHeight="466.0" prefWidth="950.0">
         <columns>
-          <TableColumn maxWidth="50.0" prefWidth="50.0" text="ID" />
-          <TableColumn prefWidth="100.0" text="Name" />
-            <TableColumn prefWidth="125.0" text="Address" />
-            <TableColumn prefWidth="75.0" text="Zipcode" />
-            <TableColumn prefWidth="100.0" text="State / Province" />
-            <TableColumn prefWidth="100.0" text="Phone" />
-            <TableColumn prefWidth="100.0" text="Created Date" />
-            <TableColumn minWidth="4.20001220703125" prefWidth="100.0" text="Created By" />
-            <TableColumn prefWidth="100.0" text="Last Update" />
-            <TableColumn prefWidth="100.0" text="Last Update By" />
+          <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="50.0" text="ID" />
+          <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
+            <TableColumn fx:id="addressCol" prefWidth="125.0" text="Address" />
+            <TableColumn fx:id="zipCol" prefWidth="75.0" text="Zipcode" />
+            <TableColumn fx:id="divCol" prefWidth="100.0" text="State / Province" />
+            <TableColumn fx:id="phoneCol" prefWidth="100.0" text="Phone" />
+            <TableColumn fx:id="createDateCol" prefWidth="100.0" text="Created Date" />
+            <TableColumn fx:id="createByCol" minWidth="4.20001220703125" prefWidth="100.0" text="Created By" />
+            <TableColumn fx:id="lastUpdateCol" prefWidth="100.0" text="Last Update" />
+            <TableColumn fx:id="lastUpdateByCol" prefWidth="100.0" text="Last Update By" />
         </columns>
       </TableView>
       <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />

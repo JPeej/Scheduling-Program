@@ -4,12 +4,22 @@ import Utility.Nav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerMenuController implements Initializable {
-
+    @FXML private TableColumn idCol;
+    @FXML private TableColumn nameCol;
+    @FXML private TableColumn addressCol;
+    @FXML private TableColumn zipCol;
+    @FXML private TableColumn divCol;
+    @FXML private TableColumn phoneCol;
+    @FXML private TableColumn createDateCol;
+    @FXML private TableColumn createByCol;
+    @FXML private TableColumn lastUpdateCol;
+    @FXML private TableColumn lastUpdateByCol;
     Nav nav = new Nav();
 
     /**Event handler to Customer Menu.
@@ -62,6 +72,5 @@ public class CustomerMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }
