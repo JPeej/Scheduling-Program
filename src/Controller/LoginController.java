@@ -16,10 +16,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 /**Controller for Login view. */
 public class LoginController implements Initializable {
 
+    @FXML private Label location;
     @FXML private Label header;
     @FXML private Button submit;
     @FXML private Label incorrectLoginText;
@@ -73,8 +75,10 @@ public class LoginController implements Initializable {
     /**Sets appropriate language to the Login menu.
      * Uses key:value pairs in MessageBundles.
      * If user's language is French, then call frenchRelocate.
-     * @param resourceBundle created in initialize method, detects MessageBundles and user location / language. */
+     * @param resourceBundle created in initialize method. */
     public void setLanguage(ResourceBundle resourceBundle){
+        String userLocation = setLocation(resourceBundle);
+        location.setText(resourceBundle.getString("location") + userLocation);
         header.setText(resourceBundle.getString("header"));
         userNameLogin.setText(resourceBundle.getString("userNameLogin"));
         passwordLogin.setText(resourceBundle.getString("passwordLogin"));
@@ -88,6 +92,13 @@ public class LoginController implements Initializable {
     public void frenchRelocate() {
         header.setLayoutX(87);
         incorrectLoginText.setLayoutX(5);
+    }
+
+    /**Determines user's location.
+     * @param resourceBundle created in initialize method.
+     * @return String of user's time zone. */
+    public String setLocation(ResourceBundle resourceBundle) {
+        return TimeZone.getDefault().getID();
     }
 
     /**Initial method called upon screen load.
