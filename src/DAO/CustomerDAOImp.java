@@ -1,12 +1,15 @@
 package DAO;
 
+import Utility.DateTimeConverter;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAOImp implements CustomerDAO{
+public class CustomerDAOImp implements CustomerDAO {
 
     /**CRUD Retrieve.
      * Retrieval of one object.
@@ -22,7 +25,7 @@ public class CustomerDAOImp implements CustomerDAO{
     public List getAll() throws SQLException {
         List customerResult = new ArrayList();
         String sql = "SELECT * FROM customers";
-        PreparedStatement ps =JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             int customerID = rs.getInt("Customer_ID");
@@ -35,6 +38,9 @@ public class CustomerDAOImp implements CustomerDAO{
             String lastUpdate = rs.getString("Last_Update");
             String lastUpdateBy = rs.getString("Last_Updated_By");
             int divID = rs.getInt("Division_ID");
+
+            ZonedDateTime zonedCreateDate = DateTimeConverter.dateTimeToClient(createDate);
+            ZonedDateTime zonedLastUpdate = DateTimeConverter.dateTimeToClient(lastUpdate);
         } return customerResult;
     }
 

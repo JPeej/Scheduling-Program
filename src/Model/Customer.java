@@ -1,5 +1,8 @@
 package Model;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 /**Manages Customer objects within program. */
 public class Customer {
 
@@ -8,6 +11,10 @@ public class Customer {
     private String address;
     private String zipcode;
     private String phoneNumber;
+    private ZonedDateTime createDate;
+    private String createBy;
+    private ZonedDateTime lastUpdate;
+    private String lastUpdateBy;
     private String country;
     private String division;
 
@@ -19,12 +26,18 @@ public class Customer {
      * @param phoneNumber String customer's phone number.
      * @param country String customer's country.
      * @param division String customer's state or province. */
-    public Customer(int customerID, String name, String address, String zipcode, String phoneNumber, String country, String division) {
+    public Customer(int customerID, String name, String address, String zipcode, String phoneNumber,
+                    ZonedDateTime createDate, String createBy, ZonedDateTime lastUpdate, String lastUpdateBy,
+                    String country, String division) {
         this.customerID = customerID;
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
+        this.createDate = createDate;
+        this.createBy = createBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdateBy = lastUpdateBy;
         this.country = country;
         this.division = division;
     }
@@ -87,6 +100,54 @@ public class Customer {
      * @param phoneNumber String. */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /**Get customer create date.
+     * @return this.createDate. */
+    public ZonedDateTime getCreateDate() {
+        return createDate;
+    }
+
+    /**Set customer create date.
+     * @param createDate ZoneDateTime */
+    public void setCreateDate(ZonedDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    /**Get customer created by.
+     * @return this.createdBy. */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**Set customer create by.
+     * @param createBy String */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**Get customer last update.
+     * @return this.lastUpdate. */
+    public ZonedDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    /**Set customer last update.
+     * @param lastUpdate ZonedDateTime */
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    /**Get customer last update by.
+     * @return this.lastUpdateBy. */
+    public String getLastUpdateBy() {
+        return lastUpdateBy;
+    }
+
+    /**Set customer last update by.
+     * @param lastUpdateBy String. */
+    public void setLastUpdateBy(String lastUpdateBy) {
+        this.lastUpdateBy = lastUpdateBy;
     }
 
     /**Get customer country.
