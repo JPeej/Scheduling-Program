@@ -1,6 +1,6 @@
 package Model;
 
-import java.time.ZoneId;
+import Utility.DateTimeConverter;
 import java.time.ZonedDateTime;
 
 /**Manages Customer objects within program. */
@@ -24,11 +24,11 @@ public class Customer {
      * @param address String address formatted as ### Street, Division, Country(if applicable).
      * @param zipcode String customer's zipcode.
      * @param phoneNumber String customer's phone number.
-     * @param country String customer's country.
      * @param division String customer's state or province. */
     public Customer(int customerID, String name, String address, String zipcode, String phoneNumber,
                     ZonedDateTime createDate, String createBy, ZonedDateTime lastUpdate, String lastUpdateBy,
-                    String country, String division) {
+                    String division, String country) {
+
         this.customerID = customerID;
         this.name = name;
         this.address = address;
@@ -38,8 +38,8 @@ public class Customer {
         this.createBy = createBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdateBy = lastUpdateBy;
-        this.country = country;
         this.division = division;
+        this.country = country;
     }
 
     /**Get customer ID.

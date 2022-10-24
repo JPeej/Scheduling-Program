@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.Customer;
 import Utility.DateTimeConverter;
 
 import java.sql.PreparedStatement;
@@ -24,23 +25,34 @@ public class CustomerDAOImp implements CustomerDAO {
     @Override
     public List getAll() throws SQLException {
         List customerResult = new ArrayList();
-        String sql = "SELECT * FROM customers";
+        String sql = "SELECT client_schedule.customers.Customer_ID, client_schedule.customers.Customer_Name, " +
+                "client_schedule.customers.Address, client_schedule.customers.Postal_Code, " +
+                "client_schedule.customers.Phone, client_schedule.customers.Create_Date, " +
+                "client_schedule.customers.Created_By, client_schedule.customers.Last_Update, " +
+                "client_schedule.customers.Last_Updated_By, client_schedule.customers.Division_ID, " +
+                "client_schedule.first_level_divisions.Division, client_schedule.countries.Country_ID, " +
+                "client_schedule.countries.Country FROM client_schedule.customers INNER JOIN " +
+                "client_schedule.first_level_divisions ON " +
+                "client_schedule.customers.Division_ID=client_schedule.first_level_divisions.Division_ID " +
+                "INNER JOIN client_schedule.countries ON " +
+                "client_schedule.first_level_divisions.Country_ID=client_schedule.countries.Country_ID;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+        while (rs.next()) {
             int customerID = rs.getInt("Customer_ID");
             String name = rs.getString("Customer_Name");
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            String createDate = rs.getString("Create_Date");
+            ZonedDateTime zonedCreateDate = DateTimeConverter.dateTimeToClient(rs.getString("Create_Date"));
             String createBy = rs.getString("Created_By");
-            String lastUpdate = rs.getString("Last_Update");
+            ZonedDateTime zonedLastUpdate = DateTimeConverter.dateTimeToClient(rs.getString("Last_Update"));
             String lastUpdateBy = rs.getString("Last_Updated_By");
-            int divID = rs.getInt("Division_ID");
-
-            ZonedDateTime zonedCreateDate = DateTimeConverter.dateTimeToClient(createDate);
-            ZonedDateTime zonedLastUpdate = DateTimeConverter.dateTimeToClient(lastUpdate);
+            String division = rs.getString("Division");
+            String country = rs.getString("Country");
+            Customer newCustomer = new Customer(customerID, name, address, zip, phone, zonedCreateDate, createBy,
+                    zonedLastUpdate, lastUpdateBy, division, country);
+            customerResult.add(newCustomer);
         } return customerResult;
     }
 

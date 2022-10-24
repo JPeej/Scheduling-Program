@@ -1,19 +1,19 @@
 package Main;
 
-
-import DAO.JDBC;
+import DAO.*;
+import Model.Customer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.TimeZone;
+import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Properties;
 
 
 public class Main extends Application {
@@ -26,22 +26,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
         JDBC.openConnection();
-
-        String dtString = "2022-10-19 16:13:09";
-        String format = "yyyy-MM-dd HH:mm:ss";
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        LocalDateTime localDateTime = LocalDateTime.parse(dtString, formatter);
-        ZoneId utc = ZoneOffset.UTC;
-        ZonedDateTime dateTimeDB = ZonedDateTime.of(localDateTime, utc);
-        System.out.println(dateTimeDB);
-        ZoneId clientZoneID = ZoneId.systemDefault();
-        ZonedDateTime dateTimeClient = dateTimeDB.withZoneSameInstant(clientZoneID);
-        System.out.println(dateTimeClient);
-
-        //launch(args);
+        launch(args);
         JDBC.closeConnection();
+
     }
 }

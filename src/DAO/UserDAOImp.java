@@ -1,10 +1,14 @@
 package DAO;
 
 import Model.User;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 /**CRUD class for User objects. */
 public class UserDAOImp implements UserDAO{
@@ -62,5 +66,4 @@ public class UserDAOImp implements UserDAO{
     public int delete(Object o) throws SQLException {
         return 0;
     }
-
 }
