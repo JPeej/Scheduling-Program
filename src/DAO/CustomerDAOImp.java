@@ -2,6 +2,8 @@ package DAO;
 
 import Model.Customer;
 import Utility.DateTimeConverter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +25,8 @@ public class CustomerDAOImp implements CustomerDAO {
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */
     @Override
-    public List getAll() throws SQLException {
-        List customerResult = new ArrayList();
+    public ObservableList<Customer> getAll() throws SQLException {
+        ObservableList<Customer> customerResult = FXCollections.observableArrayList();
         String sql = "SELECT client_schedule.customers.Customer_ID, client_schedule.customers.Customer_Name, " +
                 "client_schedule.customers.Address, client_schedule.customers.Postal_Code, " +
                 "client_schedule.customers.Phone, client_schedule.customers.Create_Date, " +

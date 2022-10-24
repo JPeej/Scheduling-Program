@@ -1,5 +1,7 @@
 package DAO;
 
+import javafx.collections.ObservableList;
+
 import java.sql.SQLException;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -14,7 +16,7 @@ public interface DAO<T> {
 
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */
-    List<T> getAll() throws SQLException;
+    ObservableList<T> getAll() throws SQLException;
 
     /**CRUD Create.
      * @param t object to be created. */

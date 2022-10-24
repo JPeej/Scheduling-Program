@@ -1,15 +1,25 @@
 package Controller;
 
+import DAO.CustomerDAO;
+import DAO.CustomerDAOImp;
+import Model.Customer;
 import Utility.Nav;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerMenuController implements Initializable {
+    @FXML private TableView customerTable;
     @FXML private TableColumn idCol;
     @FXML private TableColumn nameCol;
     @FXML private TableColumn addressCol;
@@ -72,5 +82,23 @@ public class CustomerMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CustomerDAO customerDAO = new CustomerDAOImp();
+        try {
+            ObservableList<Customer> customers = customerDAO.getAll();
+            customerTable.setItems(customers);
+            idCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+            zipCol.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+            phoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+            createDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+            createByCol.setCellValueFactory(new PropertyValueFactory<>("createBy"));
+            lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+            lastUpdateByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdateBy"));
+            divCol.setCellValueFactory(new PropertyValueFactory<>("division"));
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
     }
 }
