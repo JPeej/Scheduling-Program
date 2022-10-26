@@ -46,14 +46,14 @@ public class CustomerDAOImp implements CustomerDAO {
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            ZonedDateTime zonedCreateDate = DateTimeConverter.dateTimeToClient(rs.getString("Create_Date"));
+            String zonedCreateDate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Create_Date"));
             String createBy = rs.getString("Created_By");
-            ZonedDateTime zonedLastUpdate = DateTimeConverter.dateTimeToClient(rs.getString("Last_Update"));
+            String zonedLastUpdate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Last_Update"));
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");
             Customer newCustomer = new Customer(customerID, name, address, zip, phone, zonedCreateDate, createBy,
-                    zonedLastUpdate, lastUpdateBy, division, country);
+                                   zonedLastUpdate, lastUpdateBy, division, country);
             customerResult.add(newCustomer);
         } return customerResult;
     }

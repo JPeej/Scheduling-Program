@@ -41,7 +41,7 @@ public class AddCustomerController implements Initializable {
         ZonedDateTime createDateTime = ZonedDateTime.now();
         ZonedDateTime lastUpdateDateTime = ZonedDateTime.now();
 
-        Customer newCustomer = new Customer(name, address, zip, phone, createDateTime, createBy, lastUpdateDateTime, lastUpdateBy, country, division);
+
     }
 
     /**Event handler to Customer Menu.

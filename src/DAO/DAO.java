@@ -1,10 +1,7 @@
 package DAO;
 
 import javafx.collections.ObservableList;
-
 import java.sql.SQLException;
-import java.time.ZonedDateTime;
-import java.util.List;
 
 /**Interface for CRUD. */
 public interface DAO<T> {

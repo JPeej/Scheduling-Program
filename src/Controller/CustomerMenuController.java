@@ -3,6 +3,7 @@ package Controller;
 import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
 import Model.Customer;
+import Utility.Locations;
 import Utility.Nav;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,11 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerMenuController implements Initializable {
@@ -99,6 +98,5 @@ public class CustomerMenuController implements Initializable {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-
     }
 }
