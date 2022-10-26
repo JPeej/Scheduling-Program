@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomerDAOImp implements CustomerDAO {
 
@@ -71,7 +68,10 @@ public class CustomerDAOImp implements CustomerDAO {
             Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, zonedCreateDate, createBy,
                                    zonedLastUpdate, lastUpdateBy, division, country);
             customerResult.add(newCustomer);
-        } return customerResult;
+        }
+        Comparator<Customer> customerComparator = Comparator.comparing(Customer::getCustomerID);
+        customerResult.sort(customerComparator);
+        return customerResult;
     }
 
     /**CRUD Create.
@@ -85,7 +85,6 @@ public class CustomerDAOImp implements CustomerDAO {
      * @param newCustomer object to be inserted.*/
     @Override
     public int insert(Object newCustomer) throws SQLException {
-        newCustomer = (Customer) newCustomer;
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date," +
                 "Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

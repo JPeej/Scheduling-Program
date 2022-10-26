@@ -3,9 +3,6 @@ package Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Locations {
 
     public static ObservableList<String> countries = FXCollections.observableArrayList("U.S", "UK", "Canada");
