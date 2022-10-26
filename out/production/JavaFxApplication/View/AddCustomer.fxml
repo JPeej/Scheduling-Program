@@ -11,16 +11,16 @@
       <Label layoutX="40.0" layoutY="234.0" text="Zipcode" />
       <Label layoutX="40.0" layoutY="154.0" text="Phone" />
       <ComboBox fx:id="countryCombo" layoutX="40.0" layoutY="270.0" onAction="#onActionCountryCombo" prefHeight="26.0" prefWidth="210.0" promptText="Country" />
-      <ComboBox fx:id="divCombo" layoutX="40.0" layoutY="310.0" onAction="#onActionDivCombo" prefHeight="26.0" prefWidth="210.0" promptText="State / Province" />
+      <ComboBox fx:id="divCombo" layoutX="40.0" layoutY="310.0" prefHeight="26.0" prefWidth="210.0" promptText="State / Province" />
       <Button layoutX="45.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionSaveCustomer" prefWidth="75.0" text="Save" />
       <Button layoutX="172.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="75.0" text="Cancel" />
       <Label layoutX="43.0" layoutY="37.0" text="Add New Customer" underline="true">
          <font>
             <Font size="24.0" />
          </font></Label>
-      <TextField layoutX="100.0" layoutY="110.0" />
-      <TextField layoutX="99.0" layoutY="230.0" />
-      <TextField layoutX="100.0" layoutY="150.0" />
-      <TextField layoutX="99.0" layoutY="190.0" />
+      <TextField fx:id="nameText" layoutX="100.0" layoutY="110.0" />
+      <TextField fx:id="zipText" layoutX="99.0" layoutY="230.0" />
+      <TextField fx:id="phoneText" layoutX="100.0" layoutY="150.0" />
+      <TextField fx:id="addressText" layoutX="99.0" layoutY="190.0" />
    </children>
 </AnchorPane>

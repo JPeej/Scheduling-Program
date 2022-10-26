@@ -26,7 +26,7 @@
       <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />
       <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
       <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-      <Label layoutX="616.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data" textAlignment="CENTER" underline="true">
+      <Label layoutX="769.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data" textAlignment="CENTER" underline="true">
          <font>
             <Font size="24.0" />
          </font>
@@ -34,6 +34,6 @@
       <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAddCustomer" prefWidth="75.0" text="Add" />
       <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModifyCustomer" prefWidth="75.0" text="Modify" />
       <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Delete" />
-      <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
+      <Button layoutX="1224.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
    </children>
 </AnchorPane>
