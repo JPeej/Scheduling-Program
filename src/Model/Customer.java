@@ -1,7 +1,5 @@
 package Model;
 
-import java.time.ZonedDateTime;
-
 /**Manages Customer objects within program. */
 public class Customer {
 
@@ -16,6 +14,19 @@ public class Customer {
     private String lastUpdateBy;
     private String country;
     private String division;
+
+    /**Constructor for Customer, retrieval.
+     * @param customerID
+     * @param name
+     * @param address
+     * @param zipcode
+     * @param phoneNumber
+     * @param createDate
+     * @param createBy
+     * @param lastUpdate
+     * @param lastUpdateBy
+     * @param country
+     * @param division */
     public Customer(int customerID, String name, String address, String zipcode, String phoneNumber,
                     String createDate, String createBy, String lastUpdate, String lastUpdateBy,
                     String division, String country) {
@@ -31,6 +42,31 @@ public class Customer {
         this.lastUpdateBy = lastUpdateBy;
         this.division = division;
         this.country = country;
+    }
+
+    /**Constructor for Customer, insertion.
+     * @param name
+     * @param address
+     * @param zipcode
+     * @param phoneNumber
+     * @param createDate
+     * @param createBy
+     * @param lastUpdate
+     * @param lastUpdateBy
+     * @param country
+     * @param division */
+    public Customer(String name, String address, String zipcode, String phoneNumber, String createDate, String createBy,
+                    String lastUpdate, String lastUpdateBy, String country, String division) {
+        this.name = name;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+        this.createDate = createDate;
+        this.createBy = createBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdateBy = lastUpdateBy;
+        this.country = country;
+        this.division = division;
     }
 
     /**Get customer ID.

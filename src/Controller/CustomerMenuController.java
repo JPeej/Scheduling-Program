@@ -3,7 +3,6 @@ package Controller;
 import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
 import Model.Customer;
-import Utility.Locations;
 import Utility.Nav;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +16,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**Controller for Customer Menu view. */
 public class CustomerMenuController implements Initializable {
     @FXML private TableView customerTable;
     @FXML private TableColumn idCol;
@@ -79,6 +79,10 @@ public class CustomerMenuController implements Initializable {
         System.exit(0);
     }
 
+    /**Called upon screen load.
+     * Loads TableView with all Customer data.
+     * @param resourceBundle
+     * @param url */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerDAO customerDAO = new CustomerDAOImp();

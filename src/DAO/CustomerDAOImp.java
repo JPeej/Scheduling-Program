@@ -4,13 +4,9 @@ import Model.Customer;
 import Utility.DateTimeConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerDAOImp implements CustomerDAO {
 
