@@ -1,22 +1,28 @@
 package Model;
 
+import java.sql.Timestamp;
+
 /**Manages Customer objects within program. */
 public class Customer {
 
     private int customerID;
+    private int divisionID;
     private String name;
     private String address;
     private String zipcode;
     private String phoneNumber;
-    private String createDate;
     private String createBy;
-    private String lastUpdate;
     private String lastUpdateBy;
     private String country;
     private String division;
+    private String createDate;
+    private String lastUpdate;
+    private Timestamp createDateStamp;
+    private Timestamp lastUpdateStamp;
 
     /**Constructor for Customer, retrieval.
      * @param customerID
+     * @param divisionID
      * @param name
      * @param address
      * @param zipcode
@@ -27,11 +33,12 @@ public class Customer {
      * @param lastUpdateBy
      * @param country
      * @param division */
-    public Customer(int customerID, String name, String address, String zipcode, String phoneNumber,
+    public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String createDate, String createBy, String lastUpdate, String lastUpdateBy,
                     String division, String country) {
 
         this.customerID = customerID;
+        this.divisionID = divisionID;
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
@@ -45,28 +52,26 @@ public class Customer {
     }
 
     /**Constructor for Customer, insertion.
+     * @param divisionID
      * @param name
      * @param address
      * @param zipcode
      * @param phoneNumber
-     * @param createDate
+     * @param createDateStamp
      * @param createBy
-     * @param lastUpdate
-     * @param lastUpdateBy
-     * @param country
-     * @param division */
-    public Customer(String name, String address, String zipcode, String phoneNumber, String createDate, String createBy,
-                    String lastUpdate, String lastUpdateBy, String country, String division) {
+     * @param lastUpdateStamp
+     * @param lastUpdateBy */
+    public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
+                    Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
+        this.divisionID = divisionID;
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
+        this.createDateStamp = createDateStamp;
         this.createBy = createBy;
-        this.lastUpdate = lastUpdate;
+        this.lastUpdateStamp = lastUpdateStamp;
         this.lastUpdateBy = lastUpdateBy;
-        this.country = country;
-        this.division = division;
     }
 
     /**Get customer ID.
@@ -199,5 +204,29 @@ public class Customer {
      * @param division String. */
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    public int getDivisionID() {
+        return divisionID;
+    }
+
+    public void setDivisionID(int divisionID) {
+        this.divisionID = divisionID;
+    }
+
+    public Timestamp getCreateDateStamp() {
+        return createDateStamp;
+    }
+
+    public void setCreateDateStamp(Timestamp createDateStamp) {
+        this.createDateStamp = createDateStamp;
+    }
+
+    public Timestamp getLastUpdateStamp() {
+        return lastUpdateStamp;
+    }
+
+    public void setLastUpdateStamp(Timestamp lastUpdateStamp) {
+        this.lastUpdateStamp = lastUpdateStamp;
     }
 }

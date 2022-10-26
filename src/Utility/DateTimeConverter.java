@@ -33,6 +33,6 @@ public class DateTimeConverter {
 
     public static String stringFormatter(String dateTime) {
         dateTime = dateTime.replaceAll("\\s", "");
-        return dateTime.substring(0, 10) + "T" + dateTime.substring(10);
+        return dateTime.substring(0, 19);
     }
 }

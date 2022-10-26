@@ -7,6 +7,10 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CustomerDAOImp implements CustomerDAO {
 
@@ -16,6 +20,21 @@ public class CustomerDAOImp implements CustomerDAO {
     @Override
     public Object get(int id) throws SQLException {
         return null;
+    }
+
+    /**Overloaded CRUD Retrieve for divID.
+     * @param divName name of division.
+     * @return int division ID. */
+    @Override
+    public int getID(String divName) throws SQLException {
+        String sql = "SELECT Division_ID FROM client_schedule.first_level_divisions WHERE Division = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, divName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int divID = rs.getInt("Division_ID");
+            return divID;
+        } return -1;
     }
 
     /**CRUD Retrieve.
@@ -38,6 +57,7 @@ public class CustomerDAOImp implements CustomerDAO {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int customerID = rs.getInt("Customer_ID");
+            int divisionID = rs.getInt("Division_ID");
             String name = rs.getString("Customer_Name");
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
@@ -48,7 +68,7 @@ public class CustomerDAOImp implements CustomerDAO {
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");
-            Customer newCustomer = new Customer(customerID, name, address, zip, phone, zonedCreateDate, createBy,
+            Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, zonedCreateDate, createBy,
                                    zonedLastUpdate, lastUpdateBy, division, country);
             customerResult.add(newCustomer);
         } return customerResult;
@@ -62,10 +82,24 @@ public class CustomerDAOImp implements CustomerDAO {
     }
 
     /**CRUD Create and Update.
-     * @param o object to be inserted.*/
+     * @param newCustomer object to be inserted.*/
     @Override
-    public int insert(Object o) throws SQLException {
-        return 0;
+    public int insert(Object newCustomer) throws SQLException {
+        newCustomer = (Customer) newCustomer;
+        String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date," +
+                "Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, ((Customer) newCustomer).getName());
+        ps.setString(2, ((Customer) newCustomer).getAddress());
+        ps.setString(3, ((Customer) newCustomer).getZipcode());
+        ps.setString(4, ((Customer) newCustomer).getPhoneNumber());
+        ps.setTimestamp(5, ((Customer) newCustomer).getCreateDateStamp());
+        ps.setString(6, ((Customer) newCustomer).getCreateBy());
+        ps.setTimestamp(7, ((Customer) newCustomer).getLastUpdateStamp());
+        ps.setString(8, ((Customer) newCustomer).getLastUpdateBy());
+        ps.setInt(9, ((Customer) newCustomer).getDivisionID());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
     }
 
     /**CRUD Update.
@@ -81,4 +115,5 @@ public class CustomerDAOImp implements CustomerDAO {
     public int delete(Object o) throws SQLException {
         return 0;
     }
+
 }

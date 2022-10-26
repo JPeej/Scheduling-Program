@@ -3,6 +3,7 @@ package Main;
 import DAO.*;
 import Model.Customer;
 import Utility.DateTimeConverter;
+import Utility.Locations;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
