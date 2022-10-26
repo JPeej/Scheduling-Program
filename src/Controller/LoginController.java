@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.JDBC;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
@@ -40,6 +41,7 @@ public class LoginController implements Initializable {
         User loginUser = userAuthentication();
         if (loginUser != null) {
             logActivity("Success");
+            JDBC.user = getUserNameLogin();
             nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
         } else {
             logActivity("Fail");

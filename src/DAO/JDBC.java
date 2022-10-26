@@ -16,6 +16,7 @@ public abstract class JDBC {
     private static final String userName = "sqlUser"; // Username
     private static final String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
+    public static String user;
 
     /**Opens connection between program and MySQL database.
      * Call once at program start to open connection to MySQL database.

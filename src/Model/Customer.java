@@ -7,6 +7,20 @@ import java.time.ZonedDateTime;
 public class Customer {
 
     private int customerID;
+
+    public Customer(String name, String address, String zipcode, String phoneNumber, ZonedDateTime createDate, String createBy, ZonedDateTime lastUpdate, String lastUpdateBy, String country, String division) {
+        this.name = name;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+        this.createDate = createDate;
+        this.createBy = createBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdateBy = lastUpdateBy;
+        this.country = country;
+        this.division = division;
+    }
+
     private String name;
     private String address;
     private String zipcode;
