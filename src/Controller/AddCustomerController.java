@@ -6,6 +6,7 @@ import DAO.JDBC;
 import Model.Customer;
 import Utility.DateTimeConverter;
 import Utility.Locations;
+import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
@@ -36,7 +38,8 @@ public class AddCustomerController implements Initializable {
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
     public void onActionSaveCustomer(ActionEvent actionEvent) throws IOException, SQLException {
-        int division = customerDAO.getID(divCombo.getValue());
+        int division = customerDAO.getDivId(divCombo.getValue());
+        String country = countryCombo.getValue();
         String name = nameText.getText();
         String address = addressText.getText();
         String zip = zipText.getText();
@@ -47,8 +50,15 @@ public class AddCustomerController implements Initializable {
         Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
         Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
                 lastUpdateDateTime, lastUpdateBy);
-        customerDAO.insert(newCustomer);
-        nav.toCustomersMenu(actionEvent);
+        int rowsAffected = customerDAO.insert(newCustomer);
+
+        if (rowsAffected > 0) {
+            nav.toCustomersMenu(actionEvent);
+            MyAlerts.alertInfo("New customer saved.");
+        } else {
+            MyAlerts.alertError("New customer did not save.\nCheck values and try again.");
+        }
+
     }
 
     /**Event handler to Customer Menu.
@@ -76,6 +86,41 @@ public class AddCustomerController implements Initializable {
                 break;
             default: divCombo.setPromptText("Select country first");
         }
+    }
+
+    public boolean validateValues(int divID, String country, String name, String address, String zip, String phone) {
+        ArrayList<Boolean> validationBooleans = new ArrayList<>();
+        validationBooleans.add(validateDivID(divID));
+        validationBooleans.add(validateCountry(country));
+        validationBooleans.add(validateName(name));
+        validationBooleans.add(validateAddress(address));
+        validationBooleans.add(validateZip(zip));
+        validationBooleans.add(validatePhone(phone));
+        return !validationBooleans.contains(false);
+    }
+
+    public boolean validateDivID(int divID) {
+
+        return true;
+    }
+
+    public boolean validateCountry(String country) {
+        return true;
+    }
+
+    public boolean validateName(String name) {
+        return true;
+    }
+    public boolean validateAddress(String address) {
+        return true;
+    }
+
+    public boolean validateZip(String zip) {
+        return true;
+    }
+
+    public boolean validatePhone(String phone) {
+
     }
 
     /**Called upon screen load.

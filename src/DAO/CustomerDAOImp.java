@@ -23,7 +23,7 @@ public class CustomerDAOImp implements CustomerDAO {
      * @param divName name of division.
      * @return int division ID. */
     @Override
-    public int getID(String divName) throws SQLException {
+    public int getDivId(String divName) throws SQLException {
         String sql = "SELECT Division_ID FROM client_schedule.first_level_divisions WHERE Division = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, divName);
@@ -32,6 +32,11 @@ public class CustomerDAOImp implements CustomerDAO {
             int divID = rs.getInt("Division_ID");
             return divID;
         } return -1;
+    }
+
+    @Override
+    public ArrayList<Integer> getAllDivIDs() throws SQLException {
+        return null;
     }
 
     /**CRUD Retrieve.
