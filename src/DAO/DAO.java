@@ -15,10 +15,6 @@ public interface DAO<T> {
      * Retrieval of all objects of one object type. */
     ObservableList<T> getAll() throws SQLException;
 
-    /**CRUD Create.
-     * @param t object to be created. */
-    int save(T t) throws SQLException;
-
     /**CRUD Create and Update.
      * @param t object to be inserted. */
     int insert(T t) throws SQLException;

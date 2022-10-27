@@ -33,31 +33,39 @@ public class UserDAOImp implements UserDAO{
         }
     }
 
+    //Overridden but null CRUD methods----------------------------------------------------------------------------------
+
+    /**CRUD Retrieve.
+     * Retrieval of one object.
+     * @param id indexing or PK/FK id*/
     @Override
     public Object get(int id) throws SQLException {
         return null;
     }
 
+    /**CRUD Retrieve.
+     * Retrieval of all objects of one object type. */
     @Override
     public ObservableList getAll() throws SQLException {
         return null;
     }
 
-    @Override
-    public int save(Object o) throws SQLException {
-        return 0;
-    }
-
+    /**CRUD Create and Update.
+     * @param o object to be inserted. */
     @Override
     public int insert(Object o) throws SQLException {
         return 0;
     }
 
+    /**CRUD Update.
+     * @param o object to be updated. */
     @Override
     public int update(Object o) throws SQLException {
         return 0;
     }
 
+    /**CRUD Delete.
+     * @param o object to be deleted. */
     @Override
     public int delete(Object o) throws SQLException {
         return 0;

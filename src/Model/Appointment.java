@@ -43,8 +43,9 @@ public class Appointment {
         this.startDate = startDate;
         this.startTime = startTime;
         this.endDate = endDate;
-        this.endTime = endTime;
-    }
+        this.endTime = endTime;}
+
+    //Getters & Setters ------------------------------------------------------------------------------------------------
 
     /**Get appointment ID.
      * @return this.appointmentID. */

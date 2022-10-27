@@ -16,6 +16,8 @@ public class User {
         this.password = password;
     }
 
+    //Getters & Setters ------------------------------------------------------------------------------------------------
+
     /**Get user ID.
      * @return this.userID int.*/
     public int getUserID() {

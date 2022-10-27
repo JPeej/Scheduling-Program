@@ -48,8 +48,8 @@ public abstract class JDBC {
             connection.close();
             System.out.println("Connection closed!");
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

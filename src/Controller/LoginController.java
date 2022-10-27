@@ -82,7 +82,6 @@ public class LoginController implements Initializable {
         String user = getUserNameLogin();
         Instant dateTimeUTC = Instant.now();
         String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
-
         FileWriter fw = new FileWriter("login_activity.txt", true);
         fw.write(log);
         fw.close();
@@ -93,7 +92,7 @@ public class LoginController implements Initializable {
      * If user's language is French, then call frenchRelocate.
      * @param resourceBundle created in initialize method. */
     public void setLanguage(ResourceBundle resourceBundle){
-        String userLocation = setLocation();
+        String userLocation = TimeZone.getDefault().getID();
         location.setText(resourceBundle.getString("location") + userLocation);
         header.setText(resourceBundle.getString("header"));
         userNameLogin.setText(resourceBundle.getString("userNameLogin"));
@@ -102,12 +101,6 @@ public class LoginController implements Initializable {
         if (Locale.getDefault() == Locale.FRENCH) {
             frenchRelocate();
         }
-    }
-
-    /**Determines user's location.
-     * @return String of user's time zone. */
-    public String setLocation() {
-        return TimeZone.getDefault().getID();
     }
 
     /**Changes label location to fit French translations. */

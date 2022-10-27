@@ -1,22 +1,13 @@
 package Main;
 
 import DAO.*;
-import Model.Customer;
-import Utility.DateTimeConverter;
-import Utility.Locations;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
-
 
 public class Main extends Application {
 

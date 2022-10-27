@@ -45,13 +45,10 @@ public class AddCustomerController implements Initializable {
         String lastUpdateBy = JDBC.user;
         Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
         Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-
         Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
                 lastUpdateDateTime, lastUpdateBy);
-
         customerDAO.insert(newCustomer);
         nav.toCustomersMenu(actionEvent);
-
     }
 
     /**Event handler to Customer Menu.
@@ -63,6 +60,8 @@ public class AddCustomerController implements Initializable {
         nav.toCustomersMenu(actionEvent);
     }
 
+    /**Switch method for division combo.
+     * Reacts to country selection. */
     public void onActionCountryCombo(ActionEvent actionEvent) {
         String countrySelection = countryCombo.getValue();
         switch(countrySelection) {
@@ -75,9 +74,12 @@ public class AddCustomerController implements Initializable {
             case "Canada":
                 divCombo.setItems(Locations.canadaList);
                 break;
+            default: divCombo.setPromptText("Select country first");
         }
     }
 
+    /**Called upon screen load.
+     * Loads country combo box with all countries.   */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        countryCombo.setItems(Locations.countries);

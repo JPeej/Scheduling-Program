@@ -20,19 +20,7 @@ public class Customer {
     private Timestamp createDateStamp;
     private Timestamp lastUpdateStamp;
 
-    /**Constructor for Customer, retrieval.
-     * @param customerID
-     * @param divisionID
-     * @param name
-     * @param address
-     * @param zipcode
-     * @param phoneNumber
-     * @param createDate
-     * @param createBy
-     * @param lastUpdate
-     * @param lastUpdateBy
-     * @param country
-     * @param division */
+    /**Constructor for Customer, retrieval.*/
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String createDate, String createBy, String lastUpdate, String lastUpdateBy,
                     String division, String country) {
@@ -51,16 +39,7 @@ public class Customer {
         this.country = country;
     }
 
-    /**Constructor for Customer, insertion.
-     * @param divisionID
-     * @param name
-     * @param address
-     * @param zipcode
-     * @param phoneNumber
-     * @param createDateStamp
-     * @param createBy
-     * @param lastUpdateStamp
-     * @param lastUpdateBy */
+    /**Constructor for Customer, insertion.*/
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
         this.divisionID = divisionID;
@@ -73,6 +52,8 @@ public class Customer {
         this.lastUpdateStamp = lastUpdateStamp;
         this.lastUpdateBy = lastUpdateBy;
     }
+
+    //Getters & Setters ------------------------------------------------------------------------------------------------
 
     /**Get customer ID.
      * @return this.customerID. */
@@ -206,26 +187,38 @@ public class Customer {
         this.division = division;
     }
 
+    /**Get customer divisionID.
+     * @return this.divisionID. */
     public int getDivisionID() {
         return divisionID;
     }
 
+    /**Set customer divisionID.
+     * @param divisionID int. */
     public void setDivisionID(int divisionID) {
         this.divisionID = divisionID;
     }
 
+    /**Get customer createDateStamp.
+     * @return this.createDateStamp. */
     public Timestamp getCreateDateStamp() {
         return createDateStamp;
     }
 
+    /**Set customer createDateStamp.
+     * @param createDateStamp Timestamp. */
     public void setCreateDateStamp(Timestamp createDateStamp) {
         this.createDateStamp = createDateStamp;
     }
 
+    /**Get customer lastUpdateStamp.
+     * @return this.lastUpdateStamp. */
     public Timestamp getLastUpdateStamp() {
         return lastUpdateStamp;
     }
 
+    /**Set customer lastUpdateStamp.
+     * @param lastUpdateStamp Timestamp. */
     public void setLastUpdateStamp(Timestamp lastUpdateStamp) {
         this.lastUpdateStamp = lastUpdateStamp;
     }

@@ -3,6 +3,7 @@ package Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**Holds locations for quick access without SQL queries.*/
 public class Locations {
 
     public static ObservableList<String> countries = FXCollections.observableArrayList("U.S", "UK", "Canada");

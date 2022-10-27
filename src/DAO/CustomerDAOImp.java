@@ -35,7 +35,8 @@ public class CustomerDAOImp implements CustomerDAO {
     }
 
     /**CRUD Retrieve.
-     * Retrieval of all objects of one object type. */
+     * Retrieval of all customers in a sorted manner by ID.
+     * @return customerResult ObservableList for viewing. */
     @Override
     public ObservableList<Customer> getAll() throws SQLException {
         ObservableList<Customer> customerResult = FXCollections.observableArrayList();
@@ -65,8 +66,8 @@ public class CustomerDAOImp implements CustomerDAO {
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");
-            Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, zonedCreateDate, createBy,
-                                   zonedLastUpdate, lastUpdateBy, division, country);
+            Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, zonedCreateDate,
+                    createBy, zonedLastUpdate, lastUpdateBy, division, country);
             customerResult.add(newCustomer);
         }
         Comparator<Customer> customerComparator = Comparator.comparing(Customer::getCustomerID);
@@ -74,15 +75,9 @@ public class CustomerDAOImp implements CustomerDAO {
         return customerResult;
     }
 
-    /**CRUD Create.
-     * @param o object to be created. */
-    @Override
-    public int save(Object o) throws SQLException {
-        return 0;
-    }
-
     /**CRUD Create and Update.
-     * @param newCustomer object to be inserted.*/
+     * @param newCustomer object to be inserted.
+     * @return ps.executeUpdate() int. */
     @Override
     public int insert(Object newCustomer) throws SQLException {
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date," +
@@ -97,8 +92,7 @@ public class CustomerDAOImp implements CustomerDAO {
         ps.setTimestamp(7, ((Customer) newCustomer).getLastUpdateStamp());
         ps.setString(8, ((Customer) newCustomer).getLastUpdateBy());
         ps.setInt(9, ((Customer) newCustomer).getDivisionID());
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     /**CRUD Update.
