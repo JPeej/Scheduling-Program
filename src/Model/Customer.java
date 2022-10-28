@@ -111,18 +111,29 @@ public class Customer {
     }
 
     /**Validate provided address for customer creation.
+     * Check for non Alphanumeric characters.
      * Check size, address should at least contain building number and street as is found in pre-populated database.
      * Check that building number is provided.
      * Prompts user with error.
      * @param address */
     public boolean validateAddress(String address) {
+        for (int i = 0; i < address.length(); i++) {
+            Character testChar = address.charAt(i);
+            if (!(Character.isAlphabetic(testChar) | Character.isDigit(testChar) | Character.isSpaceChar(testChar))) {
+                MyAlerts.alertError("No non-alphanumeric characters in address.");
+                return false;
+            }
+        }
+
         String[] splitAddress = address.split(" ");
         if (!(Arrays.stream(splitAddress).count() >= 2)) {
             MyAlerts.alertError("Please format address as one of the following:\n" +
                                         "U.S. address: 123 ABC Street, White Plains\n" +
                                         "Canadian address: 123 ABC Street, Newmarket\n" +
                                         "UK address: 123 ABC Street, Greenwich, London");
-            return false; }
+            return false;
+        }
+
         String houseNumber = splitAddress[0];
         for (int i = 0; i < houseNumber.length(); i++) {
             Character testChar = houseNumber.charAt(i);
@@ -133,6 +144,7 @@ public class Customer {
     }
 
     /**Validate provided zipcode for customer creation.
+     * Zip/Postal codes may have Alphanumeric characters and '-'.
      * Checks for spaces.
      * @param zip*/
     public boolean validateZip(String zip) {
