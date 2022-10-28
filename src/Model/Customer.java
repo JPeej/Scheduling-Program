@@ -43,11 +43,9 @@ public class Customer {
         this.country = country;
     }
 
-    /**Constructor for Customer, insertion.
-     * Validates values. */
+    /**Constructor for Customer, insertion. */
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
-        if (valueValidation(divisionID, name, address, zipcode, phoneNumber)) {
             this.divisionID = divisionID;
             this.name = name;
             this.address = address;
@@ -57,9 +55,11 @@ public class Customer {
             this.createBy = createBy;
             this.lastUpdateStamp = lastUpdateStamp;
             this.lastUpdateBy = lastUpdateBy;
-        }
     }
 
+
+
+    //Value validation is not necessary to this extent for MVP (Software II rubric). Will implement at later time.
     /**Method to call all validation methods.
      * @param divID
      * @param name
@@ -124,7 +124,7 @@ public class Customer {
                 return false;
             }
         }
-
+        
         String[] splitAddress = address.split(" ");
         if (!(Arrays.stream(splitAddress).count() >= 2)) {
             MyAlerts.alertError("Please format address as one of the following:\n" +
@@ -133,7 +133,7 @@ public class Customer {
                                         "UK address: 123 ABC Street, Greenwich, London");
             return false;
         }
-
+        
         String houseNumber = splitAddress[0];
         for (int i = 0; i < houseNumber.length(); i++) {
             Character testChar = houseNumber.charAt(i);
@@ -144,7 +144,7 @@ public class Customer {
     }
 
     /**Validate provided zipcode for customer creation.
-     * Zip/Postal codes may have Alphanumeric characters and '-'.
+     * Zip/Postal codes may have Alphanumeric characters and '-'. 
      * Checks for spaces.
      * @param zip*/
     public boolean validateZip(String zip) {
