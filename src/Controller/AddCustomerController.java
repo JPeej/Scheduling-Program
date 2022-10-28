@@ -18,7 +18,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
@@ -37,28 +36,30 @@ public class AddCustomerController implements Initializable {
      * See Nav.toCustomersMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionSaveCustomer(ActionEvent actionEvent) throws IOException, SQLException {
-        int division = customerDAO.getDivId(divCombo.getValue());
-        String country = countryCombo.getValue();
-        String name = nameText.getText();
-        String address = addressText.getText();
-        String zip = zipText.getText();
-        String phone = phoneText.getText();
-        String createBy = JDBC.user;
-        String lastUpdateBy = JDBC.user;
-        Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-        Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-        Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
-                lastUpdateDateTime, lastUpdateBy);
-        int rowsAffected = customerDAO.insert(newCustomer);
-
-        if (rowsAffected > 0) {
-            nav.toCustomersMenu(actionEvent);
-            MyAlerts.alertInfo("New customer saved.");
-        } else {
-            MyAlerts.alertError("New customer did not save.\nCheck values and try again.");
+    public void onActionSaveCustomer(ActionEvent actionEvent){
+        try {
+            int division = customerDAO.getDivId(divCombo.getValue());
+            String name = nameText.getText();
+            String address = addressText.getText();
+            String zip = zipText.getText();
+            String phone = phoneText.getText();
+            String createBy = JDBC.user;
+            String lastUpdateBy = JDBC.user;
+            Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
+            Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
+            Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
+                    lastUpdateDateTime, lastUpdateBy);
+            int rowsAffected = customerDAO.insert(newCustomer);
+            if (rowsAffected > 0) {
+                nav.toCustomersMenu(actionEvent);
+                MyAlerts.alertInfo("New customer saved.");
+            }
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
+                    "Report to IT if problem continues.");
+        } catch (SQLException | NullPointerException e) {
+            MyAlerts.alertError("Please select/enter a value for every field.");
         }
-
     }
 
     /**Event handler to Customer Menu.
@@ -86,41 +87,6 @@ public class AddCustomerController implements Initializable {
                 break;
             default: divCombo.setPromptText("Select country first");
         }
-    }
-
-    public boolean validateValues(int divID, String country, String name, String address, String zip, String phone) {
-        ArrayList<Boolean> validationBooleans = new ArrayList<>();
-        validationBooleans.add(validateDivID(divID));
-        validationBooleans.add(validateCountry(country));
-        validationBooleans.add(validateName(name));
-        validationBooleans.add(validateAddress(address));
-        validationBooleans.add(validateZip(zip));
-        validationBooleans.add(validatePhone(phone));
-        return !validationBooleans.contains(false);
-    }
-
-    public boolean validateDivID(int divID) {
-
-        return true;
-    }
-
-    public boolean validateCountry(String country) {
-        return true;
-    }
-
-    public boolean validateName(String name) {
-        return true;
-    }
-    public boolean validateAddress(String address) {
-        return true;
-    }
-
-    public boolean validateZip(String zip) {
-        return true;
-    }
-
-    public boolean validatePhone(String phone) {
-
     }
 
     /**Called upon screen load.
