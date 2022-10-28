@@ -34,11 +34,6 @@ public class CustomerDAOImp implements CustomerDAO {
         } return -1;
     }
 
-    @Override
-    public ArrayList<Integer> getAllDivIDs() throws SQLException {
-        return null;
-    }
-
     /**CRUD Retrieve.
      * Retrieval of all customers in a sorted manner by ID.
      * @return customerResult ObservableList for viewing. */
@@ -82,7 +77,7 @@ public class CustomerDAOImp implements CustomerDAO {
 
     /**CRUD Create and Update.
      * @param newCustomer object to be inserted.
-     * @return ps.executeUpdate() int. */
+     * @return ps.executeUpdate() int */
     @Override
     public int insert(Object newCustomer) throws SQLException {
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date," +
@@ -101,10 +96,21 @@ public class CustomerDAOImp implements CustomerDAO {
     }
 
     /**CRUD Update.
-     * @param o object to be updated.*/
+     * @param modifiedCustomer object to be updated.
+     * @return ps.executeUpdate() int*/
     @Override
-    public int update(Object o) throws SQLException {
-        return 0;
+    public int update(Object modifiedCustomer) throws SQLException {
+        String sql = "UPDATE client_schedule.customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
+                "Last_Update = ?, Last_Update_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, ((Customer) modifiedCustomer).getName());
+        ps.setString(2, ((Customer) modifiedCustomer).getAddress());
+        ps.setString(3, ((Customer) modifiedCustomer).getZipcode());
+        ps.setString(4, ((Customer) modifiedCustomer).getLastUpdate());
+        ps.setString(5, (((Customer) modifiedCustomer).getLastUpdateBy()));
+        ps.setInt(6, ((Customer) modifiedCustomer).getDivisionID());
+        ps.setInt(7, ((Customer) modifiedCustomer).getCustomerID());
+        return ps.executeUpdate();
     }
 
     /**CRUD Delete.
