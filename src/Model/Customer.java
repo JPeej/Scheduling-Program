@@ -57,8 +57,6 @@ public class Customer {
             this.lastUpdateBy = lastUpdateBy;
     }
 
-
-
     //Value validation is not necessary to this extent for MVP (Software II rubric). Will implement at later time.
     /**Method to call all validation methods.
      * @param divID

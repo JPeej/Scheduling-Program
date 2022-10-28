@@ -3,20 +3,27 @@ package Controller;
 import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
 import Model.Customer;
+import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/**Controller for Customer Menu view. */
+/**Controller for Customer Menu menu. */
 public class CustomerMenuController implements Initializable {
     @FXML private TableView customerTable;
     @FXML private TableColumn idCol;
@@ -29,6 +36,7 @@ public class CustomerMenuController implements Initializable {
     @FXML private TableColumn createByCol;
     @FXML private TableColumn lastUpdateCol;
     @FXML private TableColumn lastUpdateByCol;
+    Stage stage;
     Nav nav = new Nav();
 
     /**Event handler to Customer Menu.
@@ -62,8 +70,23 @@ public class CustomerMenuController implements Initializable {
     /**Event handler to Modify Customer Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionModifyCustomer(ActionEvent actionEvent) throws IOException {
-        nav.navigate(actionEvent, Nav.modifyCustomerLoc, Nav.modifyCustomerTitle);
+    @FXML public void onActionModifyCustomer(ActionEvent actionEvent){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(Nav.modifyCustomerLoc));
+            loader.load();
+            ModifyCustomerController modifyCustomerController = loader.getController();
+            modifyCustomerController.sendCustomer((Customer) customerTable.getSelectionModel().getSelectedItem());
+            stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setTitle(Nav.modifyCustomerTitle);
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT");
+        } catch (NullPointerException e) {
+            MyAlerts.alertError("Please select a customer to modify first.");
+        }
     }
 
     /**Event handler to exit program.
