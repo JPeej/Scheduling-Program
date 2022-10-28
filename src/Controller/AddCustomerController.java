@@ -22,9 +22,11 @@ import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
 
+
     @FXML private ComboBox<String> countryCombo;
     @FXML private ComboBox<String> divCombo;
-    @FXML private TextField nameText;
+    @FXML private TextField firstNameText;
+    @FXML private TextField lastNameText;
     @FXML private TextField zipText;
     @FXML private TextField phoneText;
     @FXML private TextField addressText;
@@ -39,7 +41,7 @@ public class AddCustomerController implements Initializable {
     public void onActionSaveCustomer(ActionEvent actionEvent){
         try {
             int division = customerDAO.getDivId(divCombo.getValue());
-            String name = nameText.getText();
+            String name = firstNameText.getText() + " " + lastNameText.getText();
             String address = addressText.getText();
             String zip = zipText.getText();
             String phone = phoneText.getText();

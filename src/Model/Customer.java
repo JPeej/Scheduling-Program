@@ -1,6 +1,10 @@
 package Model;
 
-import java.sql.Timestamp;
+import DAO.JDBC;
+import Utility.MyAlerts;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**Manages Customer objects within program. */
 public class Customer {
@@ -39,18 +43,122 @@ public class Customer {
         this.country = country;
     }
 
-    /**Constructor for Customer, insertion.*/
+    /**Constructor for Customer, insertion.
+     * Validates values. */
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
-        this.divisionID = divisionID;
-        this.name = name;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.phoneNumber = phoneNumber;
-        this.createDateStamp = createDateStamp;
-        this.createBy = createBy;
-        this.lastUpdateStamp = lastUpdateStamp;
-        this.lastUpdateBy = lastUpdateBy;
+        if (valueValidation(divisionID, name, address, zipcode, phoneNumber)) {
+            this.divisionID = divisionID;
+            this.name = name;
+            this.address = address;
+            this.zipcode = zipcode;
+            this.phoneNumber = phoneNumber;
+            this.createDateStamp = createDateStamp;
+            this.createBy = createBy;
+            this.lastUpdateStamp = lastUpdateStamp;
+            this.lastUpdateBy = lastUpdateBy;
+        }
+    }
+
+    /**Method to call all validation methods.
+     * @param divID
+     * @param name
+     * @param address
+     * @param zip
+     * @param phone */
+    public boolean valueValidation(int divID, String name, String address, String zip, String phone) {
+        ArrayList<Boolean> booleans = new ArrayList<>();
+        booleans.add( validateDivID(divID));
+        booleans.add(validateName(name));
+        booleans.add(validateAddress(address));
+        booleans.add(validateZip(zip));
+        booleans.add(validatePhone(phone));
+        return !booleans.contains(false);
+    }
+
+    /**Validate provided division ID for customer creation.
+     * If no division is selected divID = 0 and no match exists.
+     * Prompts user with error.
+     * @param divID
+     * @return boolean*/
+    public boolean validateDivID(int divID) {
+        try {
+            String sql = "SELECT * FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, divID);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                MyAlerts.alertError("Please select a state / province after selecting a country.");
+                return false;
+            } else return true;
+        } catch (SQLException e) {
+            MyAlerts.alertError("Please select a state / province after selecting a country.");}
+            return false;
+        }
+
+    /**Validate provided name for customer creation.
+     * If first or last name is not provided, default string = "".
+     * Prompts user with error.
+     * @param name  */
+    public boolean validateName(String name){
+        if (name.contains("")) {
+            MyAlerts.alertError("Please enter a first and last name.");
+            return false;
+        } else return true;
+    }
+
+    /**Validate provided address for customer creation.
+     * Check size, address should at least contain building number and street.
+     * Check that building number is provided.
+     * Prompts user with error.
+     * @param address */
+    public boolean validateAddress(String address) {
+        String[] splitAddress = address.split(" ");
+        if (!(Arrays.stream(splitAddress).count() >= 2)) {
+            MyAlerts.alertError("Please format address as one of the following:\n" +
+                                        "U.S. address: 123 ABC Street, White Plains\n" +
+                                        "Canadian address: 123 ABC Street, Newmarket\n" +
+                                        "UK address: 123 ABC Street, Greenwich, London");
+            return false; }
+        String houseNumber = splitAddress[0];
+        for (int i = 0; i < houseNumber.length(); i++) {
+            if (!Character.isDigit(i)) {
+                MyAlerts.alertError("Please enter a building number first in the address field.");
+                return false; }
+        } return true;
+    }
+
+    /**Validate provided zipcode for customer creation.
+     * Checks for spaces.
+     * @param zip*/
+    public boolean validateZip(String zip) {
+        if (zip.contains("")) {
+            MyAlerts.alertError("No spaces allowed in zip code.");
+            return false;
+        } else return true;
+    }
+
+    /**Validate provided phone number for customer creation.
+     * Verifies no spaces.
+     * Verifies separated by '-'.
+     * Verifies digits only.
+     * @param phone*/
+    public boolean validatePhone(String phone) {
+        if (phone.contains(" ")) {
+            MyAlerts.alertError("No spaces allowed in phone number.");
+            return false;
+        }
+        if (!phone.contains("-")) {
+            MyAlerts.alertError("Please separate with '-'.");
+            return false;
+        }
+        String phoneReduced = phone.replaceAll("-", "");
+        for (int i = 0; i < phoneReduced.length(); i++) {
+            if (!Character.isDigit(i)) {
+                MyAlerts.alertError("Only digits in phone number.");
+                return false;
+            }
+        } return true;
     }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
