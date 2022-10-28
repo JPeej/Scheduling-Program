@@ -74,7 +74,7 @@ public class AddCustomerController implements Initializable {
 
     /**Switch method for division combo.
      * Reacts to country selection. */
-    public void onActionCountryCombo(ActionEvent actionEvent) {
+    public void onActionCountryCombo() {
         String countrySelection = countryCombo.getValue();
         switch(countrySelection) {
             case "U.S":

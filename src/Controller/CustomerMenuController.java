@@ -68,7 +68,7 @@ public class CustomerMenuController implements Initializable {
     }
 
     /**Event handler to Modify Customer Menu.
-     * See Nav.navigate.
+     * Passes data from selected customer on Customer menu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML public void onActionModifyCustomer(ActionEvent actionEvent){
         try {
