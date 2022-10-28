@@ -97,18 +97,21 @@ public class Customer {
         }
 
     /**Validate provided name for customer creation.
-     * If first or last name is not provided, default string = "".
+     * Split string argument and check size. .
      * Prompts user with error.
      * @param name  */
+    //TODO not working upon first test
+    //TODO waiting upon instructor response for correct implementation of customer name
     public boolean validateName(String name){
-        if (name.contains("")) {
+        String[] nameSplit = name.split(" ");
+        if (Arrays.stream(nameSplit).count() < 2) {
             MyAlerts.alertError("Please enter a first and last name.");
             return false;
         } else return true;
     }
 
     /**Validate provided address for customer creation.
-     * Check size, address should at least contain building number and street.
+     * Check size, address should at least contain building number and street as is found in pre-populated database.
      * Check that building number is provided.
      * Prompts user with error.
      * @param address */
@@ -122,7 +125,8 @@ public class Customer {
             return false; }
         String houseNumber = splitAddress[0];
         for (int i = 0; i < houseNumber.length(); i++) {
-            if (!Character.isDigit(i)) {
+            Character testChar = houseNumber.charAt(i);
+            if (!Character.isDigit(testChar)) {
                 MyAlerts.alertError("Please enter a building number first in the address field.");
                 return false; }
         } return true;
@@ -132,7 +136,7 @@ public class Customer {
      * Checks for spaces.
      * @param zip*/
     public boolean validateZip(String zip) {
-        if (zip.contains("")) {
+        if (zip.contains(" ")) {
             MyAlerts.alertError("No spaces allowed in zip code.");
             return false;
         } else return true;
