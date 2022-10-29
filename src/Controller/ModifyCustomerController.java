@@ -94,6 +94,13 @@ public class ModifyCustomerController implements Initializable {
         }
     }
 
+    /**Check if any fields were left blank by user.
+     * @param name
+     * @param address
+     * @param zip
+     * @param phone
+     * @param div
+     * @return boolean*/
     public boolean checkBlanks(String name, String address, String zip, String phone, int div) {
         if(name.isBlank() | address.isBlank() | zip.isBlank() | phone.isBlank() | String.valueOf(div).isBlank()){
             return false;

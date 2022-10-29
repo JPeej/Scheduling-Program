@@ -46,15 +46,17 @@ public class AddCustomerController implements Initializable {
             String phone = phoneText.getText();
             String createBy = JDBC.user;
             String lastUpdateBy = JDBC.user;
-            Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-            Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-            Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
-                    lastUpdateDateTime, lastUpdateBy);
-            int rowsAffected = customerDAO.insert(newCustomer);
-            if (rowsAffected > 0) {
-                nav.toCustomersMenu(actionEvent);
-                MyAlerts.alertInfo("New customer saved.");
-            }
+            if (checkBlanks(name, address, zip, phone, division)) {
+                Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
+                Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
+                Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
+                        lastUpdateDateTime, lastUpdateBy);
+                int rowsAffected = customerDAO.insert(newCustomer);
+                if (rowsAffected > 0) {
+                    nav.toCustomersMenu(actionEvent);
+                    MyAlerts.alertInfo("New customer saved.");
+                }
+            } else MyAlerts.alertError("Please fill all fields and choices.");
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
                     "Report to IT if problem continues.");
@@ -88,6 +90,19 @@ public class AddCustomerController implements Initializable {
                 break;
             default: divCombo.setPromptText("Select country first");
         }
+    }
+
+    /**Check if any fields were left blank by user.
+     * @param name
+     * @param address
+     * @param zip
+     * @param phone
+     * @param div
+     * @return boolean*/
+    public boolean checkBlanks(String name, String address, String zip, String phone, int div) {
+        if(name.isBlank() | address.isBlank() | zip.isBlank() | phone.isBlank() | String.valueOf(div).isBlank()){
+            return false;
+        } else return true;
     }
 
     /**Called upon screen load.
