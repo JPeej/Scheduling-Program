@@ -57,6 +57,20 @@ public class Customer {
             this.lastUpdateBy = lastUpdateBy;
     }
 
+    /**Constructor for Customer, update.*/
+    public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
+                    String lastUpdateBy, Timestamp lastUpdateStamp) {
+        this.customerID = customerID;
+        this.divisionID = divisionID;
+        this.name = name;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+        this.lastUpdateBy = lastUpdateBy;
+        this.lastUpdateStamp = lastUpdateStamp;
+    }
+
+
     //Value validation is not necessary to this extent for MVP (Software II rubric). Will implement at later time.
     /**Method to call all validation methods.
      * @param divID

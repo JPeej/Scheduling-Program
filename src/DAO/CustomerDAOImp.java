@@ -101,15 +101,16 @@ public class CustomerDAOImp implements CustomerDAO {
     @Override
     public int update(Object modifiedCustomer) throws SQLException {
         String sql = "UPDATE client_schedule.customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
-                "Last_Update = ?, Last_Update_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+                "Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, ((Customer) modifiedCustomer).getName());
         ps.setString(2, ((Customer) modifiedCustomer).getAddress());
         ps.setString(3, ((Customer) modifiedCustomer).getZipcode());
-        ps.setString(4, ((Customer) modifiedCustomer).getLastUpdate());
-        ps.setString(5, (((Customer) modifiedCustomer).getLastUpdateBy()));
-        ps.setInt(6, ((Customer) modifiedCustomer).getDivisionID());
-        ps.setInt(7, ((Customer) modifiedCustomer).getCustomerID());
+        ps.setString(4, ((Customer) modifiedCustomer).getPhoneNumber());
+        ps.setTimestamp(5, ((Customer) modifiedCustomer).getLastUpdateStamp());
+        ps.setString(6, (((Customer) modifiedCustomer).getLastUpdateBy()));
+        ps.setInt(7, ((Customer) modifiedCustomer).getDivisionID());
+        ps.setInt(8, ((Customer) modifiedCustomer).getCustomerID());
         return ps.executeUpdate();
     }
 
