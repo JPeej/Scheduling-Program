@@ -2,8 +2,9 @@ package Controller;
 
 import DAO.AppointmentDAO;
 import DAO.AppointmentDAOImp;
+import DAO.JDBC;
 import Model.Appointment;
-import Utility.DateTimeConverter;
+import Utility.DateAndTimeHandler;
 import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
 
@@ -38,7 +40,19 @@ public class AddApptController implements Initializable {
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
     public void onActionSaveAppt(ActionEvent actionEvent) throws IOException {
-
+        String title = titleText.getText();
+        String description = descriptText.getText();
+        String location = locText.getText();
+        int customerID = appointmentDAO.cusNameToID(customerSel.toString());
+        int contactID = appointmentDAO.conNameToID(contactSel.toString());
+        String type = typeSel.toString();
+        Timestamp apptStart =
+                DateAndTimeHandler.toTimestamp(startDate.getValue(), (LocalTime) startTime.getValue());
+        Timestamp apptEnd =
+                DateAndTimeHandler.toTimestamp(endDate.getValue(), (LocalTime) endTime.getValue());
+        int user = JDBC.userID;
+        Appointment newAppoint = new Appointment(title, description, type, location, apptStart, apptEnd, contactID,
+                customerID, user);
         nav.toAppointmentsMenu(actionEvent);
     }
 
@@ -64,7 +78,7 @@ public class AddApptController implements Initializable {
         customerSel.setItems(appointmentDAO.getCustomerNames());
         contactSel.setItems(appointmentDAO.getContactNames());
         typeSel.setItems(Appointment.types);
-        DateTimeConverter.appointmentTimes(LocalTime.of(8,00));
+        DateAndTimeHandler.appointmentTimes();
         startTime.setItems(Appointment.times);
         endTime.setItems(Appointment.times);
     }

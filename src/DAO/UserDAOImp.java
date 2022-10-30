@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.User;
+import Utility.MyAlerts;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ public class UserDAOImp implements UserDAO{
      * @return User if found and null if not.
      * */
     @Override
-    public User get(String userNameLogin, String passwordLogin) throws SQLException {
+    public User authenticateUser(String userNameLogin, String passwordLogin) throws SQLException {
         String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, userNameLogin);
@@ -31,6 +32,21 @@ public class UserDAOImp implements UserDAO{
         } else {
             return null;
         }
+    }
+
+    @Override
+    public int getUserID(String userName) {
+        try {
+            String sql = "SELECT User_ID FROM client_schedule.users WHERE ? = User_Name";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("User_ID");
+            } else return -1;
+        } catch (SQLException e) {
+            MyAlerts.alertError("User not found.");
+        } return -1;
     }
 
     //Overridden but null CRUD methods----------------------------------------------------------------------------------

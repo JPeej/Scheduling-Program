@@ -1,7 +1,7 @@
 package DAO;
 
 import Model.Customer;
-import Utility.DateTimeConverter;
+import Utility.DateAndTimeHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
@@ -60,9 +60,9 @@ public class CustomerDAOImp implements CustomerDAO {
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            String zonedCreateDate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Create_Date"));
+            String zonedCreateDate = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Create_Date"));
             String createBy = rs.getString("Created_By");
-            String zonedLastUpdate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Last_Update"));
+            String zonedLastUpdate = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Last_Update"));
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");

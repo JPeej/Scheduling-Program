@@ -8,7 +8,7 @@ public interface AppointmentDAO extends DAO {
 
     public ObservableList<String> getContactNames();
 
-    public int cusNameToID();
+    public int cusNameToID(String customerName);
 
-    public int conNameToID();
+    public int conNameToID(String contactName);
 }

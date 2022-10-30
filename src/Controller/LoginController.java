@@ -29,6 +29,7 @@ public class LoginController implements Initializable {
     @FXML private TextField userNameLogin;
     @FXML private PasswordField passwordLogin;
     Nav nav = new Nav();
+    UserDAO userDAO = new UserDAOImp();
 
     /**Event handler for login submit button.
      * Challenges credentials provided to those on database.
@@ -42,6 +43,7 @@ public class LoginController implements Initializable {
         if (loginUser != null) {
             logActivity("Success");
             JDBC.user = getUserNameLogin();
+            JDBC.userID = userDAO.getUserID(JDBC.user);
             nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
         } else {
             logActivity("Fail");
@@ -72,7 +74,7 @@ public class LoginController implements Initializable {
         UserDAO userDAO = new UserDAOImp();
         String userNameLogin = getUserNameLogin();
         String passwordLogin = getPasswordLogin();
-        return userDAO.get(userNameLogin, passwordLogin);
+        return userDAO.authenticateUser(userNameLogin, passwordLogin);
     }
 
     /**Logs any login attempt to login_activity.txt.

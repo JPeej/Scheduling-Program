@@ -4,7 +4,7 @@ import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
 import DAO.JDBC;
 import Model.Customer;
-import Utility.DateTimeConverter;
+import Utility.DateAndTimeHandler;
 import Utility.Locations;
 import Utility.MyAlerts;
 import Utility.Nav;
@@ -47,8 +47,8 @@ public class AddCustomerController implements Initializable {
             String createBy = JDBC.user;
             String lastUpdateBy = JDBC.user;
             if (checkBlanks(name, address, zip, phone, division)) {
-                Timestamp createDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
-                Timestamp lastUpdateDateTime = DateTimeConverter.dateTimeToDB(ZonedDateTime.now().toString());
+                Timestamp createDateTime = DateAndTimeHandler.dateTimeToDB(ZonedDateTime.now().toString());
+                Timestamp lastUpdateDateTime = DateAndTimeHandler.dateTimeToDB(ZonedDateTime.now().toString());
                 Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
                         lastUpdateDateTime, lastUpdateBy);
                 int rowsAffected = customerDAO.insert(newCustomer);

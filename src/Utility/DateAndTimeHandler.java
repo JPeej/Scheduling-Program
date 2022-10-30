@@ -2,12 +2,13 @@ package Utility;
 
 import Model.Appointment;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**Handles time zone conversion for database to and or from client exchange.*/
-public class DateTimeConverter {
+public class DateAndTimeHandler {
 
     private static final String dateTimeClientFormat = "yyyy-MM-dd HH:mm:ss.SSS";
     private static final ZoneId userZone = ZoneOffset.systemDefault();
@@ -38,8 +39,8 @@ public class DateTimeConverter {
         return dbTimestamp;
     }
 
-    public static void appointmentTimes(LocalTime inputTime) {
-        LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), inputTime)
+    public static void appointmentTimes() {
+        LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,00))
                 .atZone(ZoneId.of("SystemV/EST5"))
                 .withZoneSameInstant(ZoneId.systemDefault())
                 .toLocalTime();
@@ -51,6 +52,11 @@ public class DateTimeConverter {
             Appointment.times.add(zonedStart);
             zonedStart = zonedStart.plusMinutes(30);
         } Appointment.times.add(zonedEnd);
+    }
+
+    public static Timestamp toTimestamp(LocalDate date, LocalTime time) {
+        LocalDateTime ldt = LocalDateTime.of(date, time);
+        return Timestamp.valueOf(ldt);
     }
 
     /**Formats String of a Customer's datetime.

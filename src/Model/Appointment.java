@@ -36,11 +36,26 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
     }
+    /**Constructor for Appointment class, insertion. */
+    public Appointment(String title, String description, String type, String location, Timestamp startStamp,
+                       Timestamp endStamp, int contactID, int customerID, int userID) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.location = location;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
+        this.contactID = contactID;
+        this.customerID = customerID;
+        this.userID = userID;
+    }
 
     public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
             "De-Briefing", "Status Update", "Change Request", "Risk Reaction", "Other");
 
     public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
+
+
 
 
     //Getters & Setters ------------------------------------------------------------------------------------------------

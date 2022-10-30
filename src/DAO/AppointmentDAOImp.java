@@ -1,7 +1,7 @@
 package DAO;
 
 import Model.Appointment;
-import Utility.DateTimeConverter;
+import Utility.DateAndTimeHandler;
 import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Comparator;
-import java.util.Locale;
 
 public class AppointmentDAOImp implements AppointmentDAO{
 
@@ -47,8 +46,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            String start = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Start"));
-            String end = DateTimeConverter.dateTimeToClient(rs.getTimestamp("End"));
+            String start = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Start"));
+            String end = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("End"));
             int cusID = rs.getInt("Customer_ID");
             int userID = rs.getInt("User_ID");
             Appointment newAppoint = new Appointment(appID, title, description, type, location, contact, start, end,
@@ -122,12 +121,32 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     @Override
-    public int cusNameToID() {
-        return 0;
+    public int cusNameToID(String customerName) {
+        try {
+            String sql = "SELECT Customer_ID FROM client_schedule.customers WHERE ? = Customer_Name";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, customerName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Customer_ID");
+            } else return -1;
+        } catch (SQLException e) {
+            MyAlerts.alertError("Customer not found in database.");
+        } return -1;
     }
 
     @Override
-    public int conNameToID() {
-        return 0;
+    public int conNameToID(String contactName) {
+        try {
+            String sql = "SELECT Contact_ID FROM client_schedule.contacts WHERE ? = Contact_Name";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, contactName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Contact_ID");
+            } else return -1;
+        } catch (SQLException e) {
+            MyAlerts.alertError("Contact not found in database.");
+        } return -1;
     }
 }
