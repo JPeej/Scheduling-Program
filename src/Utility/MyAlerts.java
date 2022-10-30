@@ -12,4 +12,9 @@ public class MyAlerts {
         Alert alert = new Alert(Alert.AlertType.ERROR, prompt);
         alert.showAndWait();
     }
+
+    public static void alertInfo(String prompt) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, prompt);
+        alert.showAndWait();
+    }
 }

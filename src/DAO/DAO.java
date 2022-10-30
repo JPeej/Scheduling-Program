@@ -1,7 +1,7 @@
 package DAO;
 
+import javafx.collections.ObservableList;
 import java.sql.SQLException;
-import java.util.List;
 
 /**Interface for CRUD. */
 public interface DAO<T> {
@@ -13,11 +13,7 @@ public interface DAO<T> {
 
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */
-    List<T> getAll() throws SQLException;
-
-    /**CRUD Create.
-     * @param t object to be created. */
-    int save(T t) throws SQLException;
+    ObservableList<T> getAll() throws SQLException;
 
     /**CRUD Create and Update.
      * @param t object to be inserted. */

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenuController">
+<AnchorPane prefHeight="600.0" prefWidth="1325.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenuController">
    <children>
-      <TableView layoutX="25.0" layoutY="65.0" prefHeight="466.0" prefWidth="950.0">
+      <TableView fx:id="customerTable" layoutX="25.0" layoutY="65.0" prefHeight="466.0" prefWidth="1275.0">
         <columns>
-          <TableColumn maxWidth="50.0" prefWidth="50.0" text="ID" />
-          <TableColumn prefWidth="100.0" text="Name" />
-            <TableColumn prefWidth="125.0" text="Address" />
-            <TableColumn prefWidth="75.0" text="Zipcode" />
-            <TableColumn prefWidth="100.0" text="State / Province" />
-            <TableColumn prefWidth="100.0" text="Phone" />
-            <TableColumn prefWidth="100.0" text="Created Date" />
-            <TableColumn minWidth="4.20001220703125" prefWidth="100.0" text="Created By" />
-            <TableColumn prefWidth="100.0" text="Last Update" />
-            <TableColumn prefWidth="100.0" text="Last Update By" />
+          <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="25.0" text="ID" />
+          <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name" />
+            <TableColumn fx:id="addressCol" prefWidth="150.0" text="Address" />
+            <TableColumn fx:id="zipCol" prefWidth="75.0" text="Zipcode" />
+            <TableColumn fx:id="divCol" prefWidth="100.0" text="State / Province" />
+            <TableColumn fx:id="phoneCol" prefWidth="100.0" text="Phone" />
+            <TableColumn fx:id="createDateCol" prefWidth="250.0" text="Created Date" />
+            <TableColumn fx:id="createByCol" minWidth="4.20001220703125" prefWidth="100.0" text="Created By" />
+            <TableColumn fx:id="lastUpdateCol" prefWidth="250.0" text="Last Update" />
+            <TableColumn fx:id="lastUpdateByCol" prefWidth="100.0" text="Last Update By" />
         </columns>
       </TableView>
       <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />
       <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
       <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-      <Label layoutX="616.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data" textAlignment="CENTER" underline="true">
+      <Label layoutX="769.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data" textAlignment="CENTER" underline="true">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,6 +34,6 @@
       <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAddCustomer" prefWidth="75.0" text="Add" />
       <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModifyCustomer" prefWidth="75.0" text="Modify" />
       <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Delete" />
-      <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
+      <Button layoutX="1224.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
    </children>
 </AnchorPane>
