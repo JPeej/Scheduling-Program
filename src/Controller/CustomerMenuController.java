@@ -96,6 +96,8 @@ public class CustomerMenuController implements Initializable {
         System.exit(0);
     }
 
+    public void test() {}
+
     /**Called upon screen load.
      * Loads TableView with all Customer data.   */
     @Override
@@ -114,8 +116,8 @@ public class CustomerMenuController implements Initializable {
             lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
             lastUpdateByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdateBy"));
             divCol.setCellValueFactory(new PropertyValueFactory<>("division"));
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
+        } catch (SQLException e) {
+            MyAlerts.alertError("Customer data failed to load, contact IT. ");
         }
     }
 }

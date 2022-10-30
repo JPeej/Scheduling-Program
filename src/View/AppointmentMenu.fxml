@@ -6,18 +6,18 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ApptMenuController">
     <children>
-        <TableView layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
+        <TableView fx:id="appointTable" layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
             <columns>
-                <TableColumn maxWidth="50.0" prefWidth="50.0" text="ID" />
-                <TableColumn prefWidth="112.0" text="Title" />
-                <TableColumn prefWidth="125.0" text="Description" />
-                <TableColumn prefWidth="100.0" text="Location" />
-                <TableColumn prefWidth="100.0" text="Contact" />
-                <TableColumn prefWidth="100.0" text="Type" />
-                <TableColumn prefWidth="115.0" text="Start Date &amp; Time" />
-                <TableColumn minWidth="4.20001220703125" prefWidth="115.0" text="End Date &amp; Time" />
-                <TableColumn text="Customer ID" />
-                <TableColumn prefWidth="50.0" text="User ID" />
+                <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="26.0" text="ID" />
+                <TableColumn fx:id="titleCol" prefWidth="136.0" text="Title" />
+                <TableColumn fx:id="descriptCol" prefWidth="125.0" text="Description" />
+                <TableColumn fx:id="locCol" prefWidth="100.0" text="Location" />
+                <TableColumn fx:id="contactCol" prefWidth="100.0" text="Contact" />
+                <TableColumn fx:id="typeCol" prefWidth="100.0" text="Type" />
+                <TableColumn fx:id="startCol" prefWidth="115.0" text="Start Date &amp; Time" />
+                <TableColumn fx:id="endCol" minWidth="4.20001220703125" prefWidth="115.0" text="End Date &amp; Time" />
+                <TableColumn fx:id="cusIDCol" text="Customer ID" />
+                <TableColumn fx:id="userIDCol" prefWidth="50.0" text="User ID" />
             </columns>
         </TableView>
         <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomerMenu" text="Customers Menu" />
