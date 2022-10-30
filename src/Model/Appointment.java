@@ -2,6 +2,8 @@ package Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalTime;
 
@@ -18,6 +20,10 @@ public class Appointment {
     private String end;
     private Timestamp startStamp;
     private Timestamp endStamp;
+    private Timestamp createdDate;
+    private Timestamp updateDate;
+    private String createBy;
+    private String updateBy;
     private int contactID;
     private int customerID;
     private int userID;
@@ -36,15 +42,22 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
     }
+
     /**Constructor for Appointment class, insertion. */
-    public Appointment(String title, String description, String type, String location, Timestamp startStamp,
-                       Timestamp endStamp, int contactID, int customerID, int userID) {
+    public Appointment(String title, String description, String type, String location, String contact,
+                       Timestamp startStamp, Timestamp endStamp, Timestamp createdDate, Timestamp updateDate,
+                       String createBy, String updateBy, int contactID, int customerID, int userID) {
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
+        this.contact = contact;
         this.startStamp = startStamp;
         this.endStamp = endStamp;
+        this.createdDate = createdDate;
+        this.updateDate = updateDate;
+        this.createBy = createBy;
+        this.updateBy = updateBy;
         this.contactID = contactID;
         this.customerID = customerID;
         this.userID = userID;
@@ -209,9 +222,59 @@ public class Appointment {
         return contactID;
     }
 
+    /**Set appointment contactID.
+     * @param contactID int. */
     /**Set appointment contact Id.
      * @param contactID int. */
     public void setContactID(int contactID) {
         this.contactID = contactID;
+    }
+
+    /**Get appointment createDate.
+     * @return this.createDate */
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    /**Set appointment createDate.
+     * @param createdDate Timestamp. */
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**Get appointment updateDate.
+     * @return this.updateDate. */
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    /**Set appointment updateDate.
+     * @param updateDate Timestamp. */
+    public void setUpdateDate(Timestamp updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    /**Get appointment createBy.
+     * @return this.createBy. */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**Set appointment createBy.
+     * @param createBy String. */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**Get appointment updateBy.
+     * @return this.updateBy. */
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    /**Set appointment updateBy.
+     * @param updateBy String. */
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

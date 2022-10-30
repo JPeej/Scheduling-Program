@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
+/**Controller for Add Customer menu. */
 public class AddCustomerController implements Initializable {
 
 

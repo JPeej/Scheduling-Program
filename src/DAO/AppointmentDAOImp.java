@@ -25,6 +25,7 @@ public class AppointmentDAOImp implements AppointmentDAO{
     /**
      * CRUD Retrieve.
      * Retrieval of all objects of one object type.
+     * @return appointmentResult ObservableList of Appointment data
      */
     @Override
     public ObservableList<Appointment> getAll() throws SQLException {
@@ -61,11 +62,28 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
     /**
      * CRUD Create and Update.
-     * @param o object to be inserted.
+     * @param newAppoint object to be inserted.
      */
     @Override
-    public int insert(Object o) throws SQLException {
-        return 0;
+    public int insert(Object newAppoint) throws SQLException {
+        String sql = "INSERT INTO client_schedule.appointments (Title, Description, Location, Type, Start, End, " +
+                "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES " +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, ((Appointment) newAppoint).getTitle());
+        ps.setString(2, ((Appointment) newAppoint).getDescription());
+        ps.setString(3, ((Appointment) newAppoint).getLocation());
+        ps.setString(4, ((Appointment) newAppoint).getType());
+        ps.setTimestamp(5, ((Appointment) newAppoint).getStartStamp());
+        ps.setTimestamp(6, ((Appointment) newAppoint).getEndStamp());
+        ps.setTimestamp(7, ((Appointment) newAppoint).getCreatedDate());
+        ps.setString(8, ((Appointment) newAppoint).getCreateBy());
+        ps.setTimestamp(9, ((Appointment) newAppoint).getUpdateDate());
+        ps.setString(10, ((Appointment) newAppoint).getUpdateBy());
+        ps.setInt(11, ((Appointment) newAppoint).getCustomerID());
+        ps.setInt(12, ((Appointment) newAppoint).getUserID());
+        ps.setInt(13, ((Appointment) newAppoint).getContactID());
+        return ps.executeUpdate();
     }
 
     /**

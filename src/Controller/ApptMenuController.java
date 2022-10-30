@@ -12,12 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**Controller for Appointment menu. */
 public class ApptMenuController implements Initializable {
 
     @FXML private TableView appointTable;
@@ -81,6 +81,8 @@ public class ApptMenuController implements Initializable {
         System.exit(0);
     }
 
+    /**Initial method called upon screen load.
+     * Populates table view with appointment data. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentDAO appointmentDAO = new AppointmentDAOImp();

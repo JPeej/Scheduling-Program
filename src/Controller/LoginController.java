@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.util.*;
 
-/**Controller for Login view. */
+/**Controller for Login menu. */
 public class LoginController implements Initializable {
 
     @FXML private Label location;

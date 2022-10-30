@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.io.IOException;
 
+/**Controller for Modify Appointment menu. */
 public class ModifyApptController {
 
     Nav nav = new Nav();
