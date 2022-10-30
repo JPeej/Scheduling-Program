@@ -1,10 +1,9 @@
 package Utility;
 
+import Model.Appointment;
+
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**Handles time zone conversion for database to and or from client exchange.*/
@@ -37,6 +36,21 @@ public class DateTimeConverter {
         ZonedDateTime dateTimeDB = zdt.withZoneSameInstant(utcZone);
         Timestamp dbTimestamp = Timestamp.valueOf(dateTimeDB.toLocalDateTime());
         return dbTimestamp;
+    }
+
+    public static void appointmentTimes(LocalTime inputTime) {
+        LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), inputTime)
+                .atZone(ZoneId.of("SystemV/EST5"))
+                .withZoneSameInstant(ZoneId.systemDefault())
+                .toLocalTime();
+        LocalTime zonedEnd = LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 00))
+                .atZone(ZoneId.of("SystemV/EST5"))
+                .withZoneSameInstant(ZoneId.systemDefault())
+                .toLocalTime();
+        while (zonedStart.isBefore(zonedEnd)) {
+            Appointment.times.add(zonedStart);
+            zonedStart = zonedStart.plusMinutes(30);
+        } Appointment.times.add(zonedEnd);
     }
 
     /**Formats String of a Customer's datetime.

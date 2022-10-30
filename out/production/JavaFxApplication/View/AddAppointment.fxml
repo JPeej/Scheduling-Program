@@ -6,28 +6,28 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddApptController">
     <children>
+        <TextField fx:id="titleText" layoutX="102.0" layoutY="110.0" />
+        <TextField fx:id="descriptText" layoutX="102.0" layoutY="150.0" />
+        <TextField fx:id="locText" layoutX="102.0" layoutY="190.0" />
+      <ComboBox fx:id="customerSel" layoutX="40.0" layoutY="230.0" prefHeight="26.0" prefWidth="210.0" promptText="Customer" />
+        <ComboBox fx:id="contactSel" layoutX="40.0" layoutY="270.0" prefHeight="26.0" prefWidth="210.0" promptText="Contact" />
+        <ComboBox fx:id="typeSel" layoutX="40.0" layoutY="310.0" prefHeight="26.0" prefWidth="209.0" promptText="Type" />
+      <DatePicker fx:id="startDate" layoutX="392.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
+      <DatePicker fx:id="endDate" layoutX="392.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
+      <ComboBox fx:id="startTime" layoutX="390.0" layoutY="190.0" prefWidth="150.0" />
+      <ComboBox fx:id="endTime" layoutX="390.0" layoutY="230.0" onAction="#onActionEndCombo" prefWidth="150.0" />
         <Label layoutX="40.0" layoutY="114.0" text="Title" />
+        <Label layoutX="40.0" layoutY="154.0" text="Description" />
         <Label layoutX="40.0" layoutY="194.0" text="Location" />
         <Label layoutX="330.0" layoutY="114.0" text="Start Date" />
-        <Label layoutX="40.0" layoutY="154.0" text="Description" />
-        <ComboBox layoutX="40.0" layoutY="270.0" prefHeight="26.0" prefWidth="210.0" promptText="Contact" />
-        <ComboBox layoutX="40.0" layoutY="310.0" prefHeight="26.0" prefWidth="209.0" promptText="Type" />
         <Button layoutX="375.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionSaveAppt" prefWidth="75.0" text="Save" />
         <Button layoutX="466.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="75.0" text="Cancel" />
         <Label layoutX="167.0" layoutY="37.0" text="Add New Appointment" underline="true">
             <font>
                 <Font size="24.0" />
             </font></Label>
-        <TextField layoutX="102.0" layoutY="110.0" />
-        <TextField layoutX="102.0" layoutY="150.0" />
-        <TextField layoutX="102.0" layoutY="190.0" />
-      <DatePicker layoutX="392.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
       <Label layoutX="330.0" layoutY="154.0" text="End Date" />
-      <DatePicker layoutX="392.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
       <Label layoutX="330.0" layoutY="194.0" text="Start Time" />
       <Label layoutX="330.0" layoutY="234.0" text="End time" />
-      <ComboBox layoutX="390.0" layoutY="190.0" prefWidth="150.0" />
-      <ComboBox layoutX="390.0" layoutY="230.0" prefWidth="150.0" />
-      <ComboBox layoutX="40.0" layoutY="230.0" prefHeight="26.0" prefWidth="210.0" promptText="Customer" />
     </children>
 </AnchorPane>

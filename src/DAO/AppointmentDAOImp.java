@@ -2,13 +2,14 @@ package DAO;
 
 import Model.Appointment;
 import Utility.DateTimeConverter;
+import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class AppointmentDAOImp implements AppointmentDAO{
 
@@ -83,6 +84,50 @@ public class AppointmentDAOImp implements AppointmentDAO{
      */
     @Override
     public int delete(Object o) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public ObservableList<String> getCustomerNames() {
+        ObservableList<String> names = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT Customer_Name FROM client_schedule.customers";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("Customer_Name");
+                names.add(name);
+            }
+        } catch (SQLException e) {
+            MyAlerts.alertError("Customer data failed to load.");
+        }
+        return names;
+    }
+
+    @Override
+    public ObservableList<String> getContactNames() {
+        ObservableList<String> names = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT Contact_Name FROM client_schedule.contacts";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("Contact_Name");
+                names.add(name);
+            }
+        } catch (SQLException e) {
+            MyAlerts.alertError("Contact data failed to load.");
+        }
+        return names;
+    }
+
+    @Override
+    public int cusNameToID() {
+        return 0;
+    }
+
+    @Override
+    public int conNameToID() {
         return 0;
     }
 }

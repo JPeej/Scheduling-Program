@@ -1,6 +1,9 @@
 package Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
 /**Manages Appointment objects within program. */
 public class Appointment {
@@ -33,6 +36,11 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
     }
+
+    public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
+            "De-Briefing", "Status Update", "Change Request", "Risk Reaction", "Other");
+
+    public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
 
 
     //Getters & Setters ------------------------------------------------------------------------------------------------

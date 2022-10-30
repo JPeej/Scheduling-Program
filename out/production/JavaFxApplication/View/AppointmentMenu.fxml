@@ -8,8 +8,8 @@
     <children>
         <TableView fx:id="appointTable" layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
             <columns>
-                <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="titleCol" prefWidth="112.0" text="Title" />
+                <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="26.0" text="ID" />
+                <TableColumn fx:id="titleCol" prefWidth="136.0" text="Title" />
                 <TableColumn fx:id="descriptCol" prefWidth="125.0" text="Description" />
                 <TableColumn fx:id="locCol" prefWidth="100.0" text="Location" />
                 <TableColumn fx:id="contactCol" prefWidth="100.0" text="Contact" />
