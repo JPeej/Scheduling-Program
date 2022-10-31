@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -66,6 +65,7 @@ public class AppointmentDAOImp implements AppointmentDAO{
     /**
      * CRUD Create and Update.
      * @param newAppoint object to be inserted.
+     * @return int number of rows affected
      */
     @Override
     public int insert(Object newAppoint) throws SQLException {
@@ -107,6 +107,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return 0;
     }
 
+    /**CRUD retrieval of customer names.
+     * @return ObservableList of String for combo box population. */
     @Override
     public ObservableList<String> getCustomerNames() {
         ObservableList<String> names = FXCollections.observableArrayList();
@@ -124,6 +126,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return names;
     }
 
+    /**CRUD retrieval of contact names.
+     * @return ObservableList of String for combo box population. */
     @Override
     public ObservableList<String> getContactNames() {
         ObservableList<String> names = FXCollections.observableArrayList();
@@ -141,6 +145,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return names;
     }
 
+    /**CRUD retrieval of customer appointments.
+     * @return Hashmap of Timestamps for comparison. */
     @Override
     public HashMap<Timestamp, Timestamp> getAppointments(int customerID) {
         HashMap<Timestamp , Timestamp > appointments = new HashMap<>();
@@ -161,6 +167,9 @@ public class AppointmentDAOImp implements AppointmentDAO{
         } return appointments;
     }
 
+    /**CRUD retrieval of customer ID for customer.
+     * @param customerName
+     * @return customer ID if found */
     @Override
     public int cusNameToID(String customerName) {
         try {
@@ -176,6 +185,9 @@ public class AppointmentDAOImp implements AppointmentDAO{
         } return -1;
     }
 
+    /**CRUD retrieval of contact ID for contact.
+     * @param contactName
+     * @return contact ID if found */
     @Override
     public int conNameToID(String contactName) {
         try {

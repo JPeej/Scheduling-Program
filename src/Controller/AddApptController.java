@@ -91,9 +91,14 @@ public class AddApptController implements Initializable {
         nav.toAppointmentsMenu(actionEvent);
     }
 
-    public void onActionEndCombo(ActionEvent actionEvent) {
-    }
-
+    /**Verify appointment start and stop are linear and do not overlap.
+     * Checks for start to come before end.
+     * Checks for start to come after now.
+     * Checks all of the customers appointments for overlap.
+     * @param startRequest
+     * @param endRequest
+     * @param customerID
+     * @return boolean */
     public boolean checkDates(Timestamp startRequest, Timestamp endRequest, int customerID) {
         if (startRequest.after(endRequest) | startRequest.equals(endRequest)) {
             MyAlerts.alertError("Please be sure appointment start date/time is before end date/time.");
@@ -124,6 +129,13 @@ public class AddApptController implements Initializable {
         } return true;
     }
 
+    /**Verifies users submitted data into all fields.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param cusID
+     * @param contact */
     public boolean checkBlanks(String title, String description, String location, String type, int cusID,
                                String contact) {
         return !(title.isBlank() | description.isBlank() | location.isBlank() | type.isBlank() |

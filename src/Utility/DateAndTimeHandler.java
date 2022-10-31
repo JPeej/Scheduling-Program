@@ -18,22 +18,23 @@ public class DateAndTimeHandler {
         ZonedDateTime dbZonedDateTime = ZonedDateTime.of(dbLocalDateTime, utcZone);
         ZonedDateTime clientZonedDatetime = dbZonedDateTime.withZoneSameInstant(userZone);
         LocalDateTime clientLocalDateTime = clientZonedDatetime.toLocalDateTime();
-        Timestamp clientTimestamp = Timestamp.valueOf(clientLocalDateTime);
-        return clientTimestamp;
+        return Timestamp.valueOf(clientLocalDateTime);
     }
 
     /**Converts time from to user's system default to UTC.
-     * @param  clientTimestamp String from Customer object.
-     * @return dbTimestamp Timestamp for database date columns. */
+     * @param  clientTimestamp Timestamp from object.
+     * @return dbTimestamp adjusted for database UTC */
     public static Timestamp timestampToDB(Timestamp clientTimestamp) {
         LocalDateTime clientLocalDateTime = clientTimestamp.toLocalDateTime();
         ZonedDateTime clientZonedDateTime = ZonedDateTime.of(clientLocalDateTime, userZone);
         ZonedDateTime dbZonedDateTime = clientZonedDateTime.withZoneSameInstant(utcZone);
         LocalDateTime dbLocalDateTime = dbZonedDateTime.toLocalDateTime();
-        Timestamp dbTimestamp = Timestamp.valueOf(dbLocalDateTime);
-        return dbTimestamp;
+        return Timestamp.valueOf(dbLocalDateTime);
     }
 
+    /**Converts office business hours of 0800-2200 EST to user default time zone.
+     * Makes certain user can not schedule an appointment outside of normal business hours.
+     * Populates combo boxes with adjusted times. */
     public static void appointmentTimes() {
         LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,00))
                 .atZone(ZoneId.of("US/Eastern"))
