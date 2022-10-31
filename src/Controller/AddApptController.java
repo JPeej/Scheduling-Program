@@ -100,6 +100,11 @@ public class AddApptController implements Initializable {
             return false;
         }
 
+        if (startRequest.before(Timestamp.from(Instant.now()))) {
+            MyAlerts.alertError("Appointments cannot be scheduled in the past.");
+            return false;
+        }
+
         HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
         for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
             Timestamp confirmedStart = confirmedAppts.getKey();
