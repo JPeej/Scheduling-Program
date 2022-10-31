@@ -8,7 +8,10 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class AppointmentDAOImp implements AppointmentDAO{
 
@@ -47,8 +50,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            String start = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Start"));
-            String end = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("End"));
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
             int cusID = rs.getInt("Customer_ID");
             int userID = rs.getInt("User_ID");
             Appointment newAppoint = new Appointment(appID, title, description, type, location, contact, start, end,
@@ -136,6 +139,26 @@ public class AppointmentDAOImp implements AppointmentDAO{
             MyAlerts.alertError("Contact data failed to load.");
         }
         return names;
+    }
+
+    @Override
+    public HashMap<Timestamp, Timestamp> getAppointments(int customerID) {
+        HashMap<Timestamp , Timestamp > appointments = new HashMap<>();
+        try {
+            String sql = "SELECT Start, End FROM client_schedule.appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Timestamp start = rs.getTimestamp("Start");
+                Timestamp end = rs.getTimestamp("End");
+                start = DateAndTimeHandler.timestampToClient(start);
+                end = DateAndTimeHandler.timestampToClient(end);
+                appointments.put(start, end);
+            }
+        } catch (SQLException e) {
+            MyAlerts.alertError("Appointment data failed to load.");
+        } return appointments;
     }
 
     @Override

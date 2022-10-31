@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class CustomerDAOImp implements CustomerDAO {
@@ -60,9 +61,9 @@ public class CustomerDAOImp implements CustomerDAO {
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            String zonedCreateDate = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Create_Date"));
+            Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Create_Date"));
             String createBy = rs.getString("Created_By");
-            String zonedLastUpdate = DateAndTimeHandler.dateTimeToClient(rs.getTimestamp("Last_Update"));
+            Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Last_Update"));
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");

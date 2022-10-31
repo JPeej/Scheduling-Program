@@ -1,5 +1,6 @@
 package Model;
 
+import Utility.DateAndTimeHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -28,17 +29,25 @@ public class Appointment {
     private int customerID;
     private int userID;
 
+    public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
+    public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
+            "De-Briefing", "Status Update", "Change Request", "Risk Reaction", "Other");
+
     /**Constructor for Appointment class, retrieval. */
     public Appointment(int appointmentID, String title, String description, String type, String location,
-                       String contact, String start, String end, int customerID, int userID) {
+                       String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID) {
+
+        Timestamp zonedStartStamp = DateAndTimeHandler.timestampToClient(startStamp);
+        Timestamp zonedEndStamp = DateAndTimeHandler.timestampToClient(endStamp);
+
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.start = start;
-        this.end = end;
+        this.startStamp = zonedStartStamp;
+        this.endStamp = zonedEndStamp;
         this.customerID = customerID;
         this.userID = userID;
     }
@@ -47,29 +56,27 @@ public class Appointment {
     public Appointment(String title, String description, String type, String location, String contact,
                        Timestamp startStamp, Timestamp endStamp, Timestamp createdDate, Timestamp updateDate,
                        String createBy, String updateBy, int contactID, int customerID, int userID) {
+
+        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
+        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.startStamp = startStamp;
-        this.endStamp = endStamp;
-        this.createdDate = createdDate;
-        this.updateDate = updateDate;
+        this.startStamp = utcStartStamp;
+        this.endStamp = utcEndStamp;
+        this.createdDate = utcCreateStamp;
+        this.updateDate = utcUpdateStamp;
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.contactID = contactID;
         this.customerID = customerID;
         this.userID = userID;
     }
-
-    public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
-            "De-Briefing", "Status Update", "Change Request", "Risk Reaction", "Other");
-
-    public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
-
-
-
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
     /**Get appointment ID.

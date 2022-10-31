@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -111,9 +110,9 @@ public class CustomerMenuController implements Initializable {
             addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
             zipCol.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
             phoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-            createDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+            createDateCol.setCellValueFactory(new PropertyValueFactory<>("createDateStamp"));
             createByCol.setCellValueFactory(new PropertyValueFactory<>("createBy"));
-            lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+            lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdateStamp"));
             lastUpdateByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdateBy"));
             divCol.setCellValueFactory(new PropertyValueFactory<>("division"));
         } catch (SQLException e) {

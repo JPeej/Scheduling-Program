@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
@@ -47,7 +48,7 @@ public class ModifyCustomerController implements Initializable {
             String zip = zipText.getText();
             String phone = phoneText.getText();
             String lastUpdateBy = JDBC.user;
-            Timestamp lastUpdate = DateAndTimeHandler.dateTimeToDB(ZonedDateTime.now().toString());
+            Timestamp lastUpdate = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
             if (checkBlanks(name, address, zip, phone, divID)) {
                 Customer modifiedCustomer = new Customer(customerID, divID, name, address, zip, phone, lastUpdateBy,
                         lastUpdate);

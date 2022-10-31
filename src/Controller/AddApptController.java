@@ -18,6 +18,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**Controller for Add Appointment menu. */
@@ -50,23 +52,28 @@ public class AddApptController implements Initializable {
             String contact = contactSel.getValue().toString();
             int customerID = appointmentDAO.cusNameToID(customerSel.getValue().toString());
             int contactID = appointmentDAO.conNameToID(contact);
-            Timestamp apptStart =
-                    DateAndTimeHandler.toTimestamp(startDate.getValue(), (LocalTime) startTime.getValue());
-            Timestamp apptEnd =
-                    DateAndTimeHandler.toTimestamp(endDate.getValue(), (LocalTime) endTime.getValue());
-            if (checkBlanks(title, description, location, type, customerID, contact, apptStart, apptEnd)) {
-                Timestamp createDateTime = DateAndTimeHandler.dateTimeToDB(ZonedDateTime.now().toString());
-                Timestamp lastUpdateDateTime = DateAndTimeHandler.dateTimeToDB(ZonedDateTime.now().toString());
-                int userID = JDBC.userID;
-                String user = JDBC.user;
-                Appointment newAppoint = new Appointment(title, description, type, location, contact, apptStart, apptEnd,
-                        createDateTime, lastUpdateDateTime, user, user, contactID, customerID, userID);
-                int rowsAffected = appointmentDAO.insert(newAppoint);
-                if (rowsAffected > 0) {
-                    nav.toAppointmentsMenu(actionEvent);
-                    MyAlerts.alertInfo("New appointment created.");
-                } else MyAlerts.alertError("New appointment SQL insertion failed. ");
-            } else MyAlerts.alertError("Please fill all fields and choices. ");
+
+            LocalDateTime ldtStart = LocalDateTime.of(startDate.getValue(), (LocalTime) startTime.getValue());
+            LocalDateTime ldtEnd = LocalDateTime.of(endDate.getValue(), (LocalTime) endTime.getValue());
+            Timestamp stampStart = Timestamp.valueOf(ldtStart);
+            Timestamp stampEnd = Timestamp.valueOf(ldtEnd);
+            Timestamp createDateTime = Timestamp.valueOf(LocalDateTime.now());
+            Timestamp lastUpdateDateTime = Timestamp.valueOf(LocalDateTime.now());
+
+            int userID = JDBC.userID;
+            String user = JDBC.user;
+
+            if (checkDates(stampStart, stampEnd, customerID)) {
+                if (checkBlanks(title, description, location, type, customerID, contact)) {
+                    Appointment newAppoint = new Appointment(title, description, type, location, contact, stampStart,
+                            stampEnd, createDateTime, lastUpdateDateTime, user, user, contactID, customerID, userID);
+                    int rowsAffected = appointmentDAO.insert(newAppoint);
+                    if (rowsAffected > 0) {
+                        nav.toAppointmentsMenu(actionEvent);
+                        MyAlerts.alertInfo("New appointment created.");
+                    } else MyAlerts.alertError("New appointment SQL insertion failed. ");
+                } else MyAlerts.alertError("Please fill all fields and choices. ");
+            }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
                     "Report to IT if problem continues.");
@@ -84,11 +91,38 @@ public class AddApptController implements Initializable {
         nav.toAppointmentsMenu(actionEvent);
     }
 
+    public void onActionEndCombo(ActionEvent actionEvent) {
+    }
+
+    public boolean checkDates(Timestamp startRequest, Timestamp endRequest, int customerID) {
+        if (startRequest.after(endRequest) | startRequest.equals(endRequest)) {
+            MyAlerts.alertError("Please be sure appointment start date/time is before end date/time.");
+            return false;
+        }
+
+        HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
+        for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
+            Timestamp confirmedStart = confirmedAppts.getKey();
+            Timestamp confirmedEnd = confirmedAppts.getValue();
+            if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
+                    && startRequest.before(confirmedEnd)) {
+                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue() );
+                return false;
+            }
+            else if (endRequest.after(confirmedStart) &&
+                    (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
+                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue() );
+                return false;
+            }
+        } return true;
+    }
+
     public boolean checkBlanks(String title, String description, String location, String type, int cusID,
-                               String contact, Timestamp startDT, Timestamp endDT) {
+                               String contact) {
         return !(title.isBlank() | description.isBlank() | location.isBlank() | type.isBlank() |
-                String.valueOf(cusID).isBlank() | contact.isBlank() | String.valueOf(startDT.toString()).isBlank() |
-                String.valueOf(endDT.toString()).isBlank());
+                String.valueOf(cusID).isBlank() | contact.isBlank());
     }
 
     /**Initial method called upon screen load.
@@ -103,6 +137,5 @@ public class AddApptController implements Initializable {
         endTime.setItems(Appointment.times);
     }
 
-    public void onActionEndCombo(ActionEvent actionEvent) {
-    }
+
 }

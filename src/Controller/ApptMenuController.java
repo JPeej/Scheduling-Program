@@ -95,8 +95,8 @@ public class ApptMenuController implements Initializable {
             locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
             contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
             typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-            startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-            endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+            startCol.setCellValueFactory(new PropertyValueFactory<>("startStamp"));
+            endCol.setCellValueFactory(new PropertyValueFactory<>("endStamp"));
             cusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
         } catch (SQLException e) {
