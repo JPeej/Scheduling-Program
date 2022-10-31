@@ -8,10 +8,15 @@ import Utility.Nav;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,6 +37,7 @@ public class ApptMenuController implements Initializable {
     @FXML private TableColumn cusIDCol;
     @FXML private TableColumn userIDCol;
     Nav nav = new Nav();
+    Stage stage;
 
     /**Event handler to Customer Menu.
      * See Nav.toCustomersMenu.
@@ -69,8 +75,23 @@ public class ApptMenuController implements Initializable {
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionModifyAppt(ActionEvent actionEvent) throws IOException {
-        nav.navigate(actionEvent, Nav.modifyAppointmentLoc, Nav.modifyAppointmentTitle);
+    public void onActionModifyAppt(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(Nav.modifyAppointmentLoc));
+            loader.load();
+            ModifyApptController modifyApptController = loader.getController();
+            modifyApptController.sendAppt((Appointment) appointTable.getSelectionModel().getSelectedItem());
+            stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setTitle(Nav.modifyAppointmentTitle);
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT");
+        } catch (NullPointerException e) {
+            MyAlerts.alertError("Please select an appointment to modify first.");
+        }
     }
 
     /**Event handler to exit program.

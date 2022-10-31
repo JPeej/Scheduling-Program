@@ -37,9 +37,12 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 "client_schedule.appointments.Type, client_schedule.appointments.Start, " +
                 "client_schedule.appointments.End, client_schedule.appointments.Customer_ID, " +
                 "client_schedule.appointments.User_ID, client_schedule.appointments.Contact_ID, " +
-                "client_schedule.contacts.Contact_ID, client_schedule.contacts.Contact_Name " +
+                "client_schedule.contacts.Contact_ID, client_schedule.contacts.Contact_Name, " +
+                "client_schedule.customers.Customer_Name " +
                 "FROM client_schedule.appointments INNER JOIN client_schedule.contacts ON " +
-                "client_schedule.appointments.Contact_ID=client_schedule.contacts.Contact_ID";
+                "client_schedule.appointments.Contact_ID=client_schedule.contacts.Contact_ID " +
+                "INNER JOIN client_schedule.customers ON client_schedule.appointments.Customer_ID" +
+                "=client_schedule.customers.Customer_ID";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -49,12 +52,14 @@ public class AppointmentDAOImp implements AppointmentDAO{
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
+            String cusName = rs.getString("Customer_Name");
             Timestamp start = rs.getTimestamp("Start");
             Timestamp end = rs.getTimestamp("End");
             int cusID = rs.getInt("Customer_ID");
             int userID = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
             Appointment newAppoint = new Appointment(appID, title, description, type, location, contact, start, end,
-                    cusID, userID);
+                    cusID, userID, contactID, cusName);
             appointmentResult.add(newAppoint);
         }
         Comparator<Appointment> appointComparator = Comparator.comparing(Appointment::getAppointmentID);

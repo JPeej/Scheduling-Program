@@ -19,6 +19,7 @@ public class Appointment {
     private String contact;
     private String start;
     private String end;
+    private String customer;
     private Timestamp startStamp;
     private Timestamp endStamp;
     private Timestamp createdDate;
@@ -35,7 +36,8 @@ public class Appointment {
 
     /**Constructor for Appointment class, retrieval. */
     public Appointment(int appointmentID, String title, String description, String type, String location,
-                       String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID) {
+                       String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID,
+                       int contactID, String customer) {
 
         Timestamp zonedStartStamp = DateAndTimeHandler.timestampToClient(startStamp);
         Timestamp zonedEndStamp = DateAndTimeHandler.timestampToClient(endStamp);
@@ -50,6 +52,8 @@ public class Appointment {
         this.endStamp = zonedEndStamp;
         this.customerID = customerID;
         this.userID = userID;
+        this.customer = customer;
+        this.contactID = contactID;
     }
 
     /**Constructor for Appointment class, insertion. */
@@ -283,5 +287,17 @@ public class Appointment {
      * @param updateBy String. */
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    /**Get appointment customer name.
+     * @return this.customer. */
+    public String getCustomer() {
+        return customer;
+    }
+
+    /**Set appointment customer name.
+     * @param customer String. */
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 }

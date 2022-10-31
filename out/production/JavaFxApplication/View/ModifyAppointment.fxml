@@ -10,30 +10,30 @@
         <Label layoutX="40.0" layoutY="194.0" text="Customer ID" />
         <Label layoutX="331.0" layoutY="114.0" text="Start Date" />
         <Label layoutX="40.0" layoutY="154.0" text="Contact ID" />
-        <ComboBox layoutX="330.0" layoutY="270.0" prefHeight="26.0" prefWidth="217.0" promptText="Contact" />
-        <ComboBox layoutX="330.0" layoutY="310.0" prefHeight="26.0" prefWidth="217.0" promptText="Type" />
+        <ComboBox fx:id="conCombo" layoutX="330.0" layoutY="270.0" prefHeight="26.0" prefWidth="217.0" promptText="Contact" />
+        <ComboBox fx:id="typeCombo" layoutX="330.0" layoutY="310.0" prefHeight="26.0" prefWidth="217.0" promptText="Type" />
         <Button layoutX="375.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionSaveAppt" prefWidth="75.0" text="Save" />
         <Button layoutX="466.0" layoutY="386.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="75.0" text="Cancel" />
         <Label layoutX="179.0" layoutY="37.0" text="Modify Appointment" underline="true">
             <font>
                 <Font size="24.0" />
             </font></Label>
-        <TextField disable="true" editable="false" layoutX="107.0" layoutY="110.0" />
-        <TextField disable="true" editable="false" layoutX="107.0" layoutY="150.0" />
-        <TextField disable="true" editable="false" layoutX="107.0" layoutY="190.0" />
-        <DatePicker layoutX="398.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
+        <TextField fx:id="apptIDText" disable="true" editable="false" layoutX="107.0" layoutY="110.0" />
+        <TextField fx:id="conIDText" disable="true" editable="false" layoutX="107.0" layoutY="150.0" />
+        <TextField fx:id="cusIDText" disable="true" editable="false" layoutX="107.0" layoutY="190.0" />
+        <DatePicker fx:id="startDateSel" layoutX="398.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
         <Label layoutX="331.0" layoutY="154.0" text="End Date" />
-        <DatePicker layoutX="398.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
+        <DatePicker fx:id="endDateSel" layoutX="398.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
         <Label layoutX="330.0" layoutY="194.0" text="Start Time" />
         <Label layoutX="330.0" layoutY="234.0" text="End time" />
-        <ComboBox layoutX="398.0" layoutY="190.0" prefHeight="26.0" prefWidth="149.0" />
-        <ComboBox layoutX="398.0" layoutY="230.0" prefWidth="149.0" />
+        <ComboBox fx:id="startTimeCombo" layoutX="398.0" layoutY="190.0" prefHeight="26.0" prefWidth="149.0" />
+        <ComboBox fx:id="endTimeCombo" layoutX="398.0" layoutY="230.0" prefWidth="149.0" />
       <Label layoutX="40.0" layoutY="234.0" text="Title" />
       <Label layoutX="40.0" layoutY="314.0" text="Location" />
       <Label layoutX="40.0" layoutY="274.0" text="Description" />
-      <TextField disable="true" editable="false" layoutX="107.0" layoutY="230.0" />
-      <TextField disable="true" editable="false" layoutX="107.0" layoutY="270.0" />
-      <TextField disable="true" editable="false" layoutX="107.0" layoutY="310.0" />
-      <ComboBox layoutX="40.0" layoutY="350.0" prefHeight="26.0" prefWidth="217.0" promptText="Customer" />
+      <TextField fx:id="titleText" layoutX="107.0" layoutY="230.0" />
+      <TextField fx:id="descriptText" layoutX="107.0" layoutY="270.0" />
+      <TextField fx:id="locText" layoutX="107.0" layoutY="310.0" />
+      <ComboBox fx:id="cusCombo" layoutX="40.0" layoutY="350.0" prefHeight="26.0" prefWidth="217.0" promptText="Customer" />
     </children>
 </AnchorPane>
