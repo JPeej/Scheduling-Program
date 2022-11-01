@@ -5,6 +5,7 @@ import DAO.AppointmentDAOImp;
 import Model.Appointment;
 import Utility.MyAlerts;
 import Utility.Nav;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +21,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.*;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**Controller for Appointment menu. */
 public class ApptMenuController implements Initializable {
@@ -37,6 +41,7 @@ public class ApptMenuController implements Initializable {
     @FXML private TableColumn cusIDCol;
     @FXML private TableColumn userIDCol;
     AppointmentDAO appointmentDAO = new AppointmentDAOImp();
+    ObservableList<Appointment> allAppointments;
     Nav nav = new Nav();
     Stage stage;
 
@@ -64,11 +69,35 @@ public class ApptMenuController implements Initializable {
         nav.toReportsMenu(actionEvent);
     }
 
+    public void onActionAll(ActionEvent actionEvent) {
+        loadTable(allAppointments);
+    }
+
+    public void onActionByMonth(ActionEvent actionEvent) {
+        Month thisMonth = LocalDateTime.now().getMonth();
+        List<Appointment> filteredAppts = allAppointments.stream()
+                .filter(appointment -> appointment.getStartStamp().toLocalDateTime().getMonth().equals(thisMonth))
+                .collect(Collectors.toList());
+        ObservableList<Appointment> thisMonthsAppts = FXCollections.observableArrayList(filteredAppts);
+        loadTable(thisMonthsAppts);
+    }
+
+    public void onActionByWeek(ActionEvent actionEvent) {
+        LocalDateTime weekAway = LocalDateTime.now().plusDays(7);
+        List<Appointment> filteredAppts = allAppointments.stream()
+                .filter(appointment -> ((appointment.getStartStamp().toLocalDateTime().isEqual(LocalDateTime.now())
+                        | appointment.getStartStamp().toLocalDateTime().isAfter(LocalDateTime.now())))
+                        & appointment.getStartStamp().toLocalDateTime().isBefore(weekAway))
+                .collect(Collectors.toList());
+        ObservableList<Appointment> thisWeeksAppts = FXCollections.observableArrayList(filteredAppts);
+        loadTable(thisWeeksAppts);
+    }
+
     /**Event handler to Add Appointment Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionAddAppt(ActionEvent actionEvent) throws IOException {
+    public void onActionAdd(ActionEvent actionEvent) throws IOException {
         nav.navigate(actionEvent, Nav.addAppointmentLoc, Nav.addAppointmentTitle);
     }
 
@@ -76,7 +105,7 @@ public class ApptMenuController implements Initializable {
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionModifyAppt(ActionEvent actionEvent) {
+    public void onActionModify(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(Nav.modifyAppointmentLoc));
@@ -103,7 +132,7 @@ public class ApptMenuController implements Initializable {
             appointmentDAO.delete(appointment);
             MyAlerts.alertInfo("Appointment deleted.\nAppointment ID: " + apptID +"\nAppointment Type: "
                     + apptType);
-            loadTable();
+            loadTable(allAppointments);
         } catch (SQLException e) {
             MyAlerts.alertError("Appointment deletion failed. ");
         }
@@ -117,31 +146,31 @@ public class ApptMenuController implements Initializable {
         System.exit(0);
     }
 
-    public void loadTable() {
-        try {
-            ObservableList<Appointment> appointments = appointmentDAO.getAll();
-            appointTable.setItems(appointments);
-            idCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
-            titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-            descriptCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-            locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-            contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-            typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-            startCol.setCellValueFactory(new PropertyValueFactory<>("startStamp"));
-            endCol.setCellValueFactory(new PropertyValueFactory<>("endStamp"));
-            cusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-            userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        } catch (SQLException e) {
-            MyAlerts.alertError("Appointment data failed to load, contact IT. ");
-        }
+    public void loadTable(ObservableList<Appointment> appointments) {
+        appointTable.setItems(appointments);
+        idCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("startStamp"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("endStamp"));
+        cusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
     }
 
     /**Initial method called upon screen load.
      * Populates table view with appointment data. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadTable();
-    }
+        try {
+            allAppointments = appointmentDAO.getAll();
+            loadTable(allAppointments);
+        } catch (SQLException e) {
+            MyAlerts.alertError("Appointment data failed to load. ");
+        }
 
+    }
 
 }

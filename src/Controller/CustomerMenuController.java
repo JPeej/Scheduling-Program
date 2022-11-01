@@ -37,6 +37,7 @@ public class CustomerMenuController implements Initializable {
     @FXML private TableColumn lastUpdateByCol;
     Stage stage;
     Nav nav = new Nav();
+    CustomerDAO customerDAO = new CustomerDAOImp();
 
     /**Event handler to Customer Menu.
      * See Nav.toCustomersMenu.
@@ -62,14 +63,14 @@ public class CustomerMenuController implements Initializable {
     /**Event handler to Add Customer Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionAddCustomer(ActionEvent actionEvent) throws IOException {
+    @FXML public void onActionAdd(ActionEvent actionEvent) throws IOException {
         nav.navigate(actionEvent, Nav.addCustomerLoc, Nav.addCustomerTitle);
     }
 
     /**Event handler to Modify Customer Menu.
      * Passes data from selected customer on Customer menu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionModifyCustomer(ActionEvent actionEvent){
+    @FXML public void onActionModify(ActionEvent actionEvent){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(Nav.modifyCustomerLoc));
@@ -95,13 +96,10 @@ public class CustomerMenuController implements Initializable {
         System.exit(0);
     }
 
-    public void test() {}
-
     /**Called upon screen load.
      * Loads TableView with all Customer data.   */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        CustomerDAO customerDAO = new CustomerDAOImp();
         try {
             ObservableList<Customer> customers = customerDAO.getAll();
             customerTable.setItems(customers);
@@ -118,5 +116,10 @@ public class CustomerMenuController implements Initializable {
         } catch (SQLException e) {
             MyAlerts.alertError("Customer data failed to load, contact IT. ");
         }
+    }
+
+    public void onActionDelete(ActionEvent actionEvent) {
+        Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        
     }
 }
