@@ -36,6 +36,7 @@ public class ApptMenuController implements Initializable {
     @FXML private TableColumn endCol;
     @FXML private TableColumn cusIDCol;
     @FXML private TableColumn userIDCol;
+    AppointmentDAO appointmentDAO = new AppointmentDAOImp();
     Nav nav = new Nav();
     Stage stage;
 
@@ -94,6 +95,20 @@ public class ApptMenuController implements Initializable {
         }
     }
 
+    public void onActionDeleteAppt() {
+        try {
+            Appointment appointment = (Appointment)appointTable.getSelectionModel().getSelectedItem();
+            int apptID = appointment.getAppointmentID();
+            String apptType = appointment.getType();
+            appointmentDAO.delete(appointment);
+            MyAlerts.alertInfo("Appointment deleted.\nAppointment ID: " + apptID +"\nAppointment Type: "
+                    + apptType);
+            loadTable();
+        } catch (SQLException e) {
+            MyAlerts.alertError("Appointment deletion failed. ");
+        }
+    }
+
     /**Event handler to exit program.
      * Closes program and connection to database.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
@@ -102,11 +117,7 @@ public class ApptMenuController implements Initializable {
         System.exit(0);
     }
 
-    /**Initial method called upon screen load.
-     * Populates table view with appointment data. */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        AppointmentDAO appointmentDAO = new AppointmentDAOImp();
+    public void loadTable() {
         try {
             ObservableList<Appointment> appointments = appointmentDAO.getAll();
             appointTable.setItems(appointments);
@@ -124,4 +135,13 @@ public class ApptMenuController implements Initializable {
             MyAlerts.alertError("Appointment data failed to load, contact IT. ");
         }
     }
+
+    /**Initial method called upon screen load.
+     * Populates table view with appointment data. */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadTable();
+    }
+
+
 }

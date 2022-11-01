@@ -125,11 +125,18 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
     /**
      * CRUD Delete.
-     * @param o object to be deleted.
+     * @param appointment object to be deleted.
      */
     @Override
-    public int delete(Object o) throws SQLException {
-        return 0;
+    public int delete(Object appointment) {
+        try {
+            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, ((Appointment) appointment).getAppointmentID());
+            return ps.executeUpdate();
+        } catch(SQLException e) {
+            MyAlerts.alertError("Deletion failed.");
+        } return 0;
     }
 
     /**CRUD retrieval of customer names.
