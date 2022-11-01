@@ -1,6 +1,10 @@
 package Model;
 
+import Utility.DateAndTimeHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
 /**Manages Appointment objects within program. */
 public class Appointment {
@@ -13,27 +17,91 @@ public class Appointment {
     private String contact;
     private String start;
     private String end;
+    private String customer;
     private Timestamp startStamp;
     private Timestamp endStamp;
+    private Timestamp createdDate;
+    private Timestamp updateDate;
+    private String createBy;
+    private String updateBy;
     private int contactID;
     private int customerID;
     private int userID;
 
+    public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
+    public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
+            "De-Briefing", "Status Update", "Change Request", "Risk Reaction", "Other");
+
     /**Constructor for Appointment class, retrieval. */
     public Appointment(int appointmentID, String title, String description, String type, String location,
-                       String contact, String start, String end, int customerID, int userID) {
+                       String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID,
+                       int contactID, String customer) {
+
+        Timestamp zonedStartStamp = DateAndTimeHandler.timestampToClient(startStamp);
+        Timestamp zonedEndStamp = DateAndTimeHandler.timestampToClient(endStamp);
+
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.start = start;
-        this.end = end;
+        this.startStamp = zonedStartStamp;
+        this.endStamp = zonedEndStamp;
+        this.customerID = customerID;
+        this.userID = userID;
+        this.customer = customer;
+        this.contactID = contactID;
+    }
+
+    /**Constructor for Appointment class, insertion. */
+    public Appointment(String title, String description, String type, String location, String contact,
+                       Timestamp startStamp, Timestamp endStamp, Timestamp createdDate, Timestamp updateDate,
+                       String createBy, String updateBy, int contactID, int customerID, int userID) {
+
+        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
+        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.location = location;
+        this.contact = contact;
+        this.startStamp = utcStartStamp;
+        this.endStamp = utcEndStamp;
+        this.createdDate = utcCreateStamp;
+        this.updateDate = utcUpdateStamp;
+        this.createBy = createBy;
+        this.updateBy = updateBy;
+        this.contactID = contactID;
         this.customerID = customerID;
         this.userID = userID;
     }
 
+    /**Constructor for Appointment class, update. */
+    public Appointment(int appointmentID, String title, String description, String type, String location, Timestamp startStamp,
+                       Timestamp endStamp, Timestamp updateDate, String updateBy, int contactID, int customerID,
+                       int userID) {
+
+        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+
+        this.appointmentID = appointmentID;
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.location = location;
+        this.startStamp = utcStartStamp;
+        this.endStamp = utcEndStamp;
+        this.updateDate = utcUpdateStamp;
+        this.updateBy = updateBy;
+        this.contactID = contactID;
+        this.customerID = customerID;
+        this.userID = userID;
+    }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
     /**Get appointment ID.
@@ -186,9 +254,71 @@ public class Appointment {
         return contactID;
     }
 
+    /**Set appointment contactID.
+     * @param contactID int. */
     /**Set appointment contact Id.
      * @param contactID int. */
     public void setContactID(int contactID) {
         this.contactID = contactID;
+    }
+
+    /**Get appointment createDate.
+     * @return this.createDate */
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    /**Set appointment createDate.
+     * @param createdDate Timestamp. */
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**Get appointment updateDate.
+     * @return this.updateDate. */
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    /**Set appointment updateDate.
+     * @param updateDate Timestamp. */
+    public void setUpdateDate(Timestamp updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    /**Get appointment createBy.
+     * @return this.createBy. */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**Set appointment createBy.
+     * @param createBy String. */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**Get appointment updateBy.
+     * @return this.updateBy. */
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    /**Set appointment updateBy.
+     * @param updateBy String. */
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    /**Get appointment customer name.
+     * @return this.customer. */
+    public String getCustomer() {
+        return customer;
+    }
+
+    /**Set appointment customer name.
+     * @param customer String. */
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 }

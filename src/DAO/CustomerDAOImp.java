@@ -1,12 +1,14 @@
 package DAO;
 
 import Model.Customer;
-import Utility.DateTimeConverter;
+import Utility.DateAndTimeHandler;
+import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class CustomerDAOImp implements CustomerDAO {
@@ -32,6 +34,22 @@ public class CustomerDAOImp implements CustomerDAO {
             int divID = rs.getInt("Division_ID");
             return divID;
         } return -1;
+    }
+
+    @Override
+    public int countAppointments(int customerID) {
+        try {
+            String sql = "SELECT count(Customer_ID) FROM client_schedule.appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count(Customer_ID)");
+            }
+        } catch (SQLException e) {
+            MyAlerts.alertError("");
+            return 0;
+        } return 0;
     }
 
     /**CRUD Retrieve.
@@ -60,9 +78,9 @@ public class CustomerDAOImp implements CustomerDAO {
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            String zonedCreateDate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Create_Date"));
+            Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Create_Date"));
             String createBy = rs.getString("Created_By");
-            String zonedLastUpdate = DateTimeConverter.dateTimeToClient(rs.getTimestamp("Last_Update"));
+            Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Last_Update"));
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");
@@ -115,10 +133,18 @@ public class CustomerDAOImp implements CustomerDAO {
     }
 
     /**CRUD Delete.
-     * @param o object to be deleted.*/
+     * @param customer object to be deleted.*/
     @Override
-    public int delete(Object o) throws SQLException {
-        return 0;
+    public int delete(Object customer) {
+        try {
+            String sql = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1,((Customer) customer).getCustomerID());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            MyAlerts.alertError("Deletion failed.");
+            return 0;
+        }
     }
 
 }

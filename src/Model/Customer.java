@@ -19,14 +19,12 @@ public class Customer {
     private String lastUpdateBy;
     private String country;
     private String division;
-    private String createDate;
-    private String lastUpdate;
     private Timestamp createDateStamp;
     private Timestamp lastUpdateStamp;
 
     /**Constructor for Customer, retrieval.*/
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
-                    String createDate, String createBy, String lastUpdate, String lastUpdateBy,
+                    Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy,
                     String division, String country) {
 
         this.customerID = customerID;
@@ -35,9 +33,9 @@ public class Customer {
         this.address = address;
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
+        this.createDateStamp = createDateStamp;
         this.createBy = createBy;
-        this.lastUpdate = lastUpdate;
+        this.lastUpdateStamp = lastUpdateStamp;
         this.lastUpdateBy = lastUpdateBy;
         this.division = division;
         this.country = country;
@@ -251,18 +249,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    /**Get customer create date.
-     * @return this.createDate. */
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    /**Set customer create date.
-     * @param createDate ZoneDateTime */
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
     /**Get customer created by.
      * @return this.createdBy. */
     public String getCreateBy() {
@@ -273,18 +259,6 @@ public class Customer {
      * @param createBy String */
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
-    }
-
-    /**Get customer last update.
-     * @return this.lastUpdate. */
-    public String getLastUpdate() {
-        return lastUpdate;
-    }
-
-    /**Set customer last update.
-     * @param lastUpdate ZonedDateTime */
-    public void setLastUpdate(String lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 
     /**Get customer last update by.

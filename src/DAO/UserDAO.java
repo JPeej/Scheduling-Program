@@ -7,6 +7,8 @@ import java.sql.SQLException;
 public interface UserDAO extends DAO {
 
     /**Overloaded method for user authentication on login menu. */
-    User get(String userNameLogin, String passwordLogin) throws SQLException;
+    User authenticateUser(String userNameLogin, String passwordLogin) throws SQLException;
+
+    int getUserID(String userName);
 
 }

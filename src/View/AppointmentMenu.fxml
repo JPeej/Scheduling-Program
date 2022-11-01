@@ -28,15 +28,15 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAddAppt" prefWidth="75.0" text="Add" />
-        <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModifyAppt" prefWidth="75.0" text="Modify" />
-        <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" prefWidth="75.0" text="Delete" />
+        <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAdd" prefWidth="75.0" text="Add" />
+        <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModify" prefWidth="75.0" text="Modify" />
+        <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionDeleteAppt" prefWidth="75.0" text="Delete" />
         <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
-      <RadioButton layoutX="25.0" layoutY="64.0" mnemonicParsing="false" selected="true" text="All">
+      <RadioButton layoutX="25.0" layoutY="64.0" mnemonicParsing="false" onAction="#onActionAll" selected="true" text="All">
          <toggleGroup>
             <ToggleGroup fx:id="Filter" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="92.0" layoutY="64.0" mnemonicParsing="false" text="Month" toggleGroup="$Filter" />
-      <RadioButton layoutX="180.0" layoutY="64.0" mnemonicParsing="false" text="Week" toggleGroup="$Filter" />
+      <RadioButton layoutX="92.0" layoutY="64.0" mnemonicParsing="false" onAction="#onActionByMonth" text="Month" toggleGroup="$Filter" />
+      <RadioButton layoutX="180.0" layoutY="64.0" mnemonicParsing="false" onAction="#onActionByWeek" text="Week" toggleGroup="$Filter" />
     </children>
 </AnchorPane>
