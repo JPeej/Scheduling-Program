@@ -96,11 +96,31 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
     /**
      * CRUD Update.
-     * @param o object to be updated.
+     * @param newAppointment object to be updated.
      */
     @Override
-    public int update(Object o) throws SQLException {
-        return 0;
+    public int update(Object newAppointment) {
+        try {
+            String sql ="UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
+                    "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
+                    "Contact_ID = ? WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, ((Appointment) newAppointment).getTitle());
+            ps.setString(2, ((Appointment) newAppointment).getDescription());
+            ps.setString(3, ((Appointment) newAppointment).getLocation());
+            ps.setString(4, ((Appointment) newAppointment).getType());
+            ps.setTimestamp(5, ((Appointment) newAppointment).getStartStamp());
+            ps.setTimestamp(6, ((Appointment) newAppointment).getEndStamp());
+            ps.setTimestamp(7, ((Appointment) newAppointment).getUpdateDate());
+            ps.setString(8, ((Appointment) newAppointment).getUpdateBy());
+            ps.setInt(9, ((Appointment) newAppointment).getCustomerID());
+            ps.setInt(10, ((Appointment) newAppointment).getUserID());
+            ps.setInt(11, ((Appointment) newAppointment).getContactID());
+            ps.setInt(12, ((Appointment) newAppointment).getAppointmentID());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            MyAlerts.alertError("Appointment update to database failed.");
+        }   return 0;
     }
 
     /**
@@ -206,5 +226,20 @@ public class AppointmentDAOImp implements AppointmentDAO{
         } catch (SQLException e) {
             MyAlerts.alertError("Contact not found in database.");
         } return -1;
+    }
+
+    @Override
+    public boolean appointmentExists(int apptID) {
+        try {
+            String sql = "SELECT Appointment_ID FROM client_schedule.appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, apptID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else return false;
+        } catch (SQLException e) {
+            MyAlerts.alertError("Appointment ID query failed.");
+        } return false;
     }
 }

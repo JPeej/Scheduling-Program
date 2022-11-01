@@ -9,13 +9,13 @@
         <TextField fx:id="titleText" layoutX="102.0" layoutY="110.0" />
         <TextField fx:id="descriptText" layoutX="102.0" layoutY="150.0" />
         <TextField fx:id="locText" layoutX="102.0" layoutY="190.0" />
-      <ComboBox fx:id="customerSel" layoutX="40.0" layoutY="230.0" prefHeight="26.0" prefWidth="210.0" promptText="Customer" />
-        <ComboBox fx:id="contactSel" layoutX="40.0" layoutY="270.0" prefHeight="26.0" prefWidth="210.0" promptText="Contact" />
-        <ComboBox fx:id="typeSel" layoutX="40.0" layoutY="310.0" prefHeight="26.0" prefWidth="209.0" promptText="Type" />
-      <DatePicker fx:id="startDate" layoutX="392.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
-      <DatePicker fx:id="endDate" layoutX="392.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
-      <ComboBox fx:id="startTime" layoutX="390.0" layoutY="190.0" prefWidth="150.0" />
-      <ComboBox fx:id="endTime" layoutX="390.0" layoutY="230.0" prefWidth="150.0" />
+      <ComboBox fx:id="cusCombo" layoutX="40.0" layoutY="230.0" prefHeight="26.0" prefWidth="210.0" promptText="Customer" />
+        <ComboBox fx:id="conCombo" layoutX="40.0" layoutY="270.0" prefHeight="26.0" prefWidth="210.0" promptText="Contact" />
+        <ComboBox fx:id="typeCombo" layoutX="40.0" layoutY="310.0" prefHeight="26.0" prefWidth="209.0" promptText="Type" />
+      <DatePicker fx:id="startDateSel" layoutX="392.0" layoutY="110.0" prefHeight="25.6" prefWidth="148.8" />
+      <DatePicker fx:id="endDateSel" layoutX="392.0" layoutY="150.0" prefHeight="25.6" prefWidth="148.8" />
+      <ComboBox fx:id="startTimeCombo" layoutX="390.0" layoutY="190.0" prefWidth="150.0" />
+      <ComboBox fx:id="endTimeCombo" layoutX="390.0" layoutY="230.0" prefWidth="150.0" />
         <Label layoutX="40.0" layoutY="114.0" text="Title" />
         <Label layoutX="40.0" layoutY="154.0" text="Description" />
         <Label layoutX="40.0" layoutY="194.0" text="Location" />

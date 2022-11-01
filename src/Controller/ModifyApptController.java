@@ -1,59 +1,85 @@
 package Controller;
 
-import DAO.AppointmentDAO;
-import DAO.AppointmentDAOImp;
+import DAO.JDBC;
 import Model.Appointment;
-import Utility.DateAndTimeHandler;
-import Utility.Nav;
+import Utility.MyAlerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
 import java.io.IOException;
-import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ResourceBundle;
 
 /**Controller for Modify Appointment menu. */
-public class ModifyApptController implements Initializable {
+public class ModifyApptController extends AddApptController implements Initializable {
 
-    public TextField apptIDText;
-    public TextField conIDText;
-    public TextField cusIDText;
-    public TextField titleText;
-    public TextField descriptText;
-    public TextField locText;
-    public DatePicker startDateSel;
-    public DatePicker endDateSel;
-    public ComboBox startTimeCombo;
-    public ComboBox endTimeCombo;
-    public ComboBox conCombo;
-    public ComboBox typeCombo;
-    public ComboBox cusCombo;
-    Nav nav = new Nav();
-    AppointmentDAO appointmentDAO = new AppointmentDAOImp();
+    @FXML private TextField apptIDText;
+    @FXML private TextField conIDText;
+    @FXML private TextField cusIDText;
+    @FXML private TextField titleText;
+    @FXML private TextField descriptText;
+    @FXML private TextField locText;
+    @FXML private DatePicker startDateSel;
+    @FXML private DatePicker endDateSel;
+    @FXML private ComboBox startTimeCombo;
+    @FXML private ComboBox endTimeCombo;
+    @FXML private ComboBox conCombo;
+    @FXML private ComboBox typeCombo;
+    @FXML private ComboBox cusCombo;
 
     /**Event handler to Appointment Menu.
      * Saves data and updates database.
      * See Nav.toAppointmentsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionSaveAppt(ActionEvent actionEvent) throws IOException {
-        nav.toAppointmentsMenu(actionEvent);
+    public void onActionSaveAppt(ActionEvent actionEvent){
+        try {
+            String title = titleText.getText();
+            String description = descriptText.getText();
+            String location = locText.getText();
+            String type = typeCombo.getValue().toString();
+            String contact = conCombo.getValue().toString();
+            int customerID = appointmentDAO.cusNameToID(cusCombo.getValue().toString());
+            int contactID = appointmentDAO.conNameToID(contact);
+
+            LocalDateTime ldtStart = LocalDateTime.of(startDateSel.getValue(), (LocalTime) startTimeCombo.getValue());
+            LocalDateTime ldtEnd = LocalDateTime.of(endDateSel.getValue(), (LocalTime) endTimeCombo.getValue());
+            Timestamp stampStart = Timestamp.valueOf(ldtStart);
+            Timestamp stampEnd = Timestamp.valueOf(ldtEnd);
+            Timestamp lastUpdateDateTime = Timestamp.valueOf(LocalDateTime.now());
+
+            int appointmentID = Integer.parseInt(apptIDText.getText());
+            int userID = JDBC.userID;
+            String user = JDBC.user;
+
+            if (checkDates(stampStart, stampEnd, customerID, appointmentID)) {
+                if (checkBlanks(title, description, location, type, customerID, contact)) {
+                    Appointment newAppoint = new Appointment(appointmentID, title, description, type, location, stampStart,
+                            stampEnd, lastUpdateDateTime, user, contactID, customerID, userID);
+                    int rowsAffected = appointmentDAO.update(newAppoint);
+                    if (rowsAffected > 0) {
+                        nav.toAppointmentsMenu(actionEvent);
+                        MyAlerts.alertInfo("Appointment updated.");
+                    } else MyAlerts.alertError("Appointment SQL update failed. ");
+                } else MyAlerts.alertError("Please fill all fields and choices. ");
+            }
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
+                    "Report to IT if problem continues.");
+        }catch (SQLException | NullPointerException e) {
+            MyAlerts.alertError("Please select/enter a value for every field.");
+        }
     }
 
-    /**Event handler to Appointment Menu.
-     * Discards any changes, makes no changes to database.
-     * See Nav.toAppointmentsMenu.
-     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML
-    public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        nav.toAppointmentsMenu(actionEvent);
-    }
-
+    /**Populates Modify Appointment menu with appointment data.
+     * @param appointment */
     public void sendAppt(Appointment appointment) {
         apptIDText.setText(String.valueOf(appointment.getAppointmentID()));
         cusIDText.setText(String.valueOf(appointment.getCustomerID()));
@@ -75,13 +101,4 @@ public class ModifyApptController implements Initializable {
         endTimeCombo.getSelectionModel().select(localEndTime);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        cusCombo.setItems(appointmentDAO.getCustomerNames());
-        conCombo.setItems(appointmentDAO.getContactNames());
-        typeCombo.setItems(Appointment.types);
-        DateAndTimeHandler.appointmentTimes();
-        startTimeCombo.setItems(Appointment.times);
-        endTimeCombo.setItems(Appointment.times);
-    }
 }

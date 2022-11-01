@@ -28,13 +28,13 @@ public class AddApptController implements Initializable {
     @FXML private TextField titleText;
     @FXML private TextField descriptText;
     @FXML private TextField locText;
-    @FXML private ComboBox customerSel;
-    @FXML private ComboBox contactSel;
-    @FXML private ComboBox typeSel;
-    @FXML private DatePicker startDate;
-    @FXML private DatePicker endDate;
-    @FXML private ComboBox startTime;
-    @FXML private ComboBox endTime;
+    @FXML private DatePicker startDateSel;
+    @FXML private DatePicker endDateSel;
+    @FXML private ComboBox startTimeCombo;
+    @FXML private ComboBox endTimeCombo;
+    @FXML private ComboBox cusCombo;
+    @FXML private ComboBox conCombo;
+    @FXML private ComboBox typeCombo;
     Nav nav = new Nav();
     AppointmentDAO appointmentDAO = new AppointmentDAOImp();
 
@@ -48,13 +48,13 @@ public class AddApptController implements Initializable {
             String title = titleText.getText();
             String description = descriptText.getText();
             String location = locText.getText();
-            String type = typeSel.getValue().toString();
-            String contact = contactSel.getValue().toString();
-            int customerID = appointmentDAO.cusNameToID(customerSel.getValue().toString());
+            String type = typeCombo.getValue().toString();
+            String contact = conCombo.getValue().toString();
+            int customerID = appointmentDAO.cusNameToID(cusCombo.getValue().toString());
             int contactID = appointmentDAO.conNameToID(contact);
 
-            LocalDateTime ldtStart = LocalDateTime.of(startDate.getValue(), (LocalTime) startTime.getValue());
-            LocalDateTime ldtEnd = LocalDateTime.of(endDate.getValue(), (LocalTime) endTime.getValue());
+            LocalDateTime ldtStart = LocalDateTime.of(startDateSel.getValue(), (LocalTime) startTimeCombo.getValue());
+            LocalDateTime ldtEnd = LocalDateTime.of(endDateSel.getValue(), (LocalTime) endTimeCombo.getValue());
             Timestamp stampStart = Timestamp.valueOf(ldtStart);
             Timestamp stampEnd = Timestamp.valueOf(ldtEnd);
             Timestamp createDateTime = Timestamp.valueOf(LocalDateTime.now());
@@ -63,7 +63,7 @@ public class AddApptController implements Initializable {
             int userID = JDBC.userID;
             String user = JDBC.user;
 
-            if (checkDates(stampStart, stampEnd, customerID)) {
+            if (checkDates(stampStart, stampEnd, customerID, 0)) {
                 if (checkBlanks(title, description, location, type, customerID, contact)) {
                     Appointment newAppoint = new Appointment(title, description, type, location, contact, stampStart,
                             stampEnd, createDateTime, lastUpdateDateTime, user, user, contactID, customerID, userID);
@@ -99,7 +99,7 @@ public class AddApptController implements Initializable {
      * @param endRequest
      * @param customerID
      * @return boolean */
-    public boolean checkDates(Timestamp startRequest, Timestamp endRequest, int customerID) {
+    public boolean checkDates(Timestamp startRequest, Timestamp endRequest, int customerID, int appointmentID) {
         if (startRequest.after(endRequest) | startRequest.equals(endRequest)) {
             MyAlerts.alertError("Please be sure appointment start date/time is before end date/time.");
             return false;
@@ -110,21 +110,22 @@ public class AddApptController implements Initializable {
             return false;
         }
 
-        HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
-        for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
-            Timestamp confirmedStart = confirmedAppts.getKey();
-            Timestamp confirmedEnd = confirmedAppts.getValue();
-            if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
-                    && startRequest.before(confirmedEnd)) {
-                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue() );
-                return false;
-            }
-            else if (endRequest.after(confirmedStart) &&
-                    (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
-                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue() );
-                return false;
+        if (!appointmentDAO.appointmentExists(appointmentID)) {
+            HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
+            for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
+                Timestamp confirmedStart = confirmedAppts.getKey();
+                Timestamp confirmedEnd = confirmedAppts.getValue();
+                if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
+                        && startRequest.before(confirmedEnd)) {
+                    MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                            confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
+                    return false;
+                } else if (endRequest.after(confirmedStart) &&
+                        (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
+                    MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                            confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
+                    return false;
+                }
             }
         } return true;
     }
@@ -146,12 +147,12 @@ public class AddApptController implements Initializable {
      * Sets values into appropriate combo boxes. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customerSel.setItems(appointmentDAO.getCustomerNames());
-        contactSel.setItems(appointmentDAO.getContactNames());
-        typeSel.setItems(Appointment.types);
+        cusCombo.setItems(appointmentDAO.getCustomerNames());
+        conCombo.setItems(appointmentDAO.getContactNames());
+        typeCombo.setItems(Appointment.types);
         DateAndTimeHandler.appointmentTimes();
-        startTime.setItems(Appointment.times);
-        endTime.setItems(Appointment.times);
+        startTimeCombo.setItems(Appointment.times);
+        endTimeCombo.setItems(Appointment.times);
     }
 
 

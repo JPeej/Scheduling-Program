@@ -3,8 +3,6 @@ package Model;
 import Utility.DateAndTimeHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalTime;
 
@@ -76,6 +74,29 @@ public class Appointment {
         this.createdDate = utcCreateStamp;
         this.updateDate = utcUpdateStamp;
         this.createBy = createBy;
+        this.updateBy = updateBy;
+        this.contactID = contactID;
+        this.customerID = customerID;
+        this.userID = userID;
+    }
+
+    /**Constructor for Appointment class, update. */
+    public Appointment(int appointmentID, String title, String description, String type, String location, Timestamp startStamp,
+                       Timestamp endStamp, Timestamp updateDate, String updateBy, int contactID, int customerID,
+                       int userID) {
+
+        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+
+        this.appointmentID = appointmentID;
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.location = location;
+        this.startStamp = utcStartStamp;
+        this.endStamp = utcEndStamp;
+        this.updateDate = utcUpdateStamp;
         this.updateBy = updateBy;
         this.contactID = contactID;
         this.customerID = customerID;

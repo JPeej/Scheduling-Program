@@ -16,4 +16,6 @@ public interface AppointmentDAO extends DAO {
     public int cusNameToID(String customerName);
 
     public int conNameToID(String contactName);
+
+    public boolean appointmentExists(int apptID);
 }
