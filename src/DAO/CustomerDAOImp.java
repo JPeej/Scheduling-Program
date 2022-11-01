@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Customer;
 import Utility.DateAndTimeHandler;
+import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
@@ -33,6 +34,22 @@ public class CustomerDAOImp implements CustomerDAO {
             int divID = rs.getInt("Division_ID");
             return divID;
         } return -1;
+    }
+
+    @Override
+    public int countAppointments(int customerID) {
+        try {
+            String sql = "SELECT count(Customer_ID) FROM client_schedule.appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count(Customer_ID)");
+            }
+        } catch (SQLException e) {
+            MyAlerts.alertError("");
+            return 0;
+        } return 0;
     }
 
     /**CRUD Retrieve.
@@ -116,10 +133,18 @@ public class CustomerDAOImp implements CustomerDAO {
     }
 
     /**CRUD Delete.
-     * @param o object to be deleted.*/
+     * @param customer object to be deleted.*/
     @Override
-    public int delete(Object o) throws SQLException {
-        return 0;
+    public int delete(Object customer) {
+        try {
+            String sql = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1,((Customer) customer).getCustomerID());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            MyAlerts.alertError("Deletion failed.");
+            return 0;
+        }
     }
 
 }

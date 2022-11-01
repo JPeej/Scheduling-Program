@@ -85,7 +85,7 @@ public class CustomerMenuController implements Initializable {
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed. Contact IT");
         } catch (NullPointerException e) {
-            MyAlerts.alertError("Please select a customer to modify first.");
+            MyAlerts.alertError("Please select a customer to modify.");
         }
     }
 
@@ -96,10 +96,7 @@ public class CustomerMenuController implements Initializable {
         System.exit(0);
     }
 
-    /**Called upon screen load.
-     * Loads TableView with all Customer data.   */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void loadTable() {
         try {
             ObservableList<Customer> customers = customerDAO.getAll();
             customerTable.setItems(customers);
@@ -118,8 +115,29 @@ public class CustomerMenuController implements Initializable {
         }
     }
 
+    /**Called upon screen load.
+     * Loads TableView with all Customer data.   */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadTable();
+    }
+
     public void onActionDelete(ActionEvent actionEvent) {
-        Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        
+        try {
+            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            String name = customer.getName();
+            int appointments = customerDAO.countAppointments(customer.getCustomerID());
+            if (appointments == 0) {
+                customerDAO.delete(customer);
+                MyAlerts.alertInfo("Customer " + name + " deleted.");
+                loadTable();
+            } else MyAlerts.alertError("Customer has appointments scheduled.");
+        } catch (SQLException e) {
+            MyAlerts.alertError("Customer failed to delete.");
+        } catch (NullPointerException e) {
+            MyAlerts.alertError("Please select a customer to delete.");
+        }
+
+
     }
 }

@@ -136,7 +136,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
             return ps.executeUpdate();
         } catch(SQLException e) {
             MyAlerts.alertError("Deletion failed.");
-        } return 0;
+            return 0;
+        }
     }
 
     /**CRUD retrieval of customer names.

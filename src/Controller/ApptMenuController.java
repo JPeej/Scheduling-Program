@@ -120,7 +120,7 @@ public class ApptMenuController implements Initializable {
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed. Contact IT");
         } catch (NullPointerException e) {
-            MyAlerts.alertError("Please select an appointment to modify first.");
+            MyAlerts.alertError("Please select an appointment to modify .");
         }
     }
 
@@ -132,9 +132,12 @@ public class ApptMenuController implements Initializable {
             appointmentDAO.delete(appointment);
             MyAlerts.alertInfo("Appointment deleted.\nAppointment ID: " + apptID +"\nAppointment Type: "
                     + apptType);
+            allAppointments = appointmentDAO.getAll();
             loadTable(allAppointments);
         } catch (SQLException e) {
             MyAlerts.alertError("Appointment deletion failed. ");
+        } catch (NullPointerException e) {
+            MyAlerts.alertError("Please select an appointment to delete.");
         }
     }
 

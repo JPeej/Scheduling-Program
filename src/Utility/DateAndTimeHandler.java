@@ -36,11 +36,11 @@ public class DateAndTimeHandler {
      * Makes certain user can not schedule an appointment outside of normal business hours.
      * Populates combo boxes with adjusted times. */
     public static void appointmentTimes() {
-        LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,00))
+        LocalTime zonedStart = LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))
                 .atZone(ZoneId.of("US/Eastern"))
                 .withZoneSameInstant(ZoneId.systemDefault())
                 .toLocalTime();
-        LocalTime zonedEnd = LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 00))
+        LocalTime zonedEnd = LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0))
                 .atZone(ZoneId.of("US/Eastern"))
                 .withZoneSameInstant(ZoneId.systemDefault())
                 .toLocalTime();
