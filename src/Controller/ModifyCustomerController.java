@@ -55,8 +55,8 @@ public class ModifyCustomerController implements Initializable {
                 int rowsAffected = customerDAO.update(modifiedCustomer);
                 if (rowsAffected > 0) {
                     nav.toCustomersMenu(actionEvent);
-                    MyAlerts.alertInfo("Customer modified.");
-                }
+                    MyAlerts.alertInfo("Customer updated.");
+                } else MyAlerts.alertError("Customer update to database failed.");
             } else MyAlerts.alertError("Please fill all fields and choices.");
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +

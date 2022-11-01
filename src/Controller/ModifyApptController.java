@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -28,11 +27,11 @@ public class ModifyApptController extends AddApptController implements Initializ
     @FXML private TextField locText;
     @FXML private DatePicker startDateSel;
     @FXML private DatePicker endDateSel;
-    @FXML private ComboBox startTimeCombo;
-    @FXML private ComboBox endTimeCombo;
-    @FXML private ComboBox conCombo;
-    @FXML private ComboBox typeCombo;
-    @FXML private ComboBox cusCombo;
+    @FXML private ComboBox<LocalTime> startTimeCombo;
+    @FXML private ComboBox<LocalTime> endTimeCombo;
+    @FXML private ComboBox<String> conCombo;
+    @FXML private ComboBox<String> typeCombo;
+    @FXML private ComboBox<String> cusCombo;
 
     /**Event handler to Appointment Menu.
      * Saves data and updates database.
@@ -49,8 +48,8 @@ public class ModifyApptController extends AddApptController implements Initializ
             int customerID = appointmentDAO.cusNameToID(cusCombo.getValue().toString());
             int contactID = appointmentDAO.conNameToID(contact);
 
-            LocalDateTime ldtStart = LocalDateTime.of(startDateSel.getValue(), (LocalTime) startTimeCombo.getValue());
-            LocalDateTime ldtEnd = LocalDateTime.of(endDateSel.getValue(), (LocalTime) endTimeCombo.getValue());
+            LocalDateTime ldtStart = LocalDateTime.of(startDateSel.getValue(), startTimeCombo.getValue());
+            LocalDateTime ldtEnd = LocalDateTime.of(endDateSel.getValue(), endTimeCombo.getValue());
             Timestamp stampStart = Timestamp.valueOf(ldtStart);
             Timestamp stampEnd = Timestamp.valueOf(ldtEnd);
             Timestamp lastUpdateDateTime = Timestamp.valueOf(LocalDateTime.now());
@@ -67,12 +66,12 @@ public class ModifyApptController extends AddApptController implements Initializ
                     if (rowsAffected > 0) {
                         nav.toAppointmentsMenu(actionEvent);
                         MyAlerts.alertInfo("Appointment updated.");
-                    } else MyAlerts.alertError("Appointment SQL update failed. ");
-                } else MyAlerts.alertError("Please fill all fields and choices. ");
+                    } else MyAlerts.alertError("Appointment update to database failed.");
+                } else MyAlerts.alertError("Please fill all fields and choices.");
             }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
-                    "Report to IT if problem continues.");
+                    "\nReport to IT if problem persists.");
         }catch (SQLException | NullPointerException e) {
             MyAlerts.alertError("Please select/enter a value for every field.");
         }
