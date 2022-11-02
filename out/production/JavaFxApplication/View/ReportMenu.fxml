@@ -6,29 +6,36 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportMenuController">
     <children>
-        <TableView layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
+        <TableView fx:id="reportTableView" layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
             <columns>
-                <TableColumn maxWidth="50.0" prefWidth="50.0" text="ID" />
-                <TableColumn prefWidth="112.0" text="Title" />
-                <TableColumn prefWidth="125.0" text="Description" />
-                <TableColumn prefWidth="100.0" text="Location" />
-                <TableColumn prefWidth="100.0" text="Contact" />
-                <TableColumn prefWidth="100.0" text="Type" />
-                <TableColumn prefWidth="115.0" text="Start Date &amp; Time" />
-                <TableColumn minWidth="4.20001220703125" prefWidth="115.0" text="End Date &amp; Time" />
-                <TableColumn text="Customer ID" />
-                <TableColumn prefWidth="50.0" text="User ID" />
+                <TableColumn fx:id="apptID" maxWidth="50.0" prefWidth="29.399993896484375" text="ID" />
+                <TableColumn fx:id="apptTitle" prefWidth="81.19998550415039" text="Title" />
+                <TableColumn fx:id="apptDescript" prefWidth="133.7999725341797" text="Description" />
+                <TableColumn fx:id="apptType" prefWidth="117.60000610351562" text="Type" />
+                <TableColumn fx:id="apptLoc" prefWidth="110.5999755859375" text="Location" />
+                <TableColumn fx:id="apptContact" prefWidth="98.20001220703125" text="Contact" />
+                <TableColumn fx:id="apptCustomer" prefWidth="109.60003662109375" text="Customer" />
+                <TableColumn fx:id="apptStart" minWidth="4.20001220703125" prefWidth="136.0" text="Start " />
+                <TableColumn fx:id="apptEnd" prefWidth="135.199951171875" text="End" />
             </columns>
         </TableView>
         <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />
         <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
         <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-        <Label layoutX="624.0" layoutY="28.0" prefHeight="35.0" prefWidth="201.0" text="Reports" textAlignment="CENTER" underline="true">
+        <Label layoutX="873.0" layoutY="42.0" prefHeight="35.0" prefWidth="201.0" text="Reports" textAlignment="CENTER" underline="true">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
         <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
-      <ComboBox layoutX="25.0" layoutY="60.0" prefHeight="26.0" prefWidth="360.0" promptText="Select Report" />
+      <ComboBox fx:id="comboBox" layoutX="25.0" layoutY="60.0" onAction="#onActionCombo" prefHeight="26.0" prefWidth="360.0" />
+      <RadioButton layoutX="412.0" layoutY="37.0" mnemonicParsing="false" onAction="#onActionScheduleReport" selected="true" text="Contact Schedules">
+         <toggleGroup>
+            <ToggleGroup fx:id="reportRadio" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="637.0" layoutY="37.0" mnemonicParsing="false" onAction="#onActionTypeReport" text="Customer Appointments by Type" toggleGroup="$reportRadio" />
+      <RadioButton layoutX="637.0" layoutY="66.0" mnemonicParsing="false" onAction="#onActionMonthReport" text="Customer Appointments by Month" toggleGroup="$reportRadio" />
+      <RadioButton layoutX="412.0" layoutY="66.0" mnemonicParsing="false" onAction="#onActionExpired" text="Appointments Expired" toggleGroup="$reportRadio" />
     </children>
 </AnchorPane>
