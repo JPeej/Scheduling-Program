@@ -95,7 +95,8 @@ public class AddApptController implements Initializable {
 
     /**Verifies user did not request a start to come after an end.
      * @param startRequest Timestamp created by startDate and startTime
-     * @param endRequest Timestamp created by endDate and endTime*/
+     * @param endRequest Timestamp created by endDate and endTime
+     * @return boolean true if start before end*/
     public boolean checkStartBeforeEnd(Timestamp startRequest, Timestamp endRequest) {
         if (startRequest.after(endRequest) | startRequest.equals(endRequest)) {
             MyAlerts.alertError("Please be sure appointment start date/time is before end date/time.");
@@ -103,37 +104,54 @@ public class AddApptController implements Initializable {
         } else return true;
     }
 
+    /**Verifies user did not request an appointment in the past.
+     * @param startRequest date and time timestamp of appointment start
+     * @return boolean, true if not in past*/
     public boolean checkApptNotInPast(Timestamp startRequest) {
-            if (startRequest.before(Timestamp.from(Instant.now()))) {
-                MyAlerts.alertError("Appointments cannot be scheduled in the past.");
+        if (startRequest.before(Timestamp.from(Instant.now()))) {
+            MyAlerts.alertError("Appointments cannot be scheduled in the past.");
+            return false;
+        } else return true;
+    }
+
+    /**Verifies no overlap of previously scheduled appointments of the customer.
+     * Prevents checking of the same appointmentID in case of no appointment Timestamp modification.
+     * @param startRequest date and time timestamp of appointment start
+     * @param endRequest date and time timestamp of appointment end
+     * @param customerID customer to have appointment with
+     * @param appointmentID appointment ID
+     * @return boolean true if no appointment timestamp overlap exists*/
+    public boolean checkOverlap(Timestamp startRequest, Timestamp endRequest, int customerID, int appointmentID) {
+        HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
+        Timestamp confirmedStart;
+        Timestamp confirmedEnd;
+        for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
+            if (!appointmentDAO.appointmentExists(appointmentID)) {
+                confirmedStart = confirmedAppts.getKey();
+                confirmedEnd = confirmedAppts.getValue();
+            } else continue;
+            if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
+                    && startRequest.before(confirmedEnd)) {
+                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
                 return false;
-            } else return true;
-        }
+            } else if (endRequest.after(confirmedStart) &&
+                    (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
+                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
+                return false;
+            }
+        } return true;
+    }
 
-
-     public boolean checkOverlap(Timestamp startRequest, Timestamp endRequest, int customerID, int appointmentID) {
-         if (!appointmentDAO.appointmentExists(appointmentID)) {
-             HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
-             for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
-                 Timestamp confirmedStart = confirmedAppts.getKey();
-                 Timestamp confirmedEnd = confirmedAppts.getValue();
-                 if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
-                         && startRequest.before(confirmedEnd)) {
-                     MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                             confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
-                     return false;
-                 } else if (endRequest.after(confirmedStart) &&
-                         (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
-                     MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                             confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
-                     return false;
-                 }
-             }
-         } return true;
-     }
-
-
-    /**Verifies users submitted data into all fields.*/
+    /**Verifies users submitted data into all fields.
+     * @param title title field submitted
+     * @param description description field submitted
+     * @param location location field submitted
+     * @param type type field submitted
+     * @param cusID customer field submitted
+     * @param contact contact field submitted
+     * @return boolean true if all fields filled*/
     public boolean checkBlanks(String title, String description, String location, String type, int cusID,
                                String contact) {
         if (title.isBlank() | description.isBlank() | location.isBlank() | type.isBlank() |
