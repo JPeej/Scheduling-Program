@@ -54,6 +54,8 @@ public class LoginController implements Initializable {
             }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed, contact IT.");
+        } catch (SQLException e) {
+            MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         }
     }
 
@@ -82,7 +84,7 @@ public class LoginController implements Initializable {
             String passwordLogin = getPasswordLogin();
             return userDAO.authenticateUser(userNameLogin, passwordLogin);
         } catch (SQLException e) {
-            MyAlerts.alertError("User authentication query failed, contact IT.");
+            MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         } return null;
     }
 

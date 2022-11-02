@@ -2,7 +2,6 @@ package DAO;
 
 import Model.Customer;
 import Utility.DateAndTimeHandler;
-import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
