@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**Controller for Modify Appointment menu. */
 public class ModifyApptController extends AddApptController implements Initializable {
@@ -43,8 +44,8 @@ public class ModifyApptController extends AddApptController implements Initializ
             String title = titleText.getText();
             String description = descriptText.getText();
             String location = locText.getText();
-            String type = typeCombo.getValue().toString();
-            String contact = conCombo.getValue().toString();
+            String type = typeCombo.getValue();
+            String contact = conCombo.getValue();
             int customerID = appointmentDAO.cusNameToID(cusCombo.getValue().toString());
             int contactID = appointmentDAO.conNameToID(contact);
 
@@ -58,16 +59,19 @@ public class ModifyApptController extends AddApptController implements Initializ
             int userID = JDBC.userID;
             String user = JDBC.user;
 
-            if (checkDates(stampStart, stampEnd, customerID, appointmentID)) {
-                if (checkBlanks(title, description, location, type, customerID, contact)) {
-                    Appointment newAppoint = new Appointment(appointmentID, title, description, type, location, stampStart,
-                            stampEnd, lastUpdateDateTime, user, contactID, customerID, userID);
-                    int rowsAffected = appointmentDAO.update(newAppoint);
-                    if (rowsAffected > 0) {
-                        nav.toAppointmentsMenu(actionEvent);
-                        MyAlerts.alertInfo("Appointment updated.");
-                    } else MyAlerts.alertError("Appointment update to database failed.");
-                } else MyAlerts.alertError("Please fill all fields and choices.");
+            ArrayList<Boolean> valueChecks = new ArrayList<>();
+            valueChecks.add(checkBlanks(title, description, location, type, customerID, contact));
+            valueChecks.add(checkStartBeforeEnd(stampStart, stampEnd));
+            valueChecks.add(checkApptNotInPast(stampStart));
+            valueChecks.add(checkOverlap(stampStart,stampEnd,customerID, 0));
+            if(!valueChecks.contains(false)) {
+                Appointment newAppoint = new Appointment(appointmentID, title, description, type, location, stampStart,
+                        stampEnd, lastUpdateDateTime, user, contactID, customerID, userID);
+                int rowsAffected = appointmentDAO.update(newAppoint);
+                if (rowsAffected > 0) {
+                    nav.toAppointmentsMenu(actionEvent);
+                    MyAlerts.alertInfo("Appointment updated.");
+                } else MyAlerts.alertError("Appointment update to database failed.");
             }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
