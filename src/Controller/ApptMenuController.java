@@ -82,6 +82,13 @@ public class ApptMenuController implements Initializable {
         }
     }
 
+    /**Event handler to exit program.
+     * Closes program and connection to database.*/
+    @FXML
+    public void onActionExit() {
+        System.exit(0);
+    }
+
     /**Event handler to Add Appointment Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
@@ -136,13 +143,6 @@ public class ApptMenuController implements Initializable {
         } catch (NullPointerException e) {
             MyAlerts.alertError("Please select an appointment to delete.");
         }
-    }
-
-    /**Event handler to exit program.
-     * Closes program and connection to database.*/
-    @FXML
-    public void onActionExit() {
-        System.exit(0);
     }
 
     /**Loads all appointments to the tableview. */

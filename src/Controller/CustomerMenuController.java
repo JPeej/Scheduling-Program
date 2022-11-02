@@ -42,29 +42,55 @@ public class CustomerMenuController implements Initializable {
     /**Event handler to Customer Menu.
      * See Nav.toCustomersMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionCustomersMenu(ActionEvent actionEvent) throws IOException {
-        nav.toCustomersMenu(actionEvent);
+    @FXML
+    public void onActionCustomerMenu(ActionEvent actionEvent) {
+        try {
+            nav.toCustomersMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Appointment Menu.
      * See Nav.toAppointmentsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionApptMenu(ActionEvent actionEvent) throws IOException {
-        nav.toAppointmentsMenu(actionEvent);
+    @FXML
+    public void onActionApptMenu(ActionEvent actionEvent) {
+        try {
+            nav.toAppointmentsMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Reports Menu.
      * See Nav.toReportsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionReportsMenu(ActionEvent actionEvent) throws IOException {
-        nav.toReportsMenu(actionEvent);
+    @FXML
+    public void onActionReportsMenu(ActionEvent actionEvent) {
+        try {
+            nav.toAppointmentsMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
+    }
+
+    /**Event handler to exit program.
+     * Closes program and connection to database.*/
+    @FXML
+    public void onActionExit() {
+        System.exit(0);
     }
 
     /**Event handler to Add Customer Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionAdd(ActionEvent actionEvent) throws IOException {
-        nav.navigate(actionEvent, Nav.addCustomerLoc, Nav.addCustomerTitle);
+    @FXML public void onActionAdd(ActionEvent actionEvent) {
+        try {
+            nav.navigate(actionEvent, Nav.addCustomerLoc, Nav.addCustomerTitle);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Modify Customer Menu.
@@ -89,13 +115,28 @@ public class CustomerMenuController implements Initializable {
         }
     }
 
-    /**Event handler to exit program.
-     * Closes program and connection to database.
-     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML public void onActionExit(ActionEvent actionEvent) {
-        System.exit(0);
+    /**Deletes the selected customer.
+     * Rejects deletion if customer has appointments.
+     * Reloads tableview.
+     * Prompts user with errors.*/
+    public void onActionDelete() {
+        try {
+            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            String name = customer.getName();
+            int appointments = customerDAO.countAppointments(customer.getCustomerID());
+            if (appointments == 0) {
+                customerDAO.delete(customer);
+                MyAlerts.alertInfo("Customer " + name + " deleted.");
+                loadTable();
+            } else MyAlerts.alertError("Customer has appointments scheduled.");
+        } catch (SQLException e) {
+            MyAlerts.alertError("Customer failed to delete.");
+        } catch (NullPointerException e) {
+            MyAlerts.alertError("Please select a customer to delete.");
+        }
     }
 
+    /**Load tableview with Customer data.*/
     public void loadTable() {
         try {
             ObservableList<Customer> customers = customerDAO.getAll();
@@ -120,24 +161,5 @@ public class CustomerMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadTable();
-    }
-
-    public void onActionDelete(ActionEvent actionEvent) {
-        try {
-            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-            String name = customer.getName();
-            int appointments = customerDAO.countAppointments(customer.getCustomerID());
-            if (appointments == 0) {
-                customerDAO.delete(customer);
-                MyAlerts.alertInfo("Customer " + name + " deleted.");
-                loadTable();
-            } else MyAlerts.alertError("Customer has appointments scheduled.");
-        } catch (SQLException e) {
-            MyAlerts.alertError("Customer failed to delete.");
-        } catch (NullPointerException e) {
-            MyAlerts.alertError("Please select a customer to delete.");
-        }
-
-
     }
 }
