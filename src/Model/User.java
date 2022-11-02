@@ -15,9 +15,7 @@ public class User {
         this.userName = userName;
         this.password = password;
     }
-
     //Getters & Setters ------------------------------------------------------------------------------------------------
-
     /**Get user ID.
      * @return this.userID int.*/
     public int getUserID() {
@@ -53,5 +51,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

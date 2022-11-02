@@ -112,8 +112,7 @@ public class CustomerDAOImp implements CustomerDAO {
         ps.setString(1, divName);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            int divID = rs.getInt("Division_ID");
-            return divID;
+            return rs.getInt("Division_ID");
         } else return -1;
     }
 
