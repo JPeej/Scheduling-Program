@@ -89,8 +89,12 @@ public class AddApptController implements Initializable {
      * See Nav.toAppointmentsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        nav.toAppointmentsMenu(actionEvent);
+    public void onActionCancel(ActionEvent actionEvent) {
+        try {
+            nav.toAppointmentsMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Verifies user did not request a start to come after an end.
