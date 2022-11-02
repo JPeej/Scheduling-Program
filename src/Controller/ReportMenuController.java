@@ -21,10 +21,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**Controller for ReportMenu. */
 public class ReportMenuController implements Initializable {
@@ -41,12 +44,14 @@ public class ReportMenuController implements Initializable {
     @FXML private TableColumn<Appointment, String> apptCustomer;
     @FXML private TableColumn<Appointment, Timestamp> apptStart;
     @FXML private TableColumn<Appointment, Timestamp> apptEnd;
-    private ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April",
-            "May", "June", "July", "August", "September", "October", "November", "December");
-    private ObservableList<Appointment> reportData;
-    private String comboValue;
-    AppointmentDAO appointmentDAO = new AppointmentDAOImp();
     Nav nav = new Nav();
+    private final String comboValue = null;
+    private final int year = Year.now().getValue();
+    private ObservableList<Appointment> reportData = null;
+    private ObservableList<Appointment> filteredData = null;
+    AppointmentDAO appointmentDAO = new AppointmentDAOImp();
+    private final ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April",
+            "May", "June", "July", "August", "September", "October", "November", "December");
 
     /**Event handler to Customer Menu.
      * See Nav.toCustomersMenu.
@@ -100,22 +105,34 @@ public class ReportMenuController implements Initializable {
     }
 
     public void onActionMonthReport(ActionEvent actionEvent) {
+        try {
+            filteredData.removeAll();
+        } catch (NullPointerException ignored) {}
         comboBox.setItems(months);
         comboBox.setPromptText("Select month");
-        comboBox.valueProperty().addListener((comboSelection, oldMonth, newMonth) -> comboValue = newMonth);
 
-        System.out.println(comboValue);
-        ObservableList<Appointment> filteredAppoints;
-//        reportData.stream()
-//                .filter(appointment -> appointment)
+        comboBox.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldValue, newValue) -> {
+                    Month month = Month.valueOf(newValue.toUpperCase());
+                    loadTable(filterByMonth(month, year));
+                }
+        );
+    }
 
+    public ObservableList<Appointment> filterByMonth(Month month, int year) {
+        List<Appointment> monthlyData =
+                reportData.stream().filter(appointment ->
+                (appointment.getStartStamp().toLocalDateTime().getMonth().equals(month)
+                && appointment.getStartStamp().toLocalDateTime().toLocalDate().getYear() == year))
+                .collect(Collectors.toList());
+        filteredData = FXCollections.observableArrayList(monthlyData);
+        return filteredData;
     }
 
     public void onActionExpired(ActionEvent actionEvent) {
     }
 
-    public String onActionCombo() {
-        return comboBox.getSelectionModel().getSelectedItem();
+    public void onActionCombo() {
     }
 
     /**Load tableview with Appointment data provided.
@@ -137,6 +154,7 @@ public class ReportMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             reportData = appointmentDAO.getAll();
+            loadTable(reportData);
         } catch (SQLException e) {
             MyAlerts.alertError("Data retrieval failed.");
         }
