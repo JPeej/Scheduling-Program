@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**Manage navigation between menus.
  * Static strings available for Controller package. */
@@ -25,7 +26,6 @@ public class Nav {
     public static String addCustomerTitle = "Add Customer";
     public static String appointmentMenuTitle = "Appointment Menu";
     public static String customerMenuTitle = "Customer Menu";
-    public static String loginTitle = "Login";
     public static String modifyAppointmentTitle = "Modify Appointment";
     public static String modifyCustomerTitle = "Modify Customer";
     public static String reportMenuTitle = "Report Menu";
@@ -44,7 +44,7 @@ public class Nav {
      */
     public void navigate(ActionEvent event, String fxmlLocation, String title) throws IOException {
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource(fxmlLocation));
+        scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlLocation)));
         stage.setTitle(title);
         stage.setScene(new Scene(scene));
         stage.show();

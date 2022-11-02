@@ -13,6 +13,9 @@ public class MyAlerts {
         alert.showAndWait();
     }
 
+    /**Displays info alert message box.
+     * Info will have custom message.
+     * @param prompt String custom message to display. */
     public static void alertInfo(String prompt) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, prompt);
         alert.showAndWait();

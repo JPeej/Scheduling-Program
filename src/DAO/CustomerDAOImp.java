@@ -2,7 +2,6 @@ package DAO;
 
 import Model.Customer;
 import Utility.DateAndTimeHandler;
-import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
@@ -12,45 +11,6 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public class CustomerDAOImp implements CustomerDAO {
-
-    /**CRUD Retrieve.
-     * Retrieval of one object.
-     * @param id indexing or PK/FK id. */
-    @Override
-    public Object get(int id) throws SQLException {
-        return null;
-    }
-
-    /**Overloaded CRUD Retrieve for divID.
-     * @param divName name of division.
-     * @return int division ID. */
-    @Override
-    public int getDivId(String divName) throws SQLException {
-        String sql = "SELECT Division_ID FROM client_schedule.first_level_divisions WHERE Division = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, divName);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int divID = rs.getInt("Division_ID");
-            return divID;
-        } return -1;
-    }
-
-    @Override
-    public int countAppointments(int customerID) {
-        try {
-            String sql = "SELECT count(Customer_ID) FROM client_schedule.appointments WHERE Customer_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, customerID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("count(Customer_ID)");
-            }
-        } catch (SQLException e) {
-            MyAlerts.alertError("");
-            return 0;
-        } return 0;
-    }
 
     /**CRUD Retrieve.
      * Retrieval of all customers in a sorted manner by ID.
@@ -135,16 +95,45 @@ public class CustomerDAOImp implements CustomerDAO {
     /**CRUD Delete.
      * @param customer object to be deleted.*/
     @Override
-    public int delete(Object customer) {
-        try {
+    public int delete(Object customer) throws SQLException {
             String sql = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1,((Customer) customer).getCustomerID());
             return ps.executeUpdate();
-        } catch (SQLException e) {
-            MyAlerts.alertError("Deletion failed.");
-            return 0;
-        }
     }
 
+    /**Overloaded CRUD Retrieve for divID.
+     * @param divName name of division.
+     * @return int division ID. */
+    @Override
+    public int getDivId(String divName) throws SQLException {
+        String sql = "SELECT Division_ID FROM client_schedule.first_level_divisions WHERE Division = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, divName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Division_ID");
+        } else return -1;
+    }
+
+    /**Checks if customer has any appointments.
+     * @param customerID customer to check
+     * @return boolean true if appointment exists*/
+    @Override
+    public boolean appointmentExists(int customerID) throws SQLException {
+        String sql = "SELECT Appointment_ID FROM client_schedule.appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
+    }
+
+    //Overridden but null methods --------------------------------------------------------------------------------------
+    /**CRUD Retrieve.
+     * Retrieval of one object.
+     * @param id indexing or PK/FK id. */
+    @Override
+    public Object get(int id) throws SQLException {
+        return null;
+    }
 }

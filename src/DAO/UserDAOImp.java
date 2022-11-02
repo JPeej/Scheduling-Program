@@ -1,7 +1,6 @@
 package DAO;
 
 import Model.User;
-import Utility.MyAlerts;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,23 +33,21 @@ public class UserDAOImp implements UserDAO{
         }
     }
 
+    /**Gets ID of user.
+     * @param userName user name entered
+     * @return  positive int of ID if found*/
     @Override
-    public int getUserID(String userName) {
-        try {
-            String sql = "SELECT User_ID FROM client_schedule.users WHERE ? = User_Name";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, userName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("User_ID");
-            } else return -1;
-        } catch (SQLException e) {
-            MyAlerts.alertError("User not found.");
-        } return -1;
+    public int getUserID(String userName) throws SQLException {
+        String sql = "SELECT User_ID FROM client_schedule.users WHERE ? = User_Name";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, userName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("User_ID");
+        } else return -1;
     }
 
     //Overridden but null CRUD methods----------------------------------------------------------------------------------
-
     /**CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id*/

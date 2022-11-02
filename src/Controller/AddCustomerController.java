@@ -18,12 +18,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**Controller for Add Customer menu. */
 public class AddCustomerController implements Initializable {
-
 
     @FXML private ComboBox<String> countryCombo;
     @FXML private ComboBox<String> divCombo;
@@ -48,9 +46,9 @@ public class AddCustomerController implements Initializable {
             String phone = phoneText.getText();
             String createBy = JDBC.user;
             String lastUpdateBy = JDBC.user;
+            Timestamp createDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
+            Timestamp lastUpdateDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
             if (checkBlanks(name, address, zip, phone, division)) {
-                Timestamp createDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
-                Timestamp lastUpdateDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
                 Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
                         lastUpdateDateTime, lastUpdateBy);
                 int rowsAffected = customerDAO.insert(newCustomer);
