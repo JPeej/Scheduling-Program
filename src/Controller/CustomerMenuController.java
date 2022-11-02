@@ -20,21 +20,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 /**Controller for Customer Menu menu. */
 public class CustomerMenuController implements Initializable {
-    @FXML private TableView customerTable;
-    @FXML private TableColumn idCol;
-    @FXML private TableColumn nameCol;
-    @FXML private TableColumn addressCol;
-    @FXML private TableColumn zipCol;
-    @FXML private TableColumn divCol;
-    @FXML private TableColumn phoneCol;
-    @FXML private TableColumn createDateCol;
-    @FXML private TableColumn createByCol;
-    @FXML private TableColumn lastUpdateCol;
-    @FXML private TableColumn lastUpdateByCol;
+    @FXML private TableView<Customer> customerTable;
+    @FXML private TableColumn<Customer, Integer> idCol;
+    @FXML private TableColumn<Customer, String> nameCol;
+    @FXML private TableColumn<Customer, String> addressCol;
+    @FXML private TableColumn<Customer, String> zipCol;
+    @FXML private TableColumn<Customer, String> divCol;
+    @FXML private TableColumn<Customer, String> phoneCol;
+    @FXML private TableColumn<Customer, Timestamp> createDateCol;
+    @FXML private TableColumn<Customer, String> createByCol;
+    @FXML private TableColumn<Customer, Timestamp> lastUpdateCol;
+    @FXML private TableColumn<Customer, String> lastUpdateByCol;
     Stage stage;
     Nav nav = new Nav();
     CustomerDAO customerDAO = new CustomerDAOImp();
@@ -102,7 +103,7 @@ public class CustomerMenuController implements Initializable {
             loader.setLocation(getClass().getResource(Nav.modifyCustomerLoc));
             loader.load();
             ModifyCustomerController modifyCustomerController = loader.getController();
-            modifyCustomerController.sendCustomer((Customer) customerTable.getSelectionModel().getSelectedItem());
+            modifyCustomerController.sendCustomer(customerTable.getSelectionModel().getSelectedItem());
             stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setTitle(Nav.modifyCustomerTitle);
@@ -121,7 +122,7 @@ public class CustomerMenuController implements Initializable {
      * Prompts user with errors.*/
     public void onActionDelete() {
         try {
-            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            Customer customer = customerTable.getSelectionModel().getSelectedItem();
             String name = customer.getName();
             int appointments = customerDAO.countAppointments(customer.getCustomerID());
             if (appointments == 0) {
