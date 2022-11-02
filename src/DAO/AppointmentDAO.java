@@ -1,11 +1,11 @@
 package DAO;
 
 import javafx.collections.ObservableList;
-
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 
+/**Interface extension of DAO for Appointment objects. */
 public interface AppointmentDAO extends DAO {
 
     ObservableList<String> getCustomerNames() throws SQLException;

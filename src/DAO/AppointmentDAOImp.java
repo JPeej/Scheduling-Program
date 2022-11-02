@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.HashMap;
 
+/**Full DAO implementation for Appointment class. */
 public class AppointmentDAOImp implements AppointmentDAO{
 
 
