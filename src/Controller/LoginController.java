@@ -4,6 +4,7 @@ import DAO.JDBC;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
+import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,17 +39,21 @@ public class LoginController implements Initializable {
      * See Nav.toAppointmentsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionSubmitLogin(ActionEvent actionEvent) throws IOException, SQLException {
-        User loginUser = userAuthentication();
-        if (loginUser != null) {
-            logActivity("Success");
-            JDBC.user = getUserNameLogin();
-            JDBC.userID = userDAO.getUserID(JDBC.user);
-            nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
-        } else {
-            logActivity("Fail");
-            ResourceBundle rb = ResourceBundle.getBundle("Utility/MessageBundle", Locale.getDefault());
-            incorrectLoginText.setText(rb.getString("incorrectLoginText"));
+    public void onActionSubmitLogin(ActionEvent actionEvent) {
+        try {
+            User loginUser = userAuthentication();
+            if (loginUser != null) {
+                logActivity("Success");
+                JDBC.user = getUserNameLogin();
+                JDBC.userID = userDAO.getUserID(JDBC.user);
+                nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
+            } else {
+                logActivity("Fail");
+                ResourceBundle rb = ResourceBundle.getBundle("Utility/MessageBundle", Locale.getDefault());
+                incorrectLoginText.setText(rb.getString("incorrectLoginText"));
+            }
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed, contact IT.");
         }
     }
 
@@ -70,23 +75,31 @@ public class LoginController implements Initializable {
      * See UserDAOImp class.
      * See getUserNameLogin and getPasswordLogin methods here.
      * @return loginUser User if correct credentials provided and null if not. */
-    public User userAuthentication() throws SQLException {
-        UserDAO userDAO = new UserDAOImp();
-        String userNameLogin = getUserNameLogin();
-        String passwordLogin = getPasswordLogin();
-        return userDAO.authenticateUser(userNameLogin, passwordLogin);
+    public User userAuthentication() {
+        try {
+            UserDAO userDAO = new UserDAOImp();
+            String userNameLogin = getUserNameLogin();
+            String passwordLogin = getPasswordLogin();
+            return userDAO.authenticateUser(userNameLogin, passwordLogin);
+        } catch (SQLException e) {
+            MyAlerts.alertError("User authentication query failed, contact IT.");
+        } return null;
     }
 
     /**Logs any login attempt to login_activity.txt.
      * DateTime is in UTC.
      * @param logResult whether or not the login attempt was successful. */
-    public void logActivity(String logResult) throws IOException {
-        String user = getUserNameLogin();
-        Instant dateTimeUTC = Instant.now();
-        String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
-        FileWriter fw = new FileWriter("login_activity.txt", true);
-        fw.write(log);
-        fw.close();
+    public void logActivity(String logResult) {
+        try {
+            String user = getUserNameLogin();
+            Instant dateTimeUTC = Instant.now();
+            String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
+            FileWriter fw = new FileWriter("login_activity.txt", true);
+            fw.write(log);
+            fw.close();
+        } catch (IOException e) {
+            MyAlerts.alertError("Login activity failed to log, contact IT");
+        }
     }
 
     /**Sets appropriate language to the Login menu.
