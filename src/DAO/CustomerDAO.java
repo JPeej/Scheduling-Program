@@ -7,5 +7,5 @@ public interface CustomerDAO extends DAO {
 
     int getDivId(String divName) throws SQLException;
 
-    int countAppointments(int CustomerID);
+    boolean appointmentExists(int customerID) throws SQLException;
 }
