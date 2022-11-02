@@ -254,8 +254,6 @@ public class Appointment {
         return contactID;
     }
 
-    /**Set appointment contactID.
-     * @param contactID int. */
     /**Set appointment contact Id.
      * @param contactID int. */
     public void setContactID(int contactID) {
