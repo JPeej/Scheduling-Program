@@ -126,26 +126,30 @@ public class AddApptController implements Initializable {
      * @param appointmentID appointment ID
      * @return boolean true if no appointment timestamp overlap exists*/
     public boolean checkOverlap(Timestamp startRequest, Timestamp endRequest, int customerID, int appointmentID) {
-        HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
-        Timestamp confirmedStart;
-        Timestamp confirmedEnd;
-        for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
-            if (!appointmentDAO.appointmentExists(appointmentID)) {
-                confirmedStart = confirmedAppts.getKey();
-                confirmedEnd = confirmedAppts.getValue();
-            } else continue;
-            if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
-                    && startRequest.before(confirmedEnd)) {
-                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
-                return false;
-            } else if (endRequest.after(confirmedStart) &&
-                    (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
-                MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
-                        confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
-                return false;
-            }
-        } return true;
+        try {
+            HashMap<Timestamp, Timestamp> appointments = appointmentDAO.getAppointments(customerID);
+            Timestamp confirmedStart;
+            Timestamp confirmedEnd;
+            for (Map.Entry<Timestamp, Timestamp> confirmedAppts : appointments.entrySet()) {
+                if (!appointmentDAO.appointmentExists(appointmentID)) {
+                    confirmedStart = confirmedAppts.getKey();
+                    confirmedEnd = confirmedAppts.getValue();
+                } else continue;
+                if ((startRequest.after(confirmedStart) | startRequest.equals(confirmedStart))
+                        && startRequest.before(confirmedEnd)) {
+                    MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                            confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
+                    return false;
+                } else if (endRequest.after(confirmedStart) &&
+                        (endRequest.before(confirmedEnd)) | endRequest.equals(confirmedEnd)) {
+                    MyAlerts.alertError("Requested appointment overlaps appointment scheduled:\nStart: " +
+                            confirmedAppts.getKey() + "\nEnd: " + confirmedAppts.getValue());
+                    return false;
+                }
+            } return true;
+        } catch (SQLException e) {
+            MyAlerts.alertError("SQL CRUD methods failed. Contact IT.");
+        } return false;
     }
 
     /**Verifies users submitted data into all fields.
@@ -169,12 +173,16 @@ public class AddApptController implements Initializable {
      * Sets values into appropriate combo boxes. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cusCombo.setItems(appointmentDAO.getCustomerNames());
-        conCombo.setItems(appointmentDAO.getContactNames());
-        typeCombo.setItems(Appointment.types);
-        DateAndTimeHandler.appointmentTimes();
-        startTimeCombo.setItems(Appointment.times);
-        endTimeCombo.setItems(Appointment.times);
+        try {
+            cusCombo.setItems(appointmentDAO.getCustomerNames());
+            conCombo.setItems(appointmentDAO.getContactNames());
+            typeCombo.setItems(Appointment.types);
+            DateAndTimeHandler.appointmentTimes();
+            startTimeCombo.setItems(Appointment.times);
+            endTimeCombo.setItems(Appointment.times);
+        } catch (SQLException e) {
+            MyAlerts.alertError("SQL CRUD methods failed. Contact IT.");
+        }
     }
 
 }
