@@ -5,8 +5,6 @@ import DAO.AppointmentDAOImp;
 import Model.Appointment;
 import Utility.MyAlerts;
 import Utility.Nav;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,14 +15,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -101,25 +98,39 @@ public class ReportMenuController implements Initializable {
     }
 
     public void onActionTypeReport(ActionEvent actionEvent) {
+        comboBox.setItems(Appointment.types);
+        comboBox.setPromptText("Select type");
 
+        comboBox.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldValue, newValue) -> {
+                    String type = newValue;
+                    loadTable(filteredByType(type));
+                }
+        );
+    }
+
+    public ObservableList<Appointment> filteredByType(String type) {
+        List<Appointment> typeData =
+                reportData.stream().filter(appointment ->
+                        appointment.getType().contentEquals(type))
+                        .collect(Collectors.toList());
+        filteredData = FXCollections.observableArrayList(typeData);
+        return  filteredData;
     }
 
     public void onActionMonthReport(ActionEvent actionEvent) {
-        try {
-            filteredData.removeAll();
-        } catch (NullPointerException ignored) {}
         comboBox.setItems(months);
         comboBox.setPromptText("Select month");
 
         comboBox.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldValue, newValue) -> {
                     Month month = Month.valueOf(newValue.toUpperCase());
-                    loadTable(filterByMonth(month, year));
+                    loadTable(filteredByMonth(month, year));
                 }
         );
     }
 
-    public ObservableList<Appointment> filterByMonth(Month month, int year) {
+    public ObservableList<Appointment> filteredByMonth(Month month, int year) {
         List<Appointment> monthlyData =
                 reportData.stream().filter(appointment ->
                 (appointment.getStartStamp().toLocalDateTime().getMonth().equals(month)
