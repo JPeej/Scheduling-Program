@@ -2,7 +2,6 @@ package DAO;
 
 import Model.Appointment;
 import Utility.DateAndTimeHandler;
-import Utility.MyAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
@@ -91,23 +90,23 @@ public class AppointmentDAOImp implements AppointmentDAO{
      */
     @Override
     public int update(Object newAppointment) throws SQLException {
-            String sql ="UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
+        String sql ="UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
                     "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
                     "Contact_ID = ? WHERE Appointment_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, ((Appointment) newAppointment).getTitle());
-            ps.setString(2, ((Appointment) newAppointment).getDescription());
-            ps.setString(3, ((Appointment) newAppointment).getLocation());
-            ps.setString(4, ((Appointment) newAppointment).getType());
-            ps.setTimestamp(5, ((Appointment) newAppointment).getStartStamp());
-            ps.setTimestamp(6, ((Appointment) newAppointment).getEndStamp());
-            ps.setTimestamp(7, ((Appointment) newAppointment).getUpdateDate());
-            ps.setString(8, ((Appointment) newAppointment).getUpdateBy());
-            ps.setInt(9, ((Appointment) newAppointment).getCustomerID());
-            ps.setInt(10, ((Appointment) newAppointment).getUserID());
-            ps.setInt(11, ((Appointment) newAppointment).getContactID());
-            ps.setInt(12, ((Appointment) newAppointment).getAppointmentID());
-            return ps.executeUpdate();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, ((Appointment) newAppointment).getTitle());
+        ps.setString(2, ((Appointment) newAppointment).getDescription());
+        ps.setString(3, ((Appointment) newAppointment).getLocation());
+        ps.setString(4, ((Appointment) newAppointment).getType());
+        ps.setTimestamp(5, ((Appointment) newAppointment).getStartStamp());
+        ps.setTimestamp(6, ((Appointment) newAppointment).getEndStamp());
+        ps.setTimestamp(7, ((Appointment) newAppointment).getUpdateDate());
+        ps.setString(8, ((Appointment) newAppointment).getUpdateBy());
+        ps.setInt(9, ((Appointment) newAppointment).getCustomerID());
+        ps.setInt(10, ((Appointment) newAppointment).getUserID());
+        ps.setInt(11, ((Appointment) newAppointment).getContactID());
+        ps.setInt(12, ((Appointment) newAppointment).getAppointmentID());
+        return ps.executeUpdate();
     }
 
     /**
@@ -116,10 +115,10 @@ public class AppointmentDAOImp implements AppointmentDAO{
      */
     @Override
     public int delete(Object appointment) throws SQLException {
-            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, ((Appointment) appointment).getAppointmentID());
-            return ps.executeUpdate();
+        String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, ((Appointment) appointment).getAppointmentID());
+        return ps.executeUpdate();
     }
 
     /**CRUD retrieval of customer names.
@@ -153,6 +152,7 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     /**CRUD retrieval of customer appointments.
+     * @param customerID customer to search for
      * @return Hashmap of Timestamps for comparison. */
     @Override
     public HashMap<Timestamp, Timestamp> getAppointments(int customerID) throws SQLException {
@@ -172,33 +172,35 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     /**CRUD retrieval of customer ID for customer.
-     * @param customerName
+     * @param customerName name of customer
      * @return customer ID if found */
     @Override
     public int cusNameToID(String customerName) throws SQLException {
-            String sql = "SELECT Customer_ID FROM client_schedule.customers WHERE ? = Customer_Name";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, customerName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("Customer_ID");
-            } else return -1;
+        String sql = "SELECT Customer_ID FROM client_schedule.customers WHERE ? = Customer_Name";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, customerName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Customer_ID");
+        } else return -1;
     }
 
     /**CRUD retrieval of contact ID for contact.
-     * @param contactName
+     * @param contactName name of contact
      * @return contact ID if found */
     @Override
     public int conNameToID(String contactName) throws SQLException {
-            String sql = "SELECT Contact_ID FROM client_schedule.contacts WHERE ? = Contact_Name";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, contactName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("Contact_ID");
-            } else return -1;
+        String sql = "SELECT Contact_ID FROM client_schedule.contacts WHERE ? = Contact_Name";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, contactName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Contact_ID");
+        } else return -1;
     }
 
+    /**Checks appointment to see if it already exists in database.
+     * @return boolean true if appointment exists*/
     @Override
     public boolean appointmentExists(int apptID) throws SQLException {
         String sql = "SELECT Appointment_ID FROM client_schedule.appointments WHERE Appointment_ID = ?";
