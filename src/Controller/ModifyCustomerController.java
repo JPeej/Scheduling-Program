@@ -18,11 +18,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**Controller for Modify Customer menu. */
-public class ModifyCustomerController implements Initializable {
+public class ModifyCustomerController extends AddCustomerController implements Initializable {
 
     @FXML private ComboBox<String> countryCombo;
     @FXML private ComboBox<String> divCombo;
@@ -56,7 +55,7 @@ public class ModifyCustomerController implements Initializable {
                 if (rowsAffected > 0) {
                     nav.toCustomersMenu(actionEvent);
                     MyAlerts.alertInfo("Customer updated.");
-                } else MyAlerts.alertError("Customer update to database failed.");
+                }
             } else MyAlerts.alertError("Please fill all fields and choices.");
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed.\nPlease restart program. " +
@@ -65,47 +64,6 @@ public class ModifyCustomerController implements Initializable {
             MyAlerts.alertError("Please select/enter a value for every field.");
         }
 
-    }
-
-    /**Event handler to Customer Menu.
-     * Discards any changes, makes no changes to database.
-     * See Nav.toCustomersMenu.
-     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
-    @FXML
-    public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        nav.toCustomersMenu(actionEvent);
-    }
-
-    /**Switch method for division combo.
-     * Reacts to country selection. */
-    public void onActionCountryCombo() {
-        String countrySelection = countryCombo.getValue();
-        switch(countrySelection) {
-            case "U.S":
-                divCombo.setItems(Locations.usDivList);
-                break;
-            case "UK":
-                divCombo.setItems(Locations.ukDivList);
-                break;
-            case "Canada":
-                divCombo.setItems(Locations.canadaList);
-                break;
-            default:
-                divCombo.setPromptText("Select country first");
-        }
-    }
-
-    /**Check if any fields were left blank by user.
-     * @param name
-     * @param address
-     * @param zip
-     * @param phone
-     * @param div
-     * @return boolean*/
-    public boolean checkBlanks(String name, String address, String zip, String phone, int div) {
-        if(name.isBlank() | address.isBlank() | zip.isBlank() | phone.isBlank() | String.valueOf(div).isBlank()){
-            return false;
-        } else return true;
     }
 
     /**Populates Modify Customer menu with customer data.
@@ -121,6 +79,11 @@ public class ModifyCustomerController implements Initializable {
         onActionCountryCombo();
     }
 
+    /**Initial method called upon screen load.
+     * Populates country combo with countries in database. */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {countryCombo.setItems(Locations.countries);}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        countryCombo.setItems(Locations.countries);
+    }
+
 }
