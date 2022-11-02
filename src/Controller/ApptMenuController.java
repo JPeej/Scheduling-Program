@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,17 +30,17 @@ import java.util.stream.Collectors;
 /**Controller for Appointment menu. */
 public class ApptMenuController implements Initializable {
 
-    @FXML private TableView appointTable;
-    @FXML private TableColumn idCol;
-    @FXML private TableColumn titleCol;
-    @FXML private TableColumn descriptCol;
-    @FXML private TableColumn locCol;
-    @FXML private TableColumn contactCol;
-    @FXML private TableColumn typeCol;
-    @FXML private TableColumn startCol;
-    @FXML private TableColumn endCol;
-    @FXML private TableColumn cusIDCol;
-    @FXML private TableColumn userIDCol;
+    @FXML private TableView<Appointment> appointTable;
+    @FXML private TableColumn<Appointment, Integer> idCol;
+    @FXML private TableColumn<Appointment, String> titleCol;
+    @FXML private TableColumn<Appointment, String> descriptCol;
+    @FXML private TableColumn<Appointment, String> locCol;
+    @FXML private TableColumn<Appointment, String> contactCol;
+    @FXML private TableColumn<Appointment, String> typeCol;
+    @FXML private TableColumn<Appointment, Timestamp> startCol;
+    @FXML private TableColumn<Appointment, Timestamp> endCol;
+    @FXML private TableColumn<Appointment, Integer> cusIDCol;
+    @FXML private TableColumn<Appointment, Integer> userIDCol;
     AppointmentDAO appointmentDAO = new AppointmentDAOImp();
     ObservableList<Appointment> allAppointments;
     Nav nav = new Nav();
@@ -49,56 +50,48 @@ public class ApptMenuController implements Initializable {
      * See Nav.toCustomersMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionCustomerMenu(ActionEvent actionEvent) throws IOException {
-        nav.toCustomersMenu(actionEvent);
+    public void onActionCustomerMenu(ActionEvent actionEvent) {
+        try {
+            nav.toCustomersMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Appointment Menu.
      * See Nav.toAppointmentsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionApptMenu(ActionEvent actionEvent) throws IOException {
-        nav.toAppointmentsMenu(actionEvent);
+    public void onActionApptMenu(ActionEvent actionEvent) {
+        try {
+            nav.toAppointmentsMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Reports Menu.
      * See Nav.toReportsMenu.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionReportsMenu(ActionEvent actionEvent) throws IOException {
-        nav.toReportsMenu(actionEvent);
-    }
-
-    public void onActionAll(ActionEvent actionEvent) {
-        loadTable(allAppointments);
-    }
-
-    public void onActionByMonth(ActionEvent actionEvent) {
-        Month thisMonth = LocalDateTime.now().getMonth();
-        List<Appointment> filteredAppts = allAppointments.stream()
-                .filter(appointment -> appointment.getStartStamp().toLocalDateTime().getMonth().equals(thisMonth))
-                .collect(Collectors.toList());
-        ObservableList<Appointment> thisMonthsAppts = FXCollections.observableArrayList(filteredAppts);
-        loadTable(thisMonthsAppts);
-    }
-
-    public void onActionByWeek(ActionEvent actionEvent) {
-        LocalDateTime weekAway = LocalDateTime.now().plusDays(7);
-        List<Appointment> filteredAppts = allAppointments.stream()
-                .filter(appointment -> ((appointment.getStartStamp().toLocalDateTime().isEqual(LocalDateTime.now())
-                        | appointment.getStartStamp().toLocalDateTime().isAfter(LocalDateTime.now())))
-                        & appointment.getStartStamp().toLocalDateTime().isBefore(weekAway))
-                .collect(Collectors.toList());
-        ObservableList<Appointment> thisWeeksAppts = FXCollections.observableArrayList(filteredAppts);
-        loadTable(thisWeeksAppts);
+    public void onActionReportsMenu(ActionEvent actionEvent) {
+        try {
+            nav.toAppointmentsMenu(actionEvent);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Add Appointment Menu.
      * See Nav.navigate.
      * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
     @FXML
-    public void onActionAdd(ActionEvent actionEvent) throws IOException {
-        nav.navigate(actionEvent, Nav.addAppointmentLoc, Nav.addAppointmentTitle);
+    public void onActionAdd(ActionEvent actionEvent) {
+        try {
+            nav.navigate(actionEvent, Nav.addAppointmentLoc, Nav.addAppointmentTitle);
+        } catch (IOException e) {
+            MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
+        }
     }
 
     /**Event handler to Modify Appointment Menu.
@@ -111,7 +104,7 @@ public class ApptMenuController implements Initializable {
             loader.setLocation(getClass().getResource(Nav.modifyAppointmentLoc));
             loader.load();
             ModifyApptController modifyApptController = loader.getController();
-            modifyApptController.sendAppt((Appointment) appointTable.getSelectionModel().getSelectedItem());
+            modifyApptController.sendAppt(appointTable.getSelectionModel().getSelectedItem());
             stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setTitle(Nav.modifyAppointmentTitle);
@@ -124,9 +117,13 @@ public class ApptMenuController implements Initializable {
         }
     }
 
+    /**Deletes the selected appointment.
+     * Prompts user on success with ID and type.
+     * Reloads tableview.
+     * Prompts user with errors.*/
     public void onActionDeleteAppt() {
         try {
-            Appointment appointment = (Appointment)appointTable.getSelectionModel().getSelectedItem();
+            Appointment appointment = appointTable.getSelectionModel().getSelectedItem();
             int apptID = appointment.getAppointmentID();
             String apptType = appointment.getType();
             appointmentDAO.delete(appointment);
@@ -142,13 +139,44 @@ public class ApptMenuController implements Initializable {
     }
 
     /**Event handler to exit program.
-     * Closes program and connection to database.
-     * @param actionEvent ActionEvent instantiated via event handler tied to button.*/
+     * Closes program and connection to database.*/
     @FXML
-    public void onActionExit(ActionEvent actionEvent) {
+    public void onActionExit() {
         System.exit(0);
     }
 
+    /**Loads all appointments to the tableview. */
+    public void onActionAll() {
+        loadTable(allAppointments);
+    }
+
+    /**Filters appointments tableview to show only those with the next month.
+     * One of my lambda expressions. Month class allowed me to make an easy to read stream with lambda expression.
+     * The other option would have been to either implement something similar to the onActionByWeek method or,
+     * to use many if/else statements. */
+    public void onActionByMonth() {
+        Month thisMonth = LocalDateTime.now().getMonth();
+        List<Appointment> filteredAppts = allAppointments.stream()
+                .filter(appointment -> appointment.getStartStamp().toLocalDateTime().getMonth().equals(thisMonth))
+                .collect(Collectors.toList());
+        ObservableList<Appointment> thisMonthsAppts = FXCollections.observableArrayList(filteredAppts);
+        loadTable(thisMonthsAppts);
+    }
+
+    /**Filters appointments tableview to show only those within the next week.*/
+    public void onActionByWeek() {
+        LocalDateTime weekAway = LocalDateTime.now().plusDays(7);
+        List<Appointment> filteredAppts = allAppointments.stream()
+                .filter(appointment -> ((appointment.getStartStamp().toLocalDateTime().isEqual(LocalDateTime.now())
+                        | appointment.getStartStamp().toLocalDateTime().isAfter(LocalDateTime.now())))
+                        & appointment.getStartStamp().toLocalDateTime().isBefore(weekAway))
+                .collect(Collectors.toList());
+        ObservableList<Appointment> thisWeeksAppts = FXCollections.observableArrayList(filteredAppts);
+        loadTable(thisWeeksAppts);
+    }
+
+    /**Load tableview with Appointment data provided.
+     * @param appointments appointments, filtered or not, to populate the tableview*/
     public void loadTable(ObservableList<Appointment> appointments) {
         appointTable.setItems(appointments);
         idCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -173,7 +201,6 @@ public class ApptMenuController implements Initializable {
         } catch (SQLException e) {
             MyAlerts.alertError("Appointment data failed to load. ");
         }
-
     }
 
 }

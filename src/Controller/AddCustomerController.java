@@ -18,12 +18,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**Controller for Add Customer menu. */
 public class AddCustomerController implements Initializable {
-
 
     @FXML private ComboBox<String> countryCombo;
     @FXML private ComboBox<String> divCombo;
