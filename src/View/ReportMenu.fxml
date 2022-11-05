@@ -1,41 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportMenuController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportMenuController">
     <children>
-        <TableView fx:id="reportTableView" layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
+        <TableView fx:id="conTable" layoutX="25.0" layoutY="97.0" prefHeight="224.0" prefWidth="950.0">
             <columns>
-                <TableColumn fx:id="apptID" maxWidth="50.0" prefWidth="29.399993896484375" text="ID" />
-                <TableColumn fx:id="custID" prefWidth="55.20001220703125" text="Cus. ID" />
-                <TableColumn fx:id="apptTitle" prefWidth="120.60000610351562" text="Title" />
-                <TableColumn fx:id="apptDescript" prefWidth="138.99998474121094" text="Description" />
-                <TableColumn fx:id="apptType" prefWidth="120.0" text="Type" />
-                <TableColumn fx:id="apptContact" prefWidth="110.4000244140625" text="Contact" />
-                <TableColumn fx:id="apptCustomer" prefWidth="109.60003662109375" text="Customer" />
-                <TableColumn fx:id="apptStart" minWidth="4.20001220703125" prefWidth="136.0" text="Start " />
-                <TableColumn fx:id="apptEnd" prefWidth="135.199951171875" text="End" />
+                <TableColumn fx:id="conAppID" maxWidth="85.59999084472656" prefWidth="30.0" text="ID" />
+                <TableColumn fx:id="conCustID" minWidth="0.0" prefWidth="55.0" text="Cus. ID" />
+                <TableColumn fx:id="conTitle" prefWidth="120.79998779296875" text="Title" />
+                <TableColumn fx:id="conDescript" minWidth="0.0" prefWidth="139.20001220703125" text="Description" />
+                <TableColumn fx:id="conType" prefWidth="120.0" text="Type" />
+                <TableColumn fx:id="conContact" prefWidth="110.4000244140625" text="Contact" />
+                <TableColumn fx:id="conCust" prefWidth="109.60003662109375" text="Customer" />
+                <TableColumn fx:id="conStart" minWidth="4.20001220703125" prefWidth="136.0" text="Start " />
+                <TableColumn fx:id="conEnd" prefWidth="135.199951171875" text="End" />
             </columns>
         </TableView>
         <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />
         <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
         <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-        <Label layoutX="873.0" layoutY="42.0" prefHeight="35.0" prefWidth="201.0" text="Reports" textAlignment="CENTER" underline="true">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
-      <ComboBox fx:id="comboBox" layoutX="25.0" layoutY="60.0" onAction="#onActionCombo" prefHeight="26.0" prefWidth="360.0" />
-      <RadioButton fx:id="contactSchedule" layoutX="412.0" layoutY="37.0" mnemonicParsing="false" selected="true" text="Contact Schedules">
-         <toggleGroup>
-            <ToggleGroup fx:id="reportRadio" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="typeReport" layoutX="637.0" layoutY="37.0" mnemonicParsing="false" text="Customer Appointments by Type" toggleGroup="$reportRadio" />
-      <RadioButton fx:id="monthReport" layoutX="637.0" layoutY="66.0" mnemonicParsing="false" text="Customer Appointments by Month" toggleGroup="$reportRadio" />
-      <RadioButton fx:id="expiredAppoints" layoutX="412.0" layoutY="66.0" mnemonicParsing="false" text="Appointments Expired" toggleGroup="$reportRadio" />
+        <Button layoutX="890.0" layoutY="548.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
+      <ComboBox fx:id="contactCombo" layoutX="25.0" layoutY="60.0" prefHeight="26.0" prefWidth="360.0" promptText="Select a contact" />
+      <TableView fx:id="expiredTable" layoutX="28.0" layoutY="361.0" prefHeight="218.0" prefWidth="400.0">
+        <columns>
+          <TableColumn fx:id="expID" prefWidth="48.53332710266113" text="ApptID" />
+          <TableColumn fx:id="expCon" prefWidth="101.86665344238281" text="Contact" />
+            <TableColumn fx:id="expTitle" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="expStart" prefWidth="173.59996032714844" text="Start" />
+        </columns>
+      </TableView>
+      <TableView fx:id="customerTable" layoutX="456.0" layoutY="359.0" prefHeight="220.0" prefWidth="400.0">
+         <columns>
+            <TableColumn fx:id="cusMonth" prefWidth="133.0" text="Month" />
+            <TableColumn fx:id="cusType" prefWidth="133.0" text="Type" />
+            <TableColumn fx:id="cusCount" prefWidth="133.0" text="Count" />
+         </columns>
+      </TableView>
+      <Label layoutX="595.0" layoutY="58.0" text="Contact Schedule">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="515.0" layoutY="325.0" text="Customer Appt. by Month / Type">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="126.0" layoutY="323.0" text="Expired Appointments">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="560.0" layoutY="15.0" text="Reports Dashboard" underline="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

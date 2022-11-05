@@ -27,6 +27,8 @@ public class Appointment {
     private int contactID;
     private int customerID;
     private int userID;
+    private int count;
+    private String month;
 
     public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
     public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
@@ -101,6 +103,15 @@ public class Appointment {
         this.contactID = contactID;
         this.customerID = customerID;
         this.userID = userID;
+    }
+
+
+
+    /**Constructor for Appointment class, report.*/
+    public Appointment(String type, int count, String month) {
+        this.type = type;
+        this.count = count;
+        this.month = month;
     }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
@@ -318,5 +329,21 @@ public class Appointment {
      * @param customer String. */
     public void setCustomer(String customer) {
         this.customer = customer;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 }

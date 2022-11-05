@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.Appointment;
 import javafx.collections.ObservableList;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -19,4 +20,6 @@ public interface AppointmentDAO extends DAO {
     int conNameToID(String contactName) throws SQLException;
 
     boolean appointmentExists(int apptID) throws SQLException;
+
+    ObservableList<Appointment> getReport() throws SQLException;
 }

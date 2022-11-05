@@ -211,6 +211,23 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return rs.next();
     }
 
+    @Override
+    public ObservableList<Appointment> getReport() throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql ="SELECT monthname(Start) AS Month, Type, COUNT(Type) AS Count FROM client_schedule.appointments " +
+                "GROUP BY Type;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String type = rs.getString("Type");
+            int count = rs.getInt("Count");
+            String month = rs.getString("Month");
+            Appointment newAppointment = new Appointment(type, count, month);
+            appointments.add(newAppointment);
+        } return appointments;
+    }
+
+
     //Overridden but null CRUD methods----------------------------------------------------------------------------------
     /**
      * CRUD Retrieve.
