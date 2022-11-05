@@ -9,11 +9,11 @@
         <TableView fx:id="reportTableView" layoutX="25.0" layoutY="97.0" prefHeight="434.0" prefWidth="950.0">
             <columns>
                 <TableColumn fx:id="apptID" maxWidth="50.0" prefWidth="29.399993896484375" text="ID" />
-                <TableColumn fx:id="apptTitle" prefWidth="81.19998550415039" text="Title" />
-                <TableColumn fx:id="apptDescript" prefWidth="133.7999725341797" text="Description" />
-                <TableColumn fx:id="apptType" prefWidth="117.60000610351562" text="Type" />
-                <TableColumn fx:id="apptLoc" prefWidth="110.5999755859375" text="Location" />
-                <TableColumn fx:id="apptContact" prefWidth="98.20001220703125" text="Contact" />
+                <TableColumn fx:id="custID" prefWidth="55.20001220703125" text="Cus. ID" />
+                <TableColumn fx:id="apptTitle" prefWidth="120.60000610351562" text="Title" />
+                <TableColumn fx:id="apptDescript" prefWidth="138.99998474121094" text="Description" />
+                <TableColumn fx:id="apptType" prefWidth="120.0" text="Type" />
+                <TableColumn fx:id="apptContact" prefWidth="110.4000244140625" text="Contact" />
                 <TableColumn fx:id="apptCustomer" prefWidth="109.60003662109375" text="Customer" />
                 <TableColumn fx:id="apptStart" minWidth="4.20001220703125" prefWidth="136.0" text="Start " />
                 <TableColumn fx:id="apptEnd" prefWidth="135.199951171875" text="End" />
@@ -29,13 +29,13 @@
         </Label>
         <Button layoutX="899.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
       <ComboBox fx:id="comboBox" layoutX="25.0" layoutY="60.0" onAction="#onActionCombo" prefHeight="26.0" prefWidth="360.0" />
-      <RadioButton layoutX="412.0" layoutY="37.0" mnemonicParsing="false" onAction="#onActionScheduleReport" selected="true" text="Contact Schedules">
+      <RadioButton fx:id="contactSchedule" layoutX="412.0" layoutY="37.0" mnemonicParsing="false" selected="true" text="Contact Schedules">
          <toggleGroup>
             <ToggleGroup fx:id="reportRadio" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="637.0" layoutY="37.0" mnemonicParsing="false" onAction="#onActionTypeReport" text="Customer Appointments by Type" toggleGroup="$reportRadio" />
-      <RadioButton layoutX="637.0" layoutY="66.0" mnemonicParsing="false" onAction="#onActionMonthReport" text="Customer Appointments by Month" toggleGroup="$reportRadio" />
-      <RadioButton layoutX="412.0" layoutY="66.0" mnemonicParsing="false" onAction="#onActionExpired" text="Appointments Expired" toggleGroup="$reportRadio" />
+      <RadioButton fx:id="typeReport" layoutX="637.0" layoutY="37.0" mnemonicParsing="false" text="Customer Appointments by Type" toggleGroup="$reportRadio" />
+      <RadioButton fx:id="monthReport" layoutX="637.0" layoutY="66.0" mnemonicParsing="false" text="Customer Appointments by Month" toggleGroup="$reportRadio" />
+      <RadioButton fx:id="expiredAppoints" layoutX="412.0" layoutY="66.0" mnemonicParsing="false" text="Appointments Expired" toggleGroup="$reportRadio" />
     </children>
 </AnchorPane>
