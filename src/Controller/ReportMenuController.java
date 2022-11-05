@@ -151,6 +151,7 @@ public class ReportMenuController implements Initializable {
     public void filterExpired() {
         reportTableView.getItems().clear();
         comboBox.getItems().clear();
+        comboBox.setPromptText("");
         List<Appointment> list =
                 reportData.stream().filter
                         (appointment -> appointment.getStartStamp().toLocalDateTime().isBefore(LocalDateTime.now()))
