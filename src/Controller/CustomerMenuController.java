@@ -70,7 +70,7 @@ public class CustomerMenuController implements Initializable {
     @FXML
     public void onActionReportsMenu(ActionEvent actionEvent) {
         try {
-            nav.toAppointmentsMenu(actionEvent);
+            nav.toReportsMenu(actionEvent);
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
         }

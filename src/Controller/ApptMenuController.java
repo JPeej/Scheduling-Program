@@ -76,7 +76,7 @@ public class ApptMenuController implements Initializable {
     @FXML
     public void onActionReportsMenu(ActionEvent actionEvent) {
         try {
-            nav.toAppointmentsMenu(actionEvent);
+            nav.toReportsMenu(actionEvent);
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed. Contact IT if issue persists.");
         }
@@ -155,9 +155,10 @@ public class ApptMenuController implements Initializable {
      * The other option would have been to either implement something similar to the onActionByWeek method or,
      * to use many if/else statements. */
     public void onActionByMonth() {
-        Month thisMonth = LocalDateTime.now().getMonth();
+        YearMonth thisMonth = YearMonth.now();
         List<Appointment> filteredAppts = allAppointments.stream()
-                .filter(appointment -> appointment.getStartStamp().toLocalDateTime().getMonth().equals(thisMonth))
+                .filter(appointment -> YearMonth.from(appointment.getStartStamp().toLocalDateTime().toLocalDate())
+                        .equals(thisMonth))
                 .collect(Collectors.toList());
         ObservableList<Appointment> thisMonthsAppts = FXCollections.observableArrayList(filteredAppts);
         loadTable(thisMonthsAppts);
