@@ -201,6 +201,7 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     /**Checks appointment to see if it already exists in database.
+     * @param apptID id of appointment queried
      * @return boolean true if appointment exists*/
     @Override
     public boolean appointmentExists(int apptID) throws SQLException {
@@ -211,6 +212,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return rs.next();
     }
 
+    /**Retrieves data for report on appointments by month and type.
+     * @return ObservableList of Appointment objects with data on month, type, and total count per.*/
     @Override
     public ObservableList<Appointment> getReport() throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -228,7 +231,8 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
 
-    //Overridden but null CRUD methods----------------------------------------------------------------------------------
+    //Overridden but unused CRUD methods--------------------------------------------------------------------------------
+
     /**
      * CRUD Retrieve.
      * Retrieval of one object.
@@ -238,4 +242,5 @@ public class AppointmentDAOImp implements AppointmentDAO{
     public Object get(int id) throws SQLException {
         return null;
     }
+
 }
