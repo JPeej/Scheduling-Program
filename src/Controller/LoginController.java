@@ -17,7 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**Controller for Login menu. */
@@ -46,6 +49,7 @@ public class LoginController implements Initializable {
                 logActivity("Success");
                 JDBC.user = getUserNameLogin();
                 JDBC.userID = userDAO.getUserID(JDBC.user);
+                checkUserAppoints(JDBC.userID);
                 nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
             } else {
                 logActivity("Fail");
@@ -86,6 +90,32 @@ public class LoginController implements Initializable {
         } catch (SQLException e) {
             MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         } return null;
+    }
+
+    public void checkUserAppoints(int userID) {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp fifteenFromNow = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
+        try {
+            HashMap<String, Timestamp> inBetween = new HashMap<>();
+            HashMap<String, Timestamp> toCheck = userDAO.getUserAppointments(userID);
+
+            for(Map.Entry<String, Timestamp> checkTime : toCheck.entrySet()) {
+                if (checkTime.getValue().before(fifteenFromNow) && checkTime.getValue().after(now)) {
+                    inBetween.put(checkTime.getKey(), checkTime.getValue());
+                }
+            }
+
+            if (!inBetween.isEmpty()) {
+                for (Map.Entry<String, Timestamp> toPrompt : inBetween.entrySet()) {
+                    MyAlerts.alertInfo("You have the following appointment within 15 minutes.\n" +
+                            "Appointment ID: " + toPrompt.getKey() + "\n" +
+                            "Appointment Start: " + toPrompt.getValue());
+                }
+            } else MyAlerts.alertInfo("You have no immediate appointments.");
+
+        } catch (SQLException e) {
+            MyAlerts.alertError("User appointment data could not be processed.");
+        }
     }
 
     /**Logs any login attempt to login_activity.txt.

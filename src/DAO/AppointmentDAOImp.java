@@ -158,18 +158,18 @@ public class AppointmentDAOImp implements AppointmentDAO{
     @Override
     public HashMap<Timestamp, Timestamp> getAppointments(int customerID) throws SQLException {
         HashMap<Timestamp , Timestamp > appointments = new HashMap<>();
-            String sql = "SELECT Start, End FROM client_schedule.appointments WHERE Customer_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, customerID);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Timestamp start = rs.getTimestamp("Start");
-                Timestamp end = rs.getTimestamp("End");
-                start = DateAndTimeHandler.timestampToClient(start);
-                end = DateAndTimeHandler.timestampToClient(end);
-                appointments.put(start, end);
-            }
-         return appointments;
+        String sql = "SELECT Start, End FROM client_schedule.appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            start = DateAndTimeHandler.timestampToClient(start);
+            end = DateAndTimeHandler.timestampToClient(end);
+            appointments.put(start, end);
+        }
+        return appointments;
     }
 
     /**CRUD retrieval of customer ID for customer.

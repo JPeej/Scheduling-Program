@@ -1,5 +1,7 @@
 package Model;
 
+import java.sql.Timestamp;
+
 /**Manage User objects within program. */
 public class User {
     private int userID;

@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashMap;
 
 /**CRUD class for User objects. */
 public class UserDAOImp implements UserDAO{
@@ -45,6 +47,20 @@ public class UserDAOImp implements UserDAO{
         if (rs.next()) {
             return rs.getInt("User_ID");
         } else return -1;
+    }
+
+    @Override
+    public HashMap<String, Timestamp> getUserAppointments(int userID) throws SQLException {
+        HashMap<String, Timestamp> userAppoints = new HashMap<>();
+        String sql = "SELECT * FROM client_schedule.appointments WHERE User_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, userID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String apptID = String.valueOf(rs.getInt("Appointment_ID"));
+            Timestamp dateTime = rs.getTimestamp("Start");
+            userAppoints.put(apptID, dateTime);
+        } return userAppoints;
     }
 
     //Overridden but null CRUD methods----------------------------------------------------------------------------------
