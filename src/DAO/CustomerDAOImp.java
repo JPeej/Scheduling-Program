@@ -128,7 +128,8 @@ public class CustomerDAOImp implements CustomerDAO {
         return rs.next();
     }
 
-    //Overridden but null methods --------------------------------------------------------------------------------------
+    //Overridden but unused CRUD methods--------------------------------------------------------------------------------
+
     /**CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id. */
@@ -136,4 +137,5 @@ public class CustomerDAOImp implements CustomerDAO {
     public Object get(int id) throws SQLException {
         return null;
     }
+
 }
