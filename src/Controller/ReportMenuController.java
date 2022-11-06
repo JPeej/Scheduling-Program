@@ -91,6 +91,11 @@ public class ReportMenuController implements Initializable {
         System.exit(0);
     }
 
+    /**Filters all appointment data to only appointment data for a desired contact.
+     * Report is useful if database is largely populated as an "All" report would be too much to be relevant.
+     * Lambda was used to avoid for loops with nested if conditionals
+     * @param appointments OL of appointments to search through
+     * @param contact contact that user wishes to only see appointments of*/
     public void filterByContact(ObservableList<Appointment> appointments, String contact) {
         List<Appointment> filterAppointments =
                 appointments.stream().filter(
@@ -100,6 +105,11 @@ public class ReportMenuController implements Initializable {
         loadContactTable(contactData);
     }
 
+    /**Filters all appointment data to a new OL of appointments that have since expired.
+     * Report is useful to keep database useful, light, and quick.
+     * Lambda was used to avoid for loops with nested if conditionals.
+     * @param appointments appointments to screen
+     * @return a OL of since expired appointments*/
     public ObservableList<Appointment> filterExpiredData(ObservableList<Appointment> appointments) {
         List<Appointment> filterAppointments =
                 appointments.stream().filter(
@@ -108,6 +118,7 @@ public class ReportMenuController implements Initializable {
         return FXCollections.observableArrayList(filterAppointments);
     }
 
+    /**Load expired appointment report table with data. */
     public void loadExpiredTable() {
         expiredTable.setItems(filterExpiredData(reportData));
         expID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -116,6 +127,7 @@ public class ReportMenuController implements Initializable {
         expStart.setCellValueFactory(new PropertyValueFactory<>("startStamp"));
     }
 
+    /**Load customer month/type report table with data. */
     public void loadCustomerTable() {
         try {
             customerTable.setItems(appointmentDAO.getReport());
@@ -127,7 +139,7 @@ public class ReportMenuController implements Initializable {
         }
     }
 
-    /**Load tableview with Appointment data provided.
+    /**Load contact report table with data.
      * @param appointments appointments, filtered or not, to populate the tableview*/
     public void loadContactTable(ObservableList<Appointment> appointments) {
         conTable.setItems(appointments);
@@ -142,6 +154,10 @@ public class ReportMenuController implements Initializable {
         conEnd.setCellValueFactory(new PropertyValueFactory<>("endStamp"));
     }
 
+    /**Called upon screen load.
+     * Gathers all appointment data.
+     * Loads all tables.
+     * Loads contact combo. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
