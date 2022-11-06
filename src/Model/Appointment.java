@@ -113,6 +113,7 @@ public class Appointment {
     }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
+
     /**Get appointment ID.
      * @return this.appointmentID. */
     public int getAppointmentID() {
@@ -352,4 +353,5 @@ public class Appointment {
     public void setMonth(String month) {
         this.month = month;
     }
+
 }

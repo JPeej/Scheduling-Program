@@ -1,7 +1,5 @@
 package Model;
 
-import java.sql.Timestamp;
-
 /**Manage User objects within program. */
 public class User {
     private int userID;
@@ -18,6 +16,7 @@ public class User {
         this.password = password;
     }
     //Getters & Setters ------------------------------------------------------------------------------------------------
+
     /**Get user ID.
      * @return this.userID int.*/
     public int getUserID() {
@@ -53,4 +52,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

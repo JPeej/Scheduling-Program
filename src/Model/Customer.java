@@ -333,4 +333,5 @@ public class Customer {
     public void setLastUpdateStamp(Timestamp lastUpdateStamp) {
         this.lastUpdateStamp = lastUpdateStamp;
     }
+
 }
