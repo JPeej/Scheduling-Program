@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.*;
 import java.sql.SQLException;
-import java.time.Month;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Main extends Application {
