@@ -134,7 +134,7 @@ public class CustomerDAOImp implements CustomerDAO {
      * Retrieval of one object.
      * @param id indexing or PK/FK id. */
     @Override
-    public Object get(int id) throws SQLException {
+    public Object get(int id) {
         return null;
     }
 

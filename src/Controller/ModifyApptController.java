@@ -46,7 +46,7 @@ public class ModifyApptController extends AddApptController implements Initializ
             String location = locText.getText();
             String type = typeCombo.getValue();
             String contact = conCombo.getValue();
-            int customerID = appointmentDAO.cusNameToID(cusCombo.getValue().toString());
+            int customerID = appointmentDAO.cusNameToID(cusCombo.getValue());
             int contactID = appointmentDAO.conNameToID(contact);
 
             LocalDateTime ldtStart = LocalDateTime.of(startDateSel.getValue(), startTimeCombo.getValue());
