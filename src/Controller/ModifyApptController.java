@@ -82,7 +82,7 @@ public class ModifyApptController extends AddApptController implements Initializ
     }
 
     /**Populates Modify Appointment menu with appointment data.
-     * @param appointment */
+     * @param appointment appointment to modify */
     public void sendAppt(Appointment appointment) {
         apptIDText.setText(String.valueOf(appointment.getAppointmentID()));
         cusIDText.setText(String.valueOf(appointment.getCustomerID()));
