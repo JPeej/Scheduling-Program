@@ -8,60 +8,63 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportMenuController">
-    <children>
-        <TableView fx:id="conTable" layoutX="25.0" layoutY="97.0" prefHeight="224.0" prefWidth="1100.0">
-            <columns>
-                <TableColumn fx:id="conAppID" maxWidth="85.59999084472656" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="conCustID" minWidth="0.0" prefWidth="50.0" text="Cus. ID" />
-                <TableColumn fx:id="conTitle" prefWidth="120.0" text="Title" />
-                <TableColumn fx:id="conDescript" minWidth="0.0" prefWidth="120.0" text="Description" />
-                <TableColumn fx:id="conType" prefWidth="120.0" text="Type" />
-                <TableColumn fx:id="conContact" prefWidth="120.0" text="Contact" />
-                <TableColumn fx:id="conCust" prefWidth="120.0" text="Customer" />
-                <TableColumn fx:id="conStart" minWidth="4.20001220703125" prefWidth="199.0" text="Start " />
-                <TableColumn fx:id="conEnd" prefWidth="197.0" text="End" />
-            </columns>
-        </TableView>
-        <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu" text="Customers Menu" />
-        <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
-        <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-        <Button layoutX="1049.0" layoutY="553.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
-      <ComboBox fx:id="contactCombo" layoutX="25.0" layoutY="60.0" prefHeight="26.0" prefWidth="360.0" promptText="Select a contact" />
-      <TableView fx:id="expiredTable" layoutX="28.0" layoutY="360.0" prefHeight="220.0" prefWidth="485.0">
+<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportMenuController">
+    <TableView fx:id="conTable" layoutX="25.0" layoutY="97.0" prefHeight="224.0" prefWidth="1100.0">
         <columns>
-          <TableColumn fx:id="expID" prefWidth="59.9999885559082" text="ApptID" />
-          <TableColumn fx:id="expCon" prefWidth="118.39999389648438" text="Contact" />
-            <TableColumn fx:id="expTitle" prefWidth="112.80000305175781" text="Title" />
-            <TableColumn fx:id="expStart" prefWidth="192.0" text="Start" />
+            <TableColumn fx:id="conAppID" maxWidth="85.59999084472656" prefWidth="50.0" text="ID"/>
+            <TableColumn fx:id="conCustID" minWidth="0.0" prefWidth="50.0" text="Cus. ID"/>
+            <TableColumn fx:id="conTitle" prefWidth="120.0" text="Title"/>
+            <TableColumn fx:id="conDescript" minWidth="0.0" prefWidth="120.0" text="Description"/>
+            <TableColumn fx:id="conType" prefWidth="120.0" text="Type"/>
+            <TableColumn fx:id="conContact" prefWidth="120.0" text="Contact"/>
+            <TableColumn fx:id="conCust" prefWidth="120.0" text="Customer"/>
+            <TableColumn fx:id="conStart" minWidth="4.20001220703125" prefWidth="199.0" text="Start "/>
+            <TableColumn fx:id="conEnd" prefWidth="197.0" text="End"/>
         </columns>
-      </TableView>
-      <TableView fx:id="customerTable" layoutX="541.0" layoutY="360.0" prefHeight="220.0" prefWidth="485.0">
-         <columns>
-            <TableColumn fx:id="cusMonth" prefWidth="161.67" text="Month" />
-            <TableColumn fx:id="cusType" prefWidth="161.67" text="Type" />
-            <TableColumn fx:id="cusCount" prefWidth="158.0" text="Count" />
-         </columns>
-      </TableView>
-      <Label layoutX="722.0" layoutY="59.0" text="Contact Schedule">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="643.0" layoutY="332.0" text="Customer Appt. by Month / Type">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="175.0" layoutY="332.0" text="Expired Appointments">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="687.0" layoutY="15.0" text="Reports Dashboard" underline="true">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-    </children>
+    </TableView>
+    <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomersMenu"
+            text="Customers Menu"/>
+    <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu"
+            text="Appointments Menu"/>
+    <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu"/>
+    <Button layoutX="1049.0" layoutY="553.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0"
+            text="Exit"/>
+    <ComboBox fx:id="contactCombo" layoutX="25.0" layoutY="60.0" prefHeight="26.0" prefWidth="360.0"
+              promptText="Select a contact"/>
+    <TableView fx:id="expiredTable" layoutX="28.0" layoutY="360.0" prefHeight="220.0" prefWidth="485.0">
+      <columns>
+          <TableColumn fx:id="expID" prefWidth="59.9999885559082" text="ApptID"/>
+          <TableColumn fx:id="expCon" prefWidth="118.39999389648438" text="Contact"/>
+          <TableColumn fx:id="expTitle" prefWidth="112.80000305175781" text="Title"/>
+          <TableColumn fx:id="expStart" prefWidth="192.0" text="Start"/>
+      </columns>
+    </TableView>
+    <TableView fx:id="customerTable" layoutX="541.0" layoutY="360.0" prefHeight="220.0" prefWidth="485.0">
+        <columns>
+          <TableColumn fx:id="cusMonth" prefWidth="161.67" text="Month"/>
+          <TableColumn fx:id="cusType" prefWidth="161.67" text="Type"/>
+          <TableColumn fx:id="cusCount" prefWidth="158.0" text="Count"/>
+        </columns>
+    </TableView>
+    <Label layoutX="722.0" layoutY="59.0" text="Contact Schedule">
+        <font>
+          <Font name="System Bold" size="18.0"/>
+        </font>
+    </Label>
+    <Label layoutX="643.0" layoutY="332.0" text="Customer Appt. by Month / Type">
+        <font>
+          <Font name="System Bold" size="18.0"/>
+        </font>
+    </Label>
+    <Label layoutX="175.0" layoutY="332.0" text="Expired Appointments">
+        <font>
+          <Font name="System Bold" size="18.0"/>
+        </font>
+    </Label>
+    <Label layoutX="687.0" layoutY="15.0" text="Reports Dashboard" underline="true">
+        <font>
+          <Font name="System Bold" size="24.0"/>
+        </font>
+    </Label>
 </AnchorPane>

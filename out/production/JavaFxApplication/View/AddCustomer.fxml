@@ -7,26 +7,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddCustomerController">
-   <children>
-      <TextField fx:id="nameText" layoutX="530.0" layoutY="180.0" />
-      <TextField fx:id="phoneText" layoutX="530.0" layoutY="220.0" />
-      <TextField fx:id="addressText" layoutX="529.0" layoutY="260.0" prefHeight="25.0" prefWidth="149.0" promptText="### Street, State/Province">
-         <font>
-            <Font size="11.0" />
-         </font></TextField>
-      <TextField fx:id="zipText" layoutX="529.0" layoutY="300.0" />
-      <ComboBox fx:id="countryCombo" layoutX="470.0" layoutY="340.0" onAction="#onActionCountryCombo" prefHeight="26.0" prefWidth="210.0" promptText="Country" />
-      <ComboBox fx:id="divCombo" layoutX="470.0" layoutY="380.0" prefHeight="26.0" prefWidth="210.0" promptText="State / Province" />
-      <Button layoutX="475.0" layoutY="456.0" mnemonicParsing="false" onAction="#onActionSaveCustomer" prefWidth="75.0" text="Save" />
-      <Button layoutX="602.0" layoutY="456.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="75.0" text="Cancel" />
-      <Label layoutX="470.0" layoutY="184.0" text="Name" />
-      <Label layoutX="470.0" layoutY="264.0" text="Address" />
-      <Label layoutX="470.0" layoutY="304.0" text="Zipcode" />
-      <Label layoutX="470.0" layoutY="224.0" text="Phone" />
-      <Label layoutX="471.0" layoutY="118.0" text="Add New Customer" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font></Label>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddCustomerController">
+   <TextField fx:id="nameText" layoutX="530.0" layoutY="180.0"/>
+   <TextField fx:id="phoneText" layoutX="530.0" layoutY="220.0"/>
+   <TextField fx:id="addressText" layoutX="529.0" layoutY="260.0" prefHeight="25.0" prefWidth="149.0"
+              promptText="### Street, State/Province">
+      <font>
+         <Font size="11.0"/>
+      </font>
+   </TextField>
+   <TextField fx:id="zipText" layoutX="529.0" layoutY="300.0"/>
+   <ComboBox fx:id="countryCombo" layoutX="470.0" layoutY="340.0" onAction="#onActionCountryCombo" prefHeight="26.0"
+             prefWidth="210.0" promptText="Country"/>
+   <ComboBox fx:id="divCombo" layoutX="470.0" layoutY="380.0" prefHeight="26.0" prefWidth="210.0"
+             promptText="State / Province"/>
+   <Button layoutX="475.0" layoutY="456.0" mnemonicParsing="false" onAction="#onActionSaveCustomer" prefWidth="75.0"
+           text="Save"/>
+   <Button layoutX="602.0" layoutY="456.0" mnemonicParsing="false" onAction="#onActionCancel" prefWidth="75.0"
+           text="Cancel"/>
+   <Label layoutX="470.0" layoutY="184.0" text="Name"/>
+   <Label layoutX="470.0" layoutY="264.0" text="Address"/>
+   <Label layoutX="470.0" layoutY="304.0" text="Zipcode"/>
+   <Label layoutX="470.0" layoutY="224.0" text="Phone"/>
+   <Label layoutX="471.0" layoutY="118.0" text="Add New Customer" underline="true">
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
 </AnchorPane>

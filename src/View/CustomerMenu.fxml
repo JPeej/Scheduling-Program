@@ -7,33 +7,38 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenuController">
-   <children>
-      <TableView fx:id="customerTable" layoutX="25.0" layoutY="65.0" prefHeight="466.0" prefWidth="1100.0">
-        <columns>
-          <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="25.0" text="ID" />
-          <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name" />
-            <TableColumn fx:id="addressCol" prefWidth="128.0" text="Address" />
-            <TableColumn fx:id="zipCol" prefWidth="63.999969482421875" text="Zipcode" />
-            <TableColumn fx:id="divCol" prefWidth="120.80001831054688" text="State / Province" />
-            <TableColumn fx:id="phoneCol" prefWidth="114.4000244140625" text="Phone" />
-            <TableColumn fx:id="createDateCol" prefWidth="165.0" text="Created Date" />
-            <TableColumn fx:id="createByCol" minWidth="4.20001220703125" prefWidth="93.0" text="Created By" />
-            <TableColumn fx:id="lastUpdateCol" prefWidth="165.0" text="Last Update" />
-            <TableColumn fx:id="lastUpdateByCol" prefWidth="93.0" text="Last Update By" />
-        </columns>
-      </TableView>
-      <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomerMenu" text="Customers Menu" />
-      <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu" text="Appointments Menu" />
-      <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu" />
-      <Label layoutX="643.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data" textAlignment="CENTER" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAdd" prefWidth="75.0" text="Add" />
-      <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModify" prefWidth="75.0" text="Modify" />
-      <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionDelete" prefWidth="75.0" text="Delete" />
-      <Button layoutX="1049.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0" text="Exit" />
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/18"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenuController">
+    <TableView fx:id="customerTable" layoutX="25.0" layoutY="65.0" prefHeight="466.0" prefWidth="1100.0">
+      <columns>
+          <TableColumn fx:id="idCol" maxWidth="50.0" prefWidth="25.0" text="ID"/>
+          <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name"/>
+          <TableColumn fx:id="addressCol" prefWidth="128.0" text="Address"/>
+          <TableColumn fx:id="zipCol" prefWidth="63.999969482421875" text="Zipcode"/>
+          <TableColumn fx:id="divCol" prefWidth="120.80001831054688" text="State / Province"/>
+          <TableColumn fx:id="phoneCol" prefWidth="114.4000244140625" text="Phone"/>
+          <TableColumn fx:id="createDateCol" prefWidth="165.0" text="Created Date"/>
+          <TableColumn fx:id="createByCol" minWidth="4.20001220703125" prefWidth="93.0" text="Created By"/>
+          <TableColumn fx:id="lastUpdateCol" prefWidth="165.0" text="Last Update"/>
+          <TableColumn fx:id="lastUpdateByCol" prefWidth="93.0" text="Last Update By"/>
+      </columns>
+    </TableView>
+    <Button layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionCustomerMenu"
+            text="Customers Menu"/>
+    <Button layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionApptMenu"
+            text="Appointments Menu"/>
+    <Button layoutX="295.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsMenu" text="Reports Menu"/>
+    <Label layoutX="643.0" layoutY="15.0" prefHeight="35.0" prefWidth="168.0" text="Customer Data"
+           textAlignment="CENTER" underline="true">
+        <font>
+          <Font size="24.0"/>
+        </font>
+    </Label>
+    <Button layoutX="25.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionAdd" prefWidth="75.0" text="Add"/>
+    <Button layoutX="112.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionModify" prefWidth="75.0"
+            text="Modify"/>
+    <Button layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionDelete" prefWidth="75.0"
+            text="Delete"/>
+    <Button layoutX="1049.0" layoutY="551.0" mnemonicParsing="false" onAction="#onActionExit" prefWidth="75.0"
+            text="Exit"/>
 </AnchorPane>
