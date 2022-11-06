@@ -105,8 +105,6 @@ public class Appointment {
         this.userID = userID;
     }
 
-
-
     /**Constructor for Appointment class, report.*/
     public Appointment(String type, int count, String month) {
         this.type = type;
@@ -331,18 +329,26 @@ public class Appointment {
         this.customer = customer;
     }
 
+    /**Get customer appointment count.
+     * @return this.count. */
     public int getCount() {
         return count;
     }
 
+    /**Set customer appointment count.
+     * @param count int. */
     public void setCount(int count) {
         this.count = count;
     }
 
+    /**Get customer appointment month.
+     * @return this.month. */
     public String getMonth() {
         return month;
     }
 
+    /**Set customer appointment month.
+     * @param month String. */
     public void setMonth(String month) {
         this.month = month;
     }
