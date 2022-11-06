@@ -1,3 +1,4 @@
 User | Date Time UTC | Login Result
 
 test | 2022-11-06T09:38:21.617616700Z | Success
+test | 2022-11-06T10:10:35.210981300Z | Success

@@ -5,6 +5,7 @@
 #### November 06, 2022
 #### IntelliJ IDEA 2021.1.3
 #### Java SDK 11.0.15 | JavaFX SDK 18.0.1 | MYSQL Connector J 8.0.31
+#### Javadoc path - /javadoc/index.html
 
 # Purpose
 The purpose of this program is to provide a fictional company with a solution to their issue with their current 
