@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -92,6 +91,8 @@ public class LoginController implements Initializable {
         } return null;
     }
 
+    /**Queries database to check for user appointments within the next fifteen minutes.
+     * @param userID id of user to check*/
     public void checkUserAppoints(int userID) {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         Timestamp fifteenFromNow = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
