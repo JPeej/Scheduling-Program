@@ -49,6 +49,10 @@ public class UserDAOImp implements UserDAO{
         } else return -1;
     }
 
+    /**Retrieval of appointments for the logged in user.
+     * Used to check if user has appointments within the next 15 minutes.
+     * @param userID id of the logged in user
+     * @return HashMap key of appointment id and value of appointment start*/
     @Override
     public HashMap<String, Timestamp> getUserAppointments(int userID) throws SQLException {
         HashMap<String, Timestamp> userAppoints = new HashMap<>();
@@ -63,7 +67,8 @@ public class UserDAOImp implements UserDAO{
         } return userAppoints;
     }
 
-    //Overridden but null CRUD methods----------------------------------------------------------------------------------
+    //Overridden but unused CRUD methods--------------------------------------------------------------------------------
+
     /**CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id*/
@@ -99,4 +104,5 @@ public class UserDAOImp implements UserDAO{
     public int delete(Object o) throws SQLException {
         return 0;
     }
+
 }
