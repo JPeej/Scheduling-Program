@@ -73,35 +73,35 @@ public class UserDAOImp implements UserDAO{
      * Retrieval of one object.
      * @param id indexing or PK/FK id*/
     @Override
-    public Object get(int id) throws SQLException {
+    public Object get(int id) {
         return null;
     }
 
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */
     @Override
-    public ObservableList getAll() throws SQLException {
+    public ObservableList getAll() {
         return null;
     }
 
     /**CRUD Create and Update.
      * @param o object to be inserted. */
     @Override
-    public int insert(Object o) throws SQLException {
+    public int insert(Object o) {
         return 0;
     }
 
     /**CRUD Update.
      * @param o object to be updated. */
     @Override
-    public int update(Object o) throws SQLException {
+    public int update(Object o) {
         return 0;
     }
 
     /**CRUD Delete.
      * @param o object to be deleted. */
     @Override
-    public int delete(Object o) throws SQLException {
+    public int delete(Object o) {
         return 0;
     }
 

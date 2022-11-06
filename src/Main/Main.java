@@ -20,7 +20,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException, IOException {
+    public static void main(String[] args) {
         JDBC.openConnection();
         launch(args);
         JDBC.closeConnection();
