@@ -93,16 +93,14 @@ public class AddCustomerController implements Initializable {
     }
 
     /**Check if any fields were left blank by user.
-     * @param name
-     * @param address
-     * @param zip
-     * @param phone
-     * @param div
+     * @param name name textfield value
+     * @param address addess textfield value
+     * @param zip zip textfield value
+     * @param phone phone textfield value
+     * @param div div textfield value
      * @return boolean*/
     public boolean checkBlanks(String name, String address, String zip, String phone, int div) {
-        if(name.isBlank() | address.isBlank() | zip.isBlank() | phone.isBlank() | String.valueOf(div).isBlank()){
-            return false;
-        } else return true;
+        return !(name.isBlank() | address.isBlank() | zip.isBlank() | phone.isBlank() | String.valueOf(div).isBlank());
     }
 
     /**Called upon screen load.

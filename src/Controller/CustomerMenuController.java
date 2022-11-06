@@ -124,7 +124,7 @@ public class CustomerMenuController implements Initializable {
         try {
             Customer customer = customerTable.getSelectionModel().getSelectedItem();
             String name = customer.getName();
-            if (customerDAO.appointmentExists(customer.getCustomerID())) {
+            if (!customerDAO.appointmentExists(customer.getCustomerID())) {
                 customerDAO.delete(customer);
                 MyAlerts.alertInfo("Customer " + name + " deleted.");
                 loadTable();

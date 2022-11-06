@@ -9,7 +9,7 @@ public interface DAO<T> {
     /**CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id*/
-    T get(int id) throws SQLException;
+    T get(int id);
 
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */

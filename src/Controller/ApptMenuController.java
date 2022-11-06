@@ -164,7 +164,9 @@ public class ApptMenuController implements Initializable {
         loadTable(thisMonthsAppts);
     }
 
-    /**Filters appointments tableview to show only those within the next week.*/
+    /**Filters appointments tableview to show only those within the next week.
+     * Lambda solution most likely not the best. Both this solution and numerous if conditionals do not look clean.
+     * Not sure of performance comparison.*/
     public void onActionByWeek() {
         LocalDateTime weekAway = LocalDateTime.now().plusDays(7);
         List<Appointment> filteredAppts = allAppointments.stream()

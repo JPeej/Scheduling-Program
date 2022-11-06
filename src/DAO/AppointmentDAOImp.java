@@ -158,18 +158,18 @@ public class AppointmentDAOImp implements AppointmentDAO{
     @Override
     public HashMap<Timestamp, Timestamp> getAppointments(int customerID) throws SQLException {
         HashMap<Timestamp , Timestamp > appointments = new HashMap<>();
-            String sql = "SELECT Start, End FROM client_schedule.appointments WHERE Customer_ID = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, customerID);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Timestamp start = rs.getTimestamp("Start");
-                Timestamp end = rs.getTimestamp("End");
-                start = DateAndTimeHandler.timestampToClient(start);
-                end = DateAndTimeHandler.timestampToClient(end);
-                appointments.put(start, end);
-            }
-         return appointments;
+        String sql = "SELECT Start, End FROM client_schedule.appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            start = DateAndTimeHandler.timestampToClient(start);
+            end = DateAndTimeHandler.timestampToClient(end);
+            appointments.put(start, end);
+        }
+        return appointments;
     }
 
     /**CRUD retrieval of customer ID for customer.
@@ -201,6 +201,7 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     /**Checks appointment to see if it already exists in database.
+     * @param apptID id of appointment queried
      * @return boolean true if appointment exists*/
     @Override
     public boolean appointmentExists(int apptID) throws SQLException {
@@ -211,14 +212,35 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return rs.next();
     }
 
-    //Overridden but null CRUD methods----------------------------------------------------------------------------------
+    /**Retrieves data for report on appointments by month and type.
+     * @return ObservableList of Appointment objects with data on month, type, and total count per.*/
+    @Override
+    public ObservableList<Appointment> getReport() throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql ="SELECT monthname(Start) AS Month, Type, COUNT(Type) AS Count FROM client_schedule.appointments " +
+                "GROUP BY Type;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String type = rs.getString("Type");
+            int count = rs.getInt("Count");
+            String month = rs.getString("Month");
+            Appointment newAppointment = new Appointment(type, count, month);
+            appointments.add(newAppointment);
+        } return appointments;
+    }
+
+
+    //Overridden but unused CRUD methods--------------------------------------------------------------------------------
+
     /**
      * CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id
      */
     @Override
-    public Object get(int id) throws SQLException {
+    public Object get(int id) {
         return null;
     }
+
 }

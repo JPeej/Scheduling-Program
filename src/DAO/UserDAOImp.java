@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashMap;
 
 /**CRUD class for User objects. */
 public class UserDAOImp implements UserDAO{
@@ -47,40 +49,60 @@ public class UserDAOImp implements UserDAO{
         } else return -1;
     }
 
-    //Overridden but null CRUD methods----------------------------------------------------------------------------------
+    /**Retrieval of appointments for the logged in user.
+     * Used to check if user has appointments within the next 15 minutes.
+     * @param userID id of the logged in user
+     * @return HashMap key of appointment id and value of appointment start*/
+    @Override
+    public HashMap<String, Timestamp> getUserAppointments(int userID) throws SQLException {
+        HashMap<String, Timestamp> userAppoints = new HashMap<>();
+        String sql = "SELECT * FROM client_schedule.appointments WHERE User_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, userID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String apptID = String.valueOf(rs.getInt("Appointment_ID"));
+            Timestamp dateTime = rs.getTimestamp("Start");
+            userAppoints.put(apptID, dateTime);
+        } return userAppoints;
+    }
+
+    //Overridden but unused CRUD methods--------------------------------------------------------------------------------
+
     /**CRUD Retrieve.
      * Retrieval of one object.
      * @param id indexing or PK/FK id*/
     @Override
-    public Object get(int id) throws SQLException {
+    public Object get(int id) {
         return null;
     }
 
     /**CRUD Retrieve.
      * Retrieval of all objects of one object type. */
     @Override
-    public ObservableList getAll() throws SQLException {
+    public ObservableList getAll() {
         return null;
     }
 
     /**CRUD Create and Update.
      * @param o object to be inserted. */
     @Override
-    public int insert(Object o) throws SQLException {
+    public int insert(Object o) {
         return 0;
     }
 
     /**CRUD Update.
      * @param o object to be updated. */
     @Override
-    public int update(Object o) throws SQLException {
+    public int update(Object o) {
         return 0;
     }
 
     /**CRUD Delete.
      * @param o object to be deleted. */
     @Override
-    public int delete(Object o) throws SQLException {
+    public int delete(Object o) {
         return 0;
     }
+
 }
