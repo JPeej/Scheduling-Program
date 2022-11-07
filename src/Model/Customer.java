@@ -50,8 +50,8 @@ public class Customer {
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
 
-        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(createDateStamp);
-        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
+        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToDB(createDateStamp);
+        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
 
             this.divisionID = divisionID;
             this.name = name;
@@ -68,7 +68,7 @@ public class Customer {
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String lastUpdateBy, Timestamp lastUpdateStamp) {
 
-        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
+        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
 
         this.customerID = customerID;
         this.divisionID = divisionID;
