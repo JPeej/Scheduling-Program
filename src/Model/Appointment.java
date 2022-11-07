@@ -29,6 +29,7 @@ public class Appointment {
     private int userID;
     private int count;
     private String month;
+    private String year;
 
     public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
     public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
@@ -106,10 +107,11 @@ public class Appointment {
     }
 
     /**Constructor for Appointment class, report.*/
-    public Appointment(String type, int count, String month) {
+    public Appointment(String type, int count, String month, String year) {
         this.type = type;
         this.count = count;
         this.month = month;
+        this.year = year;
     }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
@@ -354,4 +356,11 @@ public class Appointment {
         this.month = month;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 }

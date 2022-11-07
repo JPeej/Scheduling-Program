@@ -1,5 +1,7 @@
 package Model;
 
+import Utility.DateAndTimeHandler;
+
 import java.sql.*;
 //import DAO.JDBC;
 //import Utility.MyAlerts;
@@ -27,15 +29,18 @@ public class Customer {
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy,
                     String division, String country) {
 
+        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(createDateStamp);
+        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
+
         this.customerID = customerID;
         this.divisionID = divisionID;
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
-        this.createDateStamp = createDateStamp;
+        this.createDateStamp = zonedCreateDate;
         this.createBy = createBy;
-        this.lastUpdateStamp = lastUpdateStamp;
+        this.lastUpdateStamp = zonedLastUpdate;
         this.lastUpdateBy = lastUpdateBy;
         this.division = division;
         this.country = country;
@@ -44,20 +49,27 @@ public class Customer {
     /**Constructor for Customer, insertion. */
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
+
+        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(createDateStamp);
+        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
+
             this.divisionID = divisionID;
             this.name = name;
             this.address = address;
             this.zipcode = zipcode;
             this.phoneNumber = phoneNumber;
-            this.createDateStamp = createDateStamp;
+            this.createDateStamp = zonedCreateDate;
             this.createBy = createBy;
-            this.lastUpdateStamp = lastUpdateStamp;
+            this.lastUpdateStamp = zonedLastUpdate;
             this.lastUpdateBy = lastUpdateBy;
     }
 
     /**Constructor for Customer, update.*/
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String lastUpdateBy, Timestamp lastUpdateStamp) {
+
+        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
+
         this.customerID = customerID;
         this.divisionID = divisionID;
         this.name = name;
@@ -65,7 +77,7 @@ public class Customer {
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
         this.lastUpdateBy = lastUpdateBy;
-        this.lastUpdateStamp = lastUpdateStamp;
+        this.lastUpdateStamp = zonedLastUpdate;
     }
 
 

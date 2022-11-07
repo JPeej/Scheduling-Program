@@ -4,6 +4,7 @@ import DAO.JDBC;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
+import Utility.DateAndTimeHandler;
 import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
@@ -101,8 +102,9 @@ public class LoginController implements Initializable {
             HashMap<String, Timestamp> toCheck = userDAO.getUserAppointments(userID);
 
             for(Map.Entry<String, Timestamp> checkTime : toCheck.entrySet()) {
-                if (checkTime.getValue().before(fifteenFromNow) && checkTime.getValue().after(now)) {
-                    inBetween.put(checkTime.getKey(), checkTime.getValue());
+                Timestamp zonedStart = DateAndTimeHandler.timestampToClient(checkTime.getValue());
+                if (zonedStart.before(fifteenFromNow) && zonedStart.after(now)) {
+                    inBetween.put(checkTime.getKey(), zonedStart);
                 }
             }
 

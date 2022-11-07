@@ -217,15 +217,16 @@ public class AppointmentDAOImp implements AppointmentDAO{
     @Override
     public ObservableList<Appointment> getReport() throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-        String sql ="SELECT monthname(Start) AS Month, Type, COUNT(Type) AS Count FROM client_schedule.appointments " +
-                "GROUP BY Type;";
+        String sql ="SELECT monthname(Start) AS Month, year(Start) AS Year, Type, COUNT(Type) AS Count FROM " +
+                "client_schedule.appointments GROUP BY Month;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             String type = rs.getString("Type");
             int count = rs.getInt("Count");
             String month = rs.getString("Month");
-            Appointment newAppointment = new Appointment(type, count, month);
+            String year = rs.getString("Year");
+            Appointment newAppointment = new Appointment(type, count, month, year);
             appointments.add(newAppointment);
         } return appointments;
     }
