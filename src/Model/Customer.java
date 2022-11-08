@@ -29,18 +29,15 @@ public class Customer {
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy,
                     String division, String country) {
 
-        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(createDateStamp);
-        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(lastUpdateStamp);
-
         this.customerID = customerID;
         this.divisionID = divisionID;
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
-        this.createDateStamp = zonedCreateDate;
+        this.createDateStamp = createDateStamp;
         this.createBy = createBy;
-        this.lastUpdateStamp = zonedLastUpdate;
+        this.lastUpdateStamp = lastUpdateStamp;
         this.lastUpdateBy = lastUpdateBy;
         this.division = division;
         this.country = country;

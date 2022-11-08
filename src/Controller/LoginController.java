@@ -102,9 +102,9 @@ public class LoginController implements Initializable {
             HashMap<String, Timestamp> toCheck = userDAO.getUserAppointments(userID);
 
             for(Map.Entry<String, Timestamp> checkTime : toCheck.entrySet()) {
-                Timestamp zonedStart = DateAndTimeHandler.timestampToClient(checkTime.getValue());
-                if (zonedStart.before(fifteenFromNow) && zonedStart.after(now)) {
-                    inBetween.put(checkTime.getKey(), zonedStart);
+                Timestamp start = checkTime.getValue();
+                if (start.before(fifteenFromNow) && start.after(now)) {
+                    inBetween.put(checkTime.getKey(), start);
                 }
             }
 

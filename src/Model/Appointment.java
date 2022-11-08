@@ -40,17 +40,14 @@ public class Appointment {
                        String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID,
                        int contactID, String customer) {
 
-        Timestamp zonedStartStamp = DateAndTimeHandler.timestampToClient(startStamp);
-        Timestamp zonedEndStamp = DateAndTimeHandler.timestampToClient(endStamp);
-
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.startStamp = zonedStartStamp;
-        this.endStamp = zonedEndStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
         this.customerID = customerID;
         this.userID = userID;
         this.customer = customer;

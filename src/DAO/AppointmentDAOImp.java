@@ -165,8 +165,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
         while (rs.next()) {
             Timestamp start = rs.getTimestamp("Start");
             Timestamp end = rs.getTimestamp("End");
-            start = DateAndTimeHandler.timestampToClient(start);
-            end = DateAndTimeHandler.timestampToClient(end);
             appointments.put(start, end);
         }
         return appointments;
