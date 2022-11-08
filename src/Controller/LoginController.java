@@ -4,7 +4,6 @@ import DAO.JDBC;
 import DAO.UserDAO;
 import DAO.UserDAOImp;
 import Model.User;
-import Utility.DateAndTimeHandler;
 import Utility.MyAlerts;
 import Utility.Nav;
 import javafx.event.ActionEvent;
@@ -47,8 +46,8 @@ public class LoginController implements Initializable {
             User loginUser = userAuthentication();
             if (loginUser != null) {
                 logActivity("Success");
-                JDBC.user = getUserNameLogin();
-                JDBC.userID = userDAO.getUserID(JDBC.user);
+                JDBC.user = loginUser.getUserName();
+                JDBC.userID = loginUser.getUserID();
                 checkUserAppoints(JDBC.userID);
                 nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
             } else {
@@ -58,35 +57,20 @@ public class LoginController implements Initializable {
             }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed, contact IT.");
-        } catch (SQLException e) {
-            MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         }
     }
 
-    /**Get user name entered in login menu.
-     * Parse String from @FXML Textfield.
-     * @return user name String. */
-    public String getUserNameLogin() {
-        return userNameLogin.getText();
-    }
-
-    /**Get password entered in login menu.
-     * Parse String from @FXML PasswordField.
-     * @return password String. */
-    public String getPasswordLogin() {
-        return passwordLogin.getText();
-    }
 
     /**Challenges provided login credentials against those on database.
      * See UserDAOImp class.
      * See getUserNameLogin and getPasswordLogin methods here.
      * @return loginUser User if correct credentials provided and null if not. */
     public User userAuthentication() {
+        String userName = userNameLogin.getText();
+        String password = passwordLogin.getText();
         try {
             UserDAO userDAO = new UserDAOImp();
-            String userNameLogin = getUserNameLogin();
-            String passwordLogin = getPasswordLogin();
-            return userDAO.authenticateUser(userNameLogin, passwordLogin);
+            return userDAO.authenticateUser(userName, password);
         } catch (SQLException e) {
             MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         } return null;
@@ -126,7 +110,7 @@ public class LoginController implements Initializable {
      * @param logResult whether or not the login attempt was successful. */
     public void logActivity(String logResult) {
         try {
-            String user = getUserNameLogin();
+            String user = JDBC.user;
             Instant dateTimeUTC = Instant.now();
             String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
             FileWriter fw = new FileWriter("login_activity.txt", true);

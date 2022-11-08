@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
+import DAO.JDBC;
 import Model.Customer;
 import Utility.MyAlerts;
 import Utility.Nav;
@@ -80,6 +81,7 @@ public class CustomerMenuController implements Initializable {
      * Closes program and connection to database.*/
     @FXML
     public void onActionExit() {
+        JDBC.closeConnection();
         System.exit(0);
     }
 
