@@ -112,7 +112,8 @@ public class AddApptController implements Initializable {
      * @param startRequest date and time timestamp of appointment start
      * @return boolean, true if not in past*/
     public boolean checkApptNotInPast(Timestamp startRequest) {
-        if (startRequest.before(Timestamp.from(Instant.now()))) {
+        Timestamp now = Timestamp.from(Instant.now());
+        if (startRequest.before(now)) {
             MyAlerts.alertError("Appointments cannot be scheduled in the past.");
             return false;
         } else return true;

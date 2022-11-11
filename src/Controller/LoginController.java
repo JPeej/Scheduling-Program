@@ -46,8 +46,8 @@ public class LoginController implements Initializable {
             User loginUser = userAuthentication();
             if (loginUser != null) {
                 logActivity("Success");
-                JDBC.user = getUserNameLogin();
-                JDBC.userID = userDAO.getUserID(JDBC.user);
+                JDBC.user = loginUser.getUserName();
+                JDBC.userID = loginUser.getUserID();
                 checkUserAppoints(JDBC.userID);
                 nav.navigate(actionEvent, Nav.customerMenuLoc, Nav.customerMenuTitle);
             } else {
@@ -57,35 +57,20 @@ public class LoginController implements Initializable {
             }
         } catch (IOException e) {
             MyAlerts.alertError("Navigation failed, contact IT.");
-        } catch (SQLException e) {
-            MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         }
     }
 
-    /**Get user name entered in login menu.
-     * Parse String from @FXML Textfield.
-     * @return user name String. */
-    public String getUserNameLogin() {
-        return userNameLogin.getText();
-    }
-
-    /**Get password entered in login menu.
-     * Parse String from @FXML PasswordField.
-     * @return password String. */
-    public String getPasswordLogin() {
-        return passwordLogin.getText();
-    }
 
     /**Challenges provided login credentials against those on database.
      * See UserDAOImp class.
      * See getUserNameLogin and getPasswordLogin methods here.
      * @return loginUser User if correct credentials provided and null if not. */
     public User userAuthentication() {
+        String userName = userNameLogin.getText();
+        String password = passwordLogin.getText();
         try {
             UserDAO userDAO = new UserDAOImp();
-            String userNameLogin = getUserNameLogin();
-            String passwordLogin = getPasswordLogin();
-            return userDAO.authenticateUser(userNameLogin, passwordLogin);
+            return userDAO.authenticateUser(userName, password);
         } catch (SQLException e) {
             MyAlerts.alertError("User authentication SQL query failed, contact IT.");
         } return null;
@@ -101,8 +86,9 @@ public class LoginController implements Initializable {
             HashMap<String, Timestamp> toCheck = userDAO.getUserAppointments(userID);
 
             for(Map.Entry<String, Timestamp> checkTime : toCheck.entrySet()) {
-                if (checkTime.getValue().before(fifteenFromNow) && checkTime.getValue().after(now)) {
-                    inBetween.put(checkTime.getKey(), checkTime.getValue());
+                Timestamp start = checkTime.getValue();
+                if (start.before(fifteenFromNow) && start.after(now)) {
+                    inBetween.put(checkTime.getKey(), start);
                 }
             }
 
@@ -124,7 +110,7 @@ public class LoginController implements Initializable {
      * @param logResult whether or not the login attempt was successful. */
     public void logActivity(String logResult) {
         try {
-            String user = getUserNameLogin();
+            String user = JDBC.user;
             Instant dateTimeUTC = Instant.now();
             String log = "\n" + user + " | " + dateTimeUTC + " | " + logResult;
             FileWriter fw = new FileWriter("login_activity.txt", true);

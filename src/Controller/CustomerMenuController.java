@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.CustomerDAO;
 import DAO.CustomerDAOImp;
+import DAO.JDBC;
 import Model.Customer;
 import Utility.MyAlerts;
 import Utility.Nav;
@@ -80,6 +81,7 @@ public class CustomerMenuController implements Initializable {
      * Closes program and connection to database.*/
     @FXML
     public void onActionExit() {
+        JDBC.closeConnection();
         System.exit(0);
     }
 
@@ -124,11 +126,13 @@ public class CustomerMenuController implements Initializable {
         try {
             Customer customer = customerTable.getSelectionModel().getSelectedItem();
             String name = customer.getName();
-            if (!customerDAO.appointmentExists(customer.getCustomerID())) {
-                customerDAO.delete(customer);
-                MyAlerts.alertInfo("Customer " + name + " deleted.");
-                loadTable();
-            } else MyAlerts.alertError("Customer has appointments scheduled.");
+            if (customerDAO.appointmentExists(customer.getCustomerID())) {
+                customerDAO.deleteAppointments(customer.getCustomerID());
+                MyAlerts.alertInfo("Customer appointments were deleted.");
+            }
+            customerDAO.delete(customer);
+            MyAlerts.alertInfo("Customer " + name + " deleted.");
+            loadTable();
         } catch (SQLException e) {
             MyAlerts.alertError("Customer failed to delete.");
         } catch (NullPointerException e) {

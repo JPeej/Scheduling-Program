@@ -1,5 +1,7 @@
 package Model;
 
+import Utility.DateAndTimeHandler;
+
 import java.sql.*;
 //import DAO.JDBC;
 //import Utility.MyAlerts;
@@ -44,6 +46,10 @@ public class Customer {
     /**Constructor for Customer, insertion. */
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
+
+//        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToDB(createDateStamp);
+//        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
+
             this.divisionID = divisionID;
             this.name = name;
             this.address = address;
@@ -58,6 +64,9 @@ public class Customer {
     /**Constructor for Customer, update.*/
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String lastUpdateBy, Timestamp lastUpdateStamp) {
+
+//        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
+
         this.customerID = customerID;
         this.divisionID = divisionID;
         this.name = name;

@@ -42,6 +42,7 @@ public class ReportMenuController implements Initializable {
     @FXML private TableColumn<Appointment, Timestamp> expStart;
     @FXML private TableView<Appointment> customerTable;
     @FXML private TableColumn<Appointment, String> cusMonth;
+    @FXML private TableColumn<Appointment, String> cusYear;
     @FXML private TableColumn<Appointment, String> cusType;
     @FXML private TableColumn<Appointment, Integer> cusCount;
     Nav nav = new Nav();
@@ -134,6 +135,7 @@ public class ReportMenuController implements Initializable {
             cusMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
             cusType.setCellValueFactory(new PropertyValueFactory<>("type"));
             cusCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+            cusYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         } catch (SQLException e) {
             MyAlerts.alertError("Customer Month / Type report failed to load.");
         }

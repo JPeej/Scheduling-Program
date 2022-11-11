@@ -47,7 +47,7 @@ public class ModifyCustomerController extends AddCustomerController implements I
             String zip = zipText.getText();
             String phone = phoneText.getText();
             String lastUpdateBy = JDBC.user;
-            Timestamp lastUpdate = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
+            Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
             if (checkBlanks(name, address, zip, phone, divID)) {
                 Customer modifiedCustomer = new Customer(customerID, divID, name, address, zip, phone, lastUpdateBy,
                         lastUpdate);

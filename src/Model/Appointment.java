@@ -29,6 +29,7 @@ public class Appointment {
     private int userID;
     private int count;
     private String month;
+    private String year;
 
     public static ObservableList<LocalTime> times = FXCollections.observableArrayList();
     public static ObservableList<String> types = FXCollections.observableArrayList("Planning Session",
@@ -39,17 +40,14 @@ public class Appointment {
                        String contact, Timestamp startStamp, Timestamp endStamp, int customerID, int userID,
                        int contactID, String customer) {
 
-        Timestamp zonedStartStamp = DateAndTimeHandler.timestampToClient(startStamp);
-        Timestamp zonedEndStamp = DateAndTimeHandler.timestampToClient(endStamp);
-
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.startStamp = zonedStartStamp;
-        this.endStamp = zonedEndStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
         this.customerID = customerID;
         this.userID = userID;
         this.customer = customer;
@@ -61,20 +59,20 @@ public class Appointment {
                        Timestamp startStamp, Timestamp endStamp, Timestamp createdDate, Timestamp updateDate,
                        String createBy, String updateBy, int contactID, int customerID, int userID) {
 
-        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
-        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
-        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
-        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+//        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+//        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+//        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
+//        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
 
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.startStamp = utcStartStamp;
-        this.endStamp = utcEndStamp;
-        this.createdDate = utcCreateStamp;
-        this.updateDate = utcUpdateStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
+        this.createdDate = createdDate;
+        this.updateDate = updateDate;
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.contactID = contactID;
@@ -87,18 +85,18 @@ public class Appointment {
                        Timestamp endStamp, Timestamp updateDate, String updateBy, int contactID, int customerID,
                        int userID) {
 
-        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
-        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
-        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+//        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+//        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+//        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
 
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
-        this.startStamp = utcStartStamp;
-        this.endStamp = utcEndStamp;
-        this.updateDate = utcUpdateStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
+        this.updateDate = updateDate;
         this.updateBy = updateBy;
         this.contactID = contactID;
         this.customerID = customerID;
@@ -106,10 +104,11 @@ public class Appointment {
     }
 
     /**Constructor for Appointment class, report.*/
-    public Appointment(String type, int count, String month) {
+    public Appointment(String type, int count, String month, String year) {
         this.type = type;
         this.count = count;
         this.month = month;
+        this.year = year;
     }
 
     //Getters & Setters ------------------------------------------------------------------------------------------------
@@ -354,4 +353,11 @@ public class Appointment {
         this.month = month;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 }

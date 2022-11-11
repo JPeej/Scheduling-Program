@@ -46,8 +46,8 @@ public class AddCustomerController implements Initializable {
             String phone = phoneText.getText();
             String createBy = JDBC.user;
             String lastUpdateBy = JDBC.user;
-            Timestamp createDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
-            Timestamp lastUpdateDateTime = DateAndTimeHandler.timestampToDB(Timestamp.valueOf(LocalDateTime.now()));
+            Timestamp createDateTime = Timestamp.valueOf(LocalDateTime.now());
+            Timestamp lastUpdateDateTime = Timestamp.valueOf(LocalDateTime.now());
             if (checkBlanks(name, address, zip, phone, division)) {
                 Customer newCustomer = new Customer(division, name, address, zip, phone, createDateTime, createBy,
                         lastUpdateDateTime, lastUpdateBy);

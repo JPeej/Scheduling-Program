@@ -38,14 +38,14 @@ public class CustomerDAOImp implements CustomerDAO {
             String address = rs.getString("Address");
             String zip = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
-            Timestamp zonedCreateDate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Create_Date"));
+            Timestamp createDate = rs.getTimestamp("Create_Date");
             String createBy = rs.getString("Created_By");
-            Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToClient(rs.getTimestamp("Last_Update"));
+            Timestamp lastUpdate = rs.getTimestamp("Last_Update");
             String lastUpdateBy = rs.getString("Last_Updated_By");
             String division = rs.getString("Division");
             String country = rs.getString("Country");
-            Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, zonedCreateDate,
-                    createBy, zonedLastUpdate, lastUpdateBy, division, country);
+            Customer newCustomer = new Customer(customerID, divisionID, name, address, zip, phone, createDate,
+                    createBy, lastUpdate, lastUpdateBy, division, country);
             customerResult.add(newCustomer);
         }
         Comparator<Customer> customerComparator = Comparator.comparing(Customer::getCustomerID);
@@ -126,6 +126,14 @@ public class CustomerDAOImp implements CustomerDAO {
         ps.setInt(1, customerID);
         ResultSet rs = ps.executeQuery();
         return rs.next();
+    }
+
+    @Override
+    public void deleteAppointments(int customerID) throws SQLException {
+        String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ps.executeUpdate();
     }
 
     //Overridden but unused CRUD methods--------------------------------------------------------------------------------
