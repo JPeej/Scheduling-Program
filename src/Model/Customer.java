@@ -47,17 +47,17 @@ public class Customer {
     public Customer(int divisionID, String name, String address, String zipcode, String phoneNumber,
                     Timestamp createDateStamp, String createBy, Timestamp lastUpdateStamp, String lastUpdateBy) {
 
-        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToDB(createDateStamp);
-        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
+//        Timestamp zonedCreateDate = DateAndTimeHandler.timestampToDB(createDateStamp);
+//        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
 
             this.divisionID = divisionID;
             this.name = name;
             this.address = address;
             this.zipcode = zipcode;
             this.phoneNumber = phoneNumber;
-            this.createDateStamp = zonedCreateDate;
+            this.createDateStamp = createDateStamp;
             this.createBy = createBy;
-            this.lastUpdateStamp = zonedLastUpdate;
+            this.lastUpdateStamp = lastUpdateStamp;
             this.lastUpdateBy = lastUpdateBy;
     }
 
@@ -65,7 +65,7 @@ public class Customer {
     public Customer(int customerID, int divisionID, String name, String address, String zipcode, String phoneNumber,
                     String lastUpdateBy, Timestamp lastUpdateStamp) {
 
-        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
+//        Timestamp zonedLastUpdate = DateAndTimeHandler.timestampToDB(lastUpdateStamp);
 
         this.customerID = customerID;
         this.divisionID = divisionID;
@@ -74,7 +74,7 @@ public class Customer {
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
         this.lastUpdateBy = lastUpdateBy;
-        this.lastUpdateStamp = zonedLastUpdate;
+        this.lastUpdateStamp = lastUpdateStamp;
     }
 
 

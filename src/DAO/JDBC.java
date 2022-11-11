@@ -35,13 +35,6 @@ public abstract class JDBC {
         }
     }
 
-    /**Getter for connection in CRUD methods.
-     * Gets connection. Efficient compared to redundant open and close cycles.
-     * @return Currently open Connection object that is open. */
-    public static Connection getConnection() {
-        return connection;
-    }
-
     /**Closes connection between program and MySQL database.
      * Call once at program end to close connection to MySQL database. */
     public static void closeConnection() {

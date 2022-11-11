@@ -59,20 +59,20 @@ public class Appointment {
                        Timestamp startStamp, Timestamp endStamp, Timestamp createdDate, Timestamp updateDate,
                        String createBy, String updateBy, int contactID, int customerID, int userID) {
 
-        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
-        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
-        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
-        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+//        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+//        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+//        Timestamp utcCreateStamp = DateAndTimeHandler.timestampToDB(createdDate);
+//        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
 
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
         this.contact = contact;
-        this.startStamp = utcStartStamp;
-        this.endStamp = utcEndStamp;
-        this.createdDate = utcCreateStamp;
-        this.updateDate = utcUpdateStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
+        this.createdDate = createdDate;
+        this.updateDate = updateDate;
         this.createBy = createBy;
         this.updateBy = updateBy;
         this.contactID = contactID;
@@ -85,18 +85,18 @@ public class Appointment {
                        Timestamp endStamp, Timestamp updateDate, String updateBy, int contactID, int customerID,
                        int userID) {
 
-        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
-        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
-        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
+//        Timestamp utcStartStamp = DateAndTimeHandler.timestampToDB(startStamp);
+//        Timestamp utcEndStamp = DateAndTimeHandler.timestampToDB(endStamp);
+//        Timestamp utcUpdateStamp = DateAndTimeHandler.timestampToDB(updateDate);
 
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.type = type;
         this.location = location;
-        this.startStamp = utcStartStamp;
-        this.endStamp = utcEndStamp;
-        this.updateDate = utcUpdateStamp;
+        this.startStamp = startStamp;
+        this.endStamp = endStamp;
+        this.updateDate = updateDate;
         this.updateBy = updateBy;
         this.contactID = contactID;
         this.customerID = customerID;
